@@ -130,7 +130,9 @@ export async function submitForm(prevState, formData) {
         return {
             success: false,
             question: `${formData.get("question")}$`,
-            answer: "Sorry, I couldn't solve this equation. Please try again.",
+            answer:
+                "Sorry, I couldn't solve this equation. Please try again. Error: " +
+                error.message,
         };
     }
 }
