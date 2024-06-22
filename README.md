@@ -34,8 +34,20 @@ It's Interface kind of like Chatgpt, you can ask the question and it will solve 
     bun run dev
     ```
 
-# Contributing
+## Contributing
 
 Please head to [CONTRIBUTING.md](CONTRIBUTING.md) to know more about contributing to this project.
 
 I hosted my code to vercel, you can host it to any platform you like.
+
+## Constrains
+
+Please head to https://ai.google.dev/pricing for knowing more about the constrains of the free API.
+
+## TODO
+
+-   [ ] theming for mobile
+-   [ ] Up and down arrow for navigation
+-   [ ] login system
+-   [ ] Storing equations that are not disliked
+-   [ ] Miscellaneous

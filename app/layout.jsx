@@ -1,6 +1,8 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import favicon from "./favicon.ico";
+import Header from "./components/Header";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -13,7 +15,16 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <link rel="shortcut icon" href={favicon.src} type="image/x-icon" />
-            <body className={font.className}>{children}</body>
+            <body className={font.className}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange>
+                    <Header />
+                    {children}
+                </ThemeProvider>
+            </body>
         </html>
     );
 }
