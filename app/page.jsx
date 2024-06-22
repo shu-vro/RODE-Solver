@@ -69,7 +69,7 @@ export default function Component() {
     return (
         <form className="flex flex-col" action={formAction}>
             <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
-                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-transparent">
+                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background">
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
