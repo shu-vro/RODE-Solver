@@ -22,9 +22,19 @@ import icon from "@/app/favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
 import {
     ClipboardIcon,
+    SparkleIcon,
     ThumbsDownIcon,
     ThumbsUpIcon,
+    ZapIcon,
 } from "./components/icons";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 export default function Component() {
     const [value, setValue] = useState(
@@ -58,14 +68,14 @@ export default function Component() {
 
     return (
         <form className="flex flex-col" action={formAction}>
-            <div className="sticky top-0 py-2 px-4 shadow-sm z-[1000]">
-                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-white">
+            <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
+                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-transparent">
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
                         style={{
                             marginRight: "50px",
-                            zIndex: 1000,
+                            zIndex: 100,
                             flexGrow: 1,
                         }}
                     />
@@ -84,10 +94,7 @@ export default function Component() {
                     <SubmitButton />
                 </div>
             </div>
-            <div className="flex-1 mx-auto flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] rounded-lg">
-                <h1 className="font-bold text-2xl">
-                    R<span className="text-red-500">ODE</span> Solver
-                </h1>
+            <div className="flex-1 mx-auto flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
                 {arrayResponse.map((response, index) => (
                     <BidirectionalChat
                         key={index}
