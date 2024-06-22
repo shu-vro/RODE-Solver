@@ -3,13 +3,13 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useFormStatus } from "react-dom";
-import { ArrowUpIcon } from "../components/icons";
+import { IoSend } from "react-icons/io5";
 
 export default function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         <Button type="submit" size="icon" className="ml-4" disabled={pending}>
-            <ArrowUpIcon className="w-4 h-4" />
+            <IoSend />
             <span className="sr-only">Send</span>
         </Button>
     );

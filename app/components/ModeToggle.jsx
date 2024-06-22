@@ -17,8 +17,10 @@ export default function ModeToggle() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-2xl">
-                    {theme == "dark" ? <BsFillMoonStarsFill /> : <MdSunny />}
+                <Button size="icon">
+                    {/* {theme == "dark" ? <BsFillMoonStarsFill /> : <MdSunny />} */}
+                    <MdSunny className="block dark:hidden" />
+                    <BsFillMoonStarsFill className="hidden dark:block" />
 
                     <span className="sr-only">Toggle theme</span>
                 </Button>

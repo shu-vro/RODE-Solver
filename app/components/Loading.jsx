@@ -4,11 +4,14 @@ import React, { useEffect } from "react";
 import { useFormStatus } from "react-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Loading({ endOfPage }) {
+export default function Loading() {
     const { pending } = useFormStatus();
     useEffect(() => {
-        if (endOfPage && pending) {
-            window.scrollTo(0, document.body.scrollHeight);
+        if (pending) {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pending]);
