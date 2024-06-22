@@ -22,19 +22,10 @@ import icon from "@/app/favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
 import {
     ClipboardIcon,
-    SparkleIcon,
     ThumbsDownIcon,
     ThumbsUpIcon,
-    ZapIcon,
 } from "./components/icons";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export default function Component() {
     const [value, setValue] = useState(
@@ -42,7 +33,6 @@ export default function Component() {
     );
 
     const [arrayResponse, setArrayResponse] = useState([]);
-    const endOfPageRef = useRef(null);
 
     const [state, formAction] = useFormState(submitForm, {});
 
@@ -94,28 +84,53 @@ export default function Component() {
                     <SubmitButton />
                 </div>
             </div>
-            <div className="flex-1 mx-auto flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
+            {!arrayResponse.length && (
+                <div className="w-[min(100%,740px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
+                    {Array(4)
+                        .fill(1)
+                        .map((_, i) => {
+                            return (
+                                <Link
+                                    href={"#"}
+                                    key={i}
+                                    className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4">
+                                    Solve ODE{" "}
+                                    <MathField
+                                        value={
+                                            "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
+                                        }
+                                        readonly
+                                        style={{
+                                            display: "inline-block",
+                                            border: "none",
+                                            background: "none",
+                                        }}
+                                    />
+                                </Link>
+                            );
+                        })}
+                </div>
+            )}
+            <div className="flex-1 mx-auto my-4 flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
                 {arrayResponse.map((response, index) => (
                     <BidirectionalChat
                         key={index}
                         question={response.question}
                         answer={response.answer}
-                        bottomElement={endOfPageRef?.current}
                     />
                 ))}
-                <Loading endOfPage={endOfPageRef.current} />
-                <div ref={endOfPageRef}></div>
+                <Loading />
             </div>
         </form>
     );
 }
 
-function BidirectionalChat({ question, answer, bottomElement }) {
+function BidirectionalChat({ question, answer }) {
     useEffect(() => {
-        bottomElement?.scrollIntoView({ behavior: "smooth" });
-        // console.log(question);
-        // console.log(answer);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+        });
     }, []);
 
     return (

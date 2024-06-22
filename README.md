@@ -47,7 +47,8 @@ Please head to https://ai.google.dev/pricing for knowing more about the constrai
 ## TODO
 
 -   [x] theming for mobile
--   [ ] Up and down arrow for navigation
+-   [x] Up and down arrow for navigation
 -   [ ] login system
 -   [ ] Storing equations that are not disliked
+-   [ ] Preset Solve button
 -   [ ] Miscellaneous

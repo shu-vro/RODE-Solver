@@ -3,6 +3,7 @@ import "./globals.css";
 import favicon from "./favicon.ico";
 import Header from "./components/Header";
 import { ThemeProvider } from "./components/ThemeProvider";
+import Footer from "./components/Footer";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
                     disableTransitionOnChange>
                     <Header />
                     {children}
+                    <Footer />
                 </ThemeProvider>
             </body>
         </html>
