@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useFormStatus } from "react-dom";
-import { ArrowUpIcon } from "../page";
+import { ArrowUpIcon } from "../components/icons";
 
 export default function SubmitButton() {
     const { pending } = useFormStatus();
