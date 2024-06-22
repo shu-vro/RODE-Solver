@@ -95,3 +95,15 @@ p {
     --d: 150%;
     color: #fff;
 }
+
+.dark .fancy-1 {
+    @apply rounded-md;
+    background: radial-gradient(farthest-side at bottom, white 98%, transparent)
+            bottom/calc(2 * var(--d, 7px)) var(--d, 0) no-repeat,
+        linear-gradient(white 0 0) bottom / 15px 3px no-repeat;
+    transition: 0.5s;
+}
+.dark .fancy-1:hover {
+    --d: 150%;
+    color: #000;
+}
