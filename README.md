@@ -48,7 +48,12 @@ Please head to https://ai.google.dev/pricing for knowing more about the constrai
 
 -   [x] theming for mobile
 -   [x] Up and down arrow for navigation
--   [ ] login system
--   [ ] Storing equations that are not disliked
+-   [x] login system
+-   [x] save the question
+-   [ ] four different modes
+    -   [ ] backend
+    -   [ ] frontend
+-   [ ] equation from url
+-   [ ] Other's solutions
 -   [ ] Preset Solve button
 -   [ ] Miscellaneous

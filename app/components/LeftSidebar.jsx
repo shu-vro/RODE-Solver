@@ -7,7 +7,6 @@ import React, { useEffect, useMemo } from "react";
 import { ChromeIcon } from "./icons";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
-import useMediaQuery from "@/lib/useMediaQuery";
 import { auth } from "@/firebase";
 import {
     DropdownMenu,
@@ -20,16 +19,13 @@ import {
 import { signOut } from "firebase/auth";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
-import MathField from "./MathField";
+import { usePathname } from "next/navigation";
+import MarkdownView from "./MarkdownView";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
     const { user } = useAuthContext();
-    const match_924 = useMediaQuery("(max-width: 924px)");
-    useEffect(() => {
-        setOpen(!match_924);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [match_924]);
+    const pathName = usePathname();
 
     const { questionList } = useUserQuestions();
     const formattedQuestionList = useMemo(() => {
@@ -38,11 +34,8 @@ export default function LeftSidebar() {
             if (!date) {
                 return acc;
             }
-            console.log("date1", date);
             date = date.toDate();
-            console.log("date2", date);
             date = date.toDateString();
-            console.log("date3", date);
             if (!acc[date]) {
                 acc[date] = [];
             }
@@ -50,8 +43,6 @@ export default function LeftSidebar() {
             return acc;
         }, {});
     });
-
-    console.log(formattedQuestionList);
 
     return (
         <div className="z-[1000]">
@@ -96,20 +87,35 @@ export default function LeftSidebar() {
                                     </div>
                                     {arr.map((obj, i) => (
                                         <Link
-                                            href="#"
+                                            href={pathName + "#" + obj.uid}
                                             key={i}
-                                            className="truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 block hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                                            className={cn(
+                                                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2",
+                                                "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
+                                                "flex items-center gap-2 justify-start",
+                                                "border-b-2"
+                                            )}
                                             prefetch={false}>
-                                            {obj.type} -{" "}
-                                            <MathField
+                                            <span>{obj.type}</span>
+                                            {/* <MathField
                                                 value={obj.question}
                                                 readonly
                                                 style={{
                                                     display: "inline-block",
                                                     fontSize: "1.2rem",
+                                                    pointerEvents: "none",
                                                 }}
-                                            />{" "}
-                                            -{obj.mode}
+                                            /> */}
+                                            <MarkdownView
+                                                style={{
+                                                    display: "inline-block",
+                                                    fontSize: "1.2rem",
+                                                    margin: 0,
+                                                    padding: 0,
+                                                }}>
+                                                {obj.question}
+                                            </MarkdownView>{" "}
+                                            <span>{obj.mode}</span>
                                         </Link>
                                     ))}
                                 </>

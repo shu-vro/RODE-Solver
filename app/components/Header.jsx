@@ -44,7 +44,10 @@ export default function Header() {
                     className="mr-3"
                     type="button"
                     onClick={() => {
-                        setOpen(prev => !prev);
+                        setOpen(prev => {
+                            localStorage["leftNavOpen"] = !prev;
+                            return !prev;
+                        });
                     }}>
                     <BsLayoutSidebarInset />
                 </Button>
