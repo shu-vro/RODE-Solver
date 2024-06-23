@@ -18,7 +18,7 @@ import {
 import { submitForm } from "./action";
 import SubmitButton from "../components/SubmitButton";
 import Loading from "../components/Loading";
-import icon from "../favicon.ico";
+import icon from "@/app/favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
 import {
     ClipboardIcon,
@@ -27,6 +27,11 @@ import {
 } from "../components/icons";
 import Link from "next/link";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
+import { auth, setDocumentToUsersCollection } from "@/firebase";
+import { toast } from "sonner";
+import { nanoid } from "nanoid";
+import { DATABASE_PATH } from "@/lib/variables";
+import { serverTimestamp } from "firebase/firestore";
 
 export default function Component() {
     const [value, setValue] = useState(
@@ -45,7 +50,6 @@ export default function Component() {
     }, []);
 
     useEffect(() => {
-        // use localstorage to store arrayResponse
         if (state?.question) {
             setArrayResponse(prev => {
                 localStorage.setItem(
@@ -54,11 +58,34 @@ export default function Component() {
                 );
                 return [...prev, state];
             });
+            if (auth.currentUser) {
+                // save to database
+                setDocumentToUsersCollection(
+                    nanoid(),
+                    {
+                        question: state.question,
+                        answer: state.answer,
+                        type: "ode",
+                        mode: state.mode,
+                        vote: 0,
+                        createdBy: auth.currentUser.uid,
+                        createdAt: serverTimestamp(),
+                    },
+                    DATABASE_PATH.solutions
+                );
+            }
         }
     }, [state]);
 
     return (
-        <form className="flex flex-col" action={formAction}>
+        <form
+            className="flex flex-col grow"
+            action={formAction}
+            onSubmit={e => {
+                if (!auth.currentUser) {
+                    toast.warning("Please sign in to save your answer");
+                }
+            }}>
             <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
                 <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background max-w-screen-lg mx-auto">
                     <MathField
@@ -85,7 +112,7 @@ export default function Component() {
                     <SubmitButton />
                 </div>
             </div>
-            {!arrayResponse.length && (
+            {!arrayResponse.length ? (
                 <div className="w-[min(100%,1024px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
                     {Array(4)
                         .fill(1)
@@ -111,17 +138,18 @@ export default function Component() {
                             );
                         })}
                 </div>
+            ) : (
+                <div className="flex-1 mx-auto my-4 flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
+                    {arrayResponse.map((response, index) => (
+                        <BidirectionalChat
+                            key={index}
+                            question={response.question}
+                            answer={response.answer}
+                        />
+                    ))}
+                    <Loading />
+                </div>
             )}
-            <div className="flex-1 mx-auto my-4 flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
-                {arrayResponse.map((response, index) => (
-                    <BidirectionalChat
-                        key={index}
-                        question={response.question}
-                        answer={response.answer}
-                    />
-                ))}
-                <Loading />
-            </div>
         </form>
     );
 }
@@ -148,7 +176,7 @@ function BidirectionalChat({ question, answer }) {
             </div>
             <div className="flex items-start gap-4 text-xs">
                 <div className="flex flex-col items-center">
-                    <Avatar className="border w-10 h-10">
+                    <Avatar className="border w-10 h-10 dark:invert">
                         <AvatarImage src={icon.src} />
                         <AvatarFallback>ODE</AvatarFallback>
                     </Avatar>
@@ -157,7 +185,7 @@ function BidirectionalChat({ question, answer }) {
                             variant="ghost"
                             size="icon"
                             type="button"
-                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900">
+                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
                             <FaCaretUp />
                             <span className="sr-only">Upvote</span>
                         </Button>
@@ -173,7 +201,7 @@ function BidirectionalChat({ question, answer }) {
                             variant="ghost"
                             size="icon"
                             type="button"
-                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900">
+                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
                             <FaCaretDown />
                             <span className="sr-only">Downvote</span>
                         </Button>

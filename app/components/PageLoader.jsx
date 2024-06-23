@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import "@/assets/css/page-loader.css";
 import { cn } from "@/lib/utils";
 
-export default function PageLoader() {
-    const [shouldLoad, setShouldLoad] = useState(true);
+export default function PageLoader({ loading = true }) {
+    const [shouldLoad, setShouldLoad] = useState(loading);
 
     useEffect(() => {
         // Simulate a delay to ensure the transition is visible
@@ -14,7 +14,7 @@ export default function PageLoader() {
         }, 100); // Adjust this delay as needed
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [loading]);
 
     return (
         <div
