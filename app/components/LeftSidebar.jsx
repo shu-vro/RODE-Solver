@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/firebase";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ChromeIcon } from "./icons";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "firebase/auth";
 import { useAuthContext } from "@/contexts/AuthProvider";
+import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
+import MathField from "./MathField";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
@@ -29,9 +31,27 @@ export default function LeftSidebar() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [match_924]);
 
-    useEffect(() => {
-        console.log(auth.currentUser);
-    }, [auth.currentUser]);
+    const { questionList } = useUserQuestions();
+    const formattedQuestionList = useMemo(() => {
+        return questionList.reduce((acc, question) => {
+            let date = question.createdAt;
+            if (!date) {
+                return acc;
+            }
+            console.log("date1", date);
+            date = date.toDate();
+            console.log("date2", date);
+            date = date.toDateString();
+            console.log("date3", date);
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(question);
+            return acc;
+        }, {});
+    });
+
+    console.log(formattedQuestionList);
 
     return (
         <div className="z-[1000]">
@@ -54,7 +74,7 @@ export default function LeftSidebar() {
                 )}>
                 <div className="flex-1 overflow-auto z-20">
                     <div className="grid gap-1 p-2">
-                        <div className="text-stone-500 text-xs font-medium px-2">
+                        {/* <div className="text-stone-500 text-xs font-medium px-2">
                             Today
                         </div>
                         {Array(25)
@@ -65,9 +85,36 @@ export default function LeftSidebar() {
                                     key={i}
                                     className="truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 block hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
                                     prefetch={false}>
-                                    Python functon for Fibonacci sequence
+                                    Python function for Fibonacci sequence
                                 </Link>
-                            ))}
+                            ))} */}
+                        {Object.entries(formattedQuestionList).map(
+                            ([date, arr]) => (
+                                <>
+                                    <div className="text-stone-500 text-xs font-medium px-2">
+                                        {date}
+                                    </div>
+                                    {arr.map((obj, i) => (
+                                        <Link
+                                            href="#"
+                                            key={i}
+                                            className="truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 block hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                                            prefetch={false}>
+                                            {obj.type} -{" "}
+                                            <MathField
+                                                value={obj.question}
+                                                readonly
+                                                style={{
+                                                    display: "inline-block",
+                                                    fontSize: "1.2rem",
+                                                }}
+                                            />{" "}
+                                            -{obj.mode}
+                                        </Link>
+                                    ))}
+                                </>
+                            )
+                        )}
                     </div>
                 </div>
                 <div className="mb-3 flex flex-col gap-2">

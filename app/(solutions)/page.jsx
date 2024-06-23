@@ -27,42 +27,47 @@ import {
 } from "../components/icons";
 import Link from "next/link";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
-import { auth, setDocumentToUsersCollection } from "@/firebase";
+import { auth, firestoreDb, setDocumentToUsersCollection } from "@/firebase";
 import { toast } from "sonner";
 import { nanoid } from "nanoid";
 import { DATABASE_PATH } from "@/lib/variables";
-import { serverTimestamp } from "firebase/firestore";
+import { doc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
+import { useAuthContext } from "@/contexts/AuthProvider";
 
 export default function Component() {
     const [value, setValue] = useState(
         "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
     );
-
-    const [arrayResponse, setArrayResponse] = useState([]);
+    let { questionList } = useUserQuestions();
+    questionList = questionList.filter(question => question.type === "ode");
 
     const [state, formAction] = useFormState(submitForm, {});
 
-    useEffect(() => {
-        const storedArrayResponse = localStorage.getItem("arrayResponse");
-        if (storedArrayResponse) {
-            setArrayResponse(JSON.parse(storedArrayResponse));
-        }
-    }, []);
+    const [localState, setLocalState] = useState([]);
+
+    // useEffect(() => {
+    //     const storedArrayResponse = localStorage.getItem("arrayResponse");
+    //     if (storedArrayResponse) {
+    //         setArrayResponse(JSON.parse(storedArrayResponse));
+    //     }
+    // }, []);
 
     useEffect(() => {
-        if (state?.question) {
-            setArrayResponse(prev => {
-                localStorage.setItem(
-                    "arrayResponse",
-                    JSON.stringify([...prev, state])
-                );
-                return [...prev, state];
-            });
+        if (state?.success) {
+            // setArrayResponse(prev => {
+            //     localStorage.setItem(
+            //         "arrayResponse",
+            //         JSON.stringify([...prev, state])
+            //     );
+            //     return [...prev, state];
+            // });
+            const uid = nanoid();
             if (auth.currentUser) {
-                // save to database
                 setDocumentToUsersCollection(
-                    nanoid(),
+                    uid,
                     {
+                        uid,
                         question: state.question,
                         answer: state.answer,
                         type: "ode",
@@ -70,10 +75,18 @@ export default function Component() {
                         vote: 0,
                         createdBy: auth.currentUser.uid,
                         createdAt: serverTimestamp(),
+                        fromServer: true,
                     },
                     DATABASE_PATH.solutions
                 );
+            } else {
+                setLocalState(prev => [
+                    ...prev,
+                    { ...state, type: "ode", vote: 0, uid, fromServer: false },
+                ]);
             }
+        } else if (state && state.success === false) {
+            toast.error(state.answer);
         }
     }, [state]);
 
@@ -112,7 +125,7 @@ export default function Component() {
                     <SubmitButton />
                 </div>
             </div>
-            {!arrayResponse.length ? (
+            {![...questionList, ...localState].length ? (
                 <div className="w-[min(100%,1024px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
                     {Array(4)
                         .fill(1)
@@ -140,11 +153,14 @@ export default function Component() {
                 </div>
             ) : (
                 <div className="flex-1 mx-auto my-4 flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
-                    {arrayResponse.map((response, index) => (
+                    {[...questionList, ...localState].map((response, index) => (
                         <BidirectionalChat
-                            key={index}
+                            key={response.uid}
                             question={response.question}
                             answer={response.answer}
+                            vote={response.vote}
+                            fromServer={response.fromServer}
+                            id={response.uid}
                         />
                     ))}
                     <Loading />
@@ -154,13 +170,34 @@ export default function Component() {
     );
 }
 
-function BidirectionalChat({ question, answer }) {
+function BidirectionalChat({ question, answer, vote, fromServer, id }) {
     useEffect(() => {
         window.scrollTo({
             top: document.body.scrollHeight,
             behavior: "smooth",
         });
     }, []);
+
+    const { user } = useAuthContext();
+
+    const voteHandler = async incr => {
+        try {
+            // upvote
+            if (fromServer && user) {
+                const docRef = doc(firestoreDb, DATABASE_PATH.solutions, id);
+                // Atomically increment the population of the city by 50.
+                await updateDoc(docRef, {
+                    vote: increment(incr),
+                });
+            } else {
+                toast.warning(
+                    "This feature is only available for server responses or for signed in users."
+                );
+            }
+        } catch (e) {
+            toast.error(e.message);
+        }
+    };
 
     return (
         <div className="flex-1 flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)]">
@@ -185,6 +222,9 @@ function BidirectionalChat({ question, answer }) {
                             variant="ghost"
                             size="icon"
                             type="button"
+                            onClick={first => {
+                                voteHandler(1);
+                            }}
                             className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
                             <FaCaretUp />
                             <span className="sr-only">Upvote</span>
@@ -195,12 +235,15 @@ function BidirectionalChat({ question, answer }) {
                             size="icon"
                             type="button"
                             className="text-2xl">
-                            0
+                            {vote}
                         </Button>
                         <Button
                             variant="ghost"
                             size="icon"
                             type="button"
+                            onClick={first => {
+                                voteHandler(-1);
+                            }}
                             className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
                             <FaCaretDown />
                             <span className="sr-only">Downvote</span>
@@ -208,7 +251,7 @@ function BidirectionalChat({ question, answer }) {
                     </div>
                 </div>
                 <div className="grid gap-1">
-                    <div className="font-bold">rODE Solver</div>
+                    <div className="font-bold">RODE Solver</div>
                     <MarkdownView>{answer}</MarkdownView>
                     <div className="flex items-center gap-2 py-2">
                         <Button
@@ -219,25 +262,9 @@ function BidirectionalChat({ question, answer }) {
                                 navigator.clipboard.writeText(answer);
                                 alert("Copied to clipboard");
                             }}
-                            className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900">
+                            className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
                             <ClipboardIcon className="w-4 h-4" />
                             <span className="sr-only">Copy</span>
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            type="button"
-                            className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900">
-                            <ThumbsUpIcon className="w-4 h-4" />
-                            <span className="sr-only">Upvote</span>
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            type="button"
-                            className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900">
-                            <ThumbsDownIcon className="w-4 h-4" />
-                            <span className="sr-only">Downvote</span>
                         </Button>
                     </div>
                 </div>

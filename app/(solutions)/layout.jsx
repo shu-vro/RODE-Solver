@@ -9,6 +9,7 @@ import LeftNavProvider from "@/contexts/LeftNavProvider";
 import { Toaster } from "@/components/ui/sonner";
 import ConfigComponent from "../components/ConfigComponent";
 import AuthProvider from "@/contexts/AuthProvider";
+import UserQuestionsProvider from "@/contexts/UserQuestionsProvider";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -78,16 +79,18 @@ export default function RootLayout({ children }) {
                     enableSystem
                     disableTransitionOnChange>
                     <AuthProvider>
-                        <LeftNavProvider>
-                            <Header />
-                            <div className="flex flex-row flex-nowrap">
-                                <LeftSidebar />
-                                {children}
-                            </div>
-                        </LeftNavProvider>
-                        <Footer />
-                        <Toaster expand richColors duration={6000} />
-                        <ConfigComponent />
+                        <UserQuestionsProvider>
+                            <LeftNavProvider>
+                                <Header />
+                                <div className="flex flex-row flex-nowrap">
+                                    <LeftSidebar />
+                                    {children}
+                                </div>
+                            </LeftNavProvider>
+                            <Footer />
+                            <Toaster expand richColors duration={6000} />
+                            <ConfigComponent />
+                        </UserQuestionsProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </body>
