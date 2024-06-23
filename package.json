@@ -23,7 +23,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "firebase": "^10.12.2",
-    "mathlive": "^0.99.0",
+    "mathlive": "^0.100.0",
     "next": "14.2.4",
     "next-themes": "^0.3.0",
     "react": "^18",
@@ -38,7 +38,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "eslint": "^8",
+    "eslint": "^9.5.0",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",
     "shadcn-ui": "^0.8.0",

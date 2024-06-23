@@ -1,9 +1,10 @@
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import favicon from "./favicon.ico";
-import Header from "./components/Header";
-import { ThemeProvider } from "./components/ThemeProvider";
-import Footer from "./components/Footer";
+import favicon from "@/app/favicon.ico";
+import Header from "@/app/components/Header";
+import { ThemeProvider } from "@/app/components/ThemeProvider";
+import Footer from "@/app/components/Footer";
+import LeftSidebar from "@/app/components/LeftSidebar";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -23,7 +24,10 @@ export default function RootLayout({ children }) {
                     enableSystem
                     disableTransitionOnChange>
                     <Header />
-                    {children}
+                    <div className="flex flex-row">
+                        <LeftSidebar />
+                        {children}
+                    </div>
                     <Footer />
                 </ThemeProvider>
             </body>

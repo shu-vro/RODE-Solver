@@ -1,18 +1,28 @@
 // Import the functions you need from the SDKs you need
 import { getApps, initializeApp } from "firebase/app";
 import {
-    getAuth,
-    signInWithPopup,
-    signOut,
-    GoogleAuthProvider,
-    connectAuthEmulator,
-} from "firebase/auth";
-import {
     connectFirestoreEmulator,
+    doc,
+    setDoc,
+    query,
+    collection,
+    where,
+    getDocs,
     initializeFirestore,
     persistentLocalCache,
     persistentMultipleTabManager,
 } from "firebase/firestore";
+import {
+    getAuth,
+    connectAuthEmulator,
+    GoogleAuthProvider,
+    signInWithPopup,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+    signOut,
+} from "firebase/auth";
+import { DATABASE_PATH } from "./lib/variables";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -41,10 +51,74 @@ if (globalThis?.location?.hostname === "localhost") {
     connectFirestoreEmulator(firestoreDb, "127.0.0.1", 4002);
 }
 
+async function setDocumentToUsersCollection(uid, obj) {
+    try {
+        await setDoc(doc(firestoreDb, DATABASE_PATH.users, uid), obj, {
+            merge: true,
+        });
+        return;
+    } catch (error) {
+        console.warn(error);
+        return alert("there was an error on setDocumentToUsersCollection");
+    }
+}
+
+export async function createUserWithPassword(name, email, password) {
+    try {
+        let { user } = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+        await setDocumentToUsersCollection(user.uid, {
+            uid: user.uid,
+            name,
+            email,
+            photoURL: null,
+        });
+        await updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL,
+        });
+        return user;
+    } catch (e) {
+        console.warn(e);
+        alert("There was an error creating user: " + name);
+        await signOut(auth);
+        return e.code;
+    }
+}
+
+export async function loginWithPassword(email, password) {
+    try {
+        let { user } = await signInWithEmailAndPassword(auth, email, password);
+        return user;
+    } catch (e) {
+        console.warn("There was an error at loginWithPassword");
+        return e.code;
+    }
+}
+
 export async function signInWithGoogle() {
     try {
         let provider = new GoogleAuthProvider();
         let { user } = await signInWithPopup(auth, provider);
+
+        // const userExists = await getDocs(
+        //     query(
+        //         collection(firestoreDb, DATABASE_PATH.users),
+        //         where("uid", "==", user.uid)
+        //     )
+        // );
+        // if (userExists.size !== 0) {
+        //     return user;
+        // }
+        await setDocumentToUsersCollection(user.uid, {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+        });
         return user;
     } catch (e) {
         console.warn("There was an error at signInWithGoogle", e);

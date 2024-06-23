@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import MathField from "./components/MathField";
-import MarkdownView from "./components/MarkdownView";
+import MathField from "../components/MathField";
+import MarkdownView from "../components/MarkdownView";
 import {
     Select,
     SelectContent,
@@ -16,15 +16,15 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { submitForm } from "./action";
-import SubmitButton from "./components/SubmitButton";
-import Loading from "./components/Loading";
-import icon from "@/app/favicon.ico";
+import SubmitButton from "../components/SubmitButton";
+import Loading from "../components/Loading";
+import icon from "../favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
 import {
     ClipboardIcon,
     ThumbsDownIcon,
     ThumbsUpIcon,
-} from "./components/icons";
+} from "../components/icons";
 import Link from "next/link";
 
 export default function Component() {
@@ -57,9 +57,9 @@ export default function Component() {
     }, [state]);
 
     return (
-        <form className="flex flex-col" action={formAction}>
+        <form className="flex flex-col grow" action={formAction}>
             <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
-                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background">
+                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background max-w-screen-lg mx-auto">
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
@@ -85,7 +85,7 @@ export default function Component() {
                 </div>
             </div>
             {!arrayResponse.length && (
-                <div className="w-[min(100%,740px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
+                <div className="w-[min(100%,1024px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
                     {Array(4)
                         .fill(1)
                         .map((_, i) => {
