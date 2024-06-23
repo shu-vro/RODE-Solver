@@ -107,3 +107,10 @@ p {
     --d: 150%;
     color: #000;
 }
+
+[data-radix-popper-content-wrapper] {
+    z-index: 500000000 !important;
+}
+.firebase-emulator-warning {
+    @apply sr-only;
+}

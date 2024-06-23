@@ -2,10 +2,11 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import favicon from "@/app/favicon.ico";
 import Header from "@/app/components/Header";
-import { ThemeProvider } from "@/app/components/ThemeProvider";
+import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Footer from "@/app/components/Footer";
 import LeftSidebar from "@/app/components/LeftSidebar";
-
+import LeftNavProvider from "@/contexts/LeftNavProvider";
+import PageLoader from "../components/PageLoader";
 const font = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
@@ -23,11 +24,14 @@ export default function RootLayout({ children }) {
                     defaultTheme="system"
                     enableSystem
                     disableTransitionOnChange>
-                    <Header />
-                    <div className="flex flex-row">
-                        <LeftSidebar />
-                        {children}
-                    </div>
+                    <LeftNavProvider>
+                        <PageLoader />
+                        <Header />
+                        <div className="flex flex-row flex-nowrap">
+                            <LeftSidebar />
+                            {children}
+                        </div>
+                    </LeftNavProvider>
                     <Footer />
                 </ThemeProvider>
             </body>

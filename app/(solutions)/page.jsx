@@ -26,6 +26,7 @@ import {
     ThumbsUpIcon,
 } from "../components/icons";
 import Link from "next/link";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 
 export default function Component() {
     const [value, setValue] = useState(
@@ -57,7 +58,7 @@ export default function Component() {
     }, [state]);
 
     return (
-        <form className="flex flex-col grow" action={formAction}>
+        <form className="flex flex-col" action={formAction}>
             <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
                 <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background max-w-screen-lg mx-auto">
                     <MathField
@@ -146,10 +147,38 @@ function BidirectionalChat({ question, answer }) {
                 </div>
             </div>
             <div className="flex items-start gap-4 text-xs">
-                <Avatar className="border w-10 h-10">
-                    <AvatarImage src={icon.src} />
-                    <AvatarFallback>ODE</AvatarFallback>
-                </Avatar>
+                <div className="flex flex-col items-center">
+                    <Avatar className="border w-10 h-10">
+                        <AvatarImage src={icon.src} />
+                        <AvatarFallback>ODE</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            type="button"
+                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900">
+                            <FaCaretUp />
+                            <span className="sr-only">Upvote</span>
+                        </Button>
+                        <Button
+                            variant="text"
+                            disabled
+                            size="icon"
+                            type="button"
+                            className="text-2xl">
+                            0
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            type="button"
+                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900">
+                            <FaCaretDown />
+                            <span className="sr-only">Downvote</span>
+                        </Button>
+                    </div>
+                </div>
                 <div className="grid gap-1">
                     <div className="font-bold">rODE Solver</div>
                     <MarkdownView>{answer}</MarkdownView>

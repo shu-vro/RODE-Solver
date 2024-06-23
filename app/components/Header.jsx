@@ -11,7 +11,7 @@ import Link from "next/link";
 import React from "react";
 import ModeToggle from "./ModeToggle";
 import useMediaQuery from "@/lib/useMediaQuery";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { BsLayoutSidebarInset } from "react-icons/bs";
 import {
@@ -22,6 +22,8 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import { useLeftNav } from "@/contexts/LeftNavProvider";
+import { cn } from "@/lib/utils";
 
 const links = [
     { href: "/ode", text: "ODE" },
@@ -32,9 +34,20 @@ const links = [
 
 export default function Header() {
     const match_700 = useMediaQuery(`(max-width: 700px)`);
+    const { setOpen } = useLeftNav();
     return (
         <div className="flex justify-between my-4 z-[1001] relative max-w-[1024px] mx-auto">
             <div className="flex justify-center items-center flex-row">
+                <Button
+                    size="icon"
+                    variant="outline"
+                    className="mr-3"
+                    type="button"
+                    onClick={() => {
+                        setOpen(prev => !prev);
+                    }}>
+                    <BsLayoutSidebarInset />
+                </Button>
                 <Link href={`/`} className="font-bold text-2xl">
                     R<span className="text-red-500">ODE</span> Solver
                 </Link>
@@ -47,10 +60,10 @@ export default function Header() {
         </div>
     );
 }
+
 function MobileNavigation() {
     return (
-        <NavigationMenuItem className="gap-4 flex justify-center items-center flex-nowrap">
-            <ModeToggle />
+        <NavigationMenuItem>
             <Sheet>
                 <SheetTrigger>
                     <span
@@ -80,6 +93,9 @@ function MobileNavigation() {
                                         </a>
                                     </li>
                                 ))}
+                                <li>
+                                    <ModeToggle />
+                                </li>
                             </ul>
                         </SheetDescription>
                     </SheetHeader>
@@ -95,7 +111,10 @@ function DesktopNavigation() {
             {links.map(link => (
                 <Link href={link.href} legacyBehavior passHref key={link.href}>
                     <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}>
+                        className={cn(
+                            navigationMenuTriggerStyle(),
+                            "bg-transparent"
+                        )}>
                         {link.text}
                     </NavigationMenuLink>
                 </Link>
