@@ -85,7 +85,7 @@ export default function LeftSidebar() {
                                     <div className="text-stone-500 text-xs font-medium px-2">
                                         {date}
                                     </div>
-                                    {arr.map((obj, i) => (
+                                    {arr.reverse().map((obj, i) => (
                                         <Link
                                             href={pathName + "#" + obj.uid}
                                             key={i}

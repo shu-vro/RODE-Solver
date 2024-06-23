@@ -15,16 +15,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { submitForm } from "./action";
+import { submitForm } from "./ode-action";
 import SubmitButton from "../components/SubmitButton";
 import Loading from "../components/Loading";
 import icon from "@/app/favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
-import {
-    ClipboardIcon,
-    ThumbsDownIcon,
-    ThumbsUpIcon,
-} from "../components/icons";
+import { ClipboardIcon } from "../components/icons";
 import Link from "next/link";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { auth, firestoreDb, setDocumentToUsersCollection } from "@/firebase";
