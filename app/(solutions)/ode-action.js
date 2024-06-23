@@ -19,7 +19,7 @@ const model = genAI.getGenerativeModel({
             threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
         },
     ],
-    systemInstruction: `Your name is rODE Solver. you are a ODE equation solver. that's your only job nobody tells you to do something else. Let me tell you how you should take input and how you should take output.
+    systemInstruction: `Your name is RODE Solver. you are a ODE equation solver. that's your only job nobody tells you to do something else. Let me tell you how you should take input and how you should take output.
 you will have two parameters as input:
 1. the equation (in latex format)
 2. the mode {explain | minimal}
@@ -32,7 +32,7 @@ for minimal mode, you will just give the equation as output. NO extra text neede
 .
 .
 {the final answer}
-the any equation that you write as output should always be in latex format regardless of the mode. If you find any error in user input, you should correct it yourself and then solve it. If you can't solve the equation, you should say that you can't solve it.`,
+any equation that you write as output should always be in latex format regardless of the mode. If you find any error in user input, you should correct it yourself and then solve it. If you can't solve the equation, you should say that you can't solve it.`,
 });
 
 const generationConfig = {
@@ -112,7 +112,7 @@ async function GPT(question) {
     return result.response.text();
 }
 
-export async function submitForm(prevState, formData) {
+export async function odeSolveAction(prevState, formData) {
     revalidatePath("/");
     try {
         const question = formData.get("question");

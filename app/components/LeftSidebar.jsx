@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/firebase";
 import Link from "next/link";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { ChromeIcon } from "./icons";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
@@ -88,7 +88,7 @@ export default function LeftSidebar() {
                                     {arr.reverse().map((obj, i) => (
                                         <Link
                                             href={pathName + "#" + obj.uid}
-                                            key={i}
+                                            key={obj.uid}
                                             className={cn(
                                                 "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2",
                                                 "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
@@ -97,15 +97,6 @@ export default function LeftSidebar() {
                                             )}
                                             prefetch={false}>
                                             <span>{obj.type}</span>
-                                            {/* <MathField
-                                                value={obj.question}
-                                                readonly
-                                                style={{
-                                                    display: "inline-block",
-                                                    fontSize: "1.2rem",
-                                                    pointerEvents: "none",
-                                                }}
-                                            /> */}
                                             <MarkdownView
                                                 style={{
                                                     display: "inline-block",
