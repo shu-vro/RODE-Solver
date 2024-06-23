@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useFormStatus } from "react-dom";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "../../components/ui/skeleton";
 
 export default function Loading() {
     const { pending } = useFormStatus();

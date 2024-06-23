@@ -12,7 +12,7 @@ export default function MathField({ value, ...rest }) {
                 style={{
                     display: "block",
                     fontSize: "1.8rem",
-                    border: "1px solid #999",
+                    border: "1px solid hsl(var(--border))",
                     ...extra_style,
                 }}>
                 {value}
