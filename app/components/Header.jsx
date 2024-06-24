@@ -29,11 +29,11 @@ const links = [
     { href: "/ode", text: "ODE" },
     { href: "/differentiation", text: "Differentiation" },
     { href: "/integration", text: "Integration" },
-    { href: "/matrix", text: "Matrix" },
+    // { href: "/matrix", text: "Matrix" },
 ];
 
 export default function Header() {
-    const match_700 = useMediaQuery(`(max-width: 700px)`);
+    const match_700 = useMediaQuery(`(max-width: 631px)`);
     const { setOpen } = useLeftNav();
     return (
         <div className="flex justify-between my-4 z-[1001] relative max-w-[1024px] mx-auto">
@@ -44,7 +44,10 @@ export default function Header() {
                     className="mr-3"
                     type="button"
                     onClick={() => {
-                        setOpen(prev => !prev);
+                        setOpen(prev => {
+                            localStorage["leftNavOpen"] = !prev;
+                            return !prev;
+                        });
                     }}>
                     <BsLayoutSidebarInset />
                 </Button>

@@ -3,11 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/firebase";
 import Link from "next/link";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { ChromeIcon } from "./icons";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
-import useMediaQuery from "@/lib/useMediaQuery";
 import { auth } from "@/firebase";
 import {
     DropdownMenu,
@@ -20,16 +19,13 @@ import {
 import { signOut } from "firebase/auth";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
-import MathField from "./MathField";
+import { usePathname } from "next/navigation";
+import MarkdownView from "./MarkdownView";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
     const { user } = useAuthContext();
-    const match_924 = useMediaQuery("(max-width: 924px)");
-    useEffect(() => {
-        setOpen(!match_924);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [match_924]);
+    const pathName = usePathname();
 
     const { questionList } = useUserQuestions();
     const formattedQuestionList = useMemo(() => {
@@ -38,11 +34,8 @@ export default function LeftSidebar() {
             if (!date) {
                 return acc;
             }
-            console.log("date1", date);
             date = date.toDate();
-            console.log("date2", date);
             date = date.toDateString();
-            console.log("date3", date);
             if (!acc[date]) {
                 acc[date] = [];
             }
@@ -50,8 +43,6 @@ export default function LeftSidebar() {
             return acc;
         }, {});
     });
-
-    console.log(formattedQuestionList);
 
     return (
         <div className="z-[1000]">
@@ -94,22 +85,60 @@ export default function LeftSidebar() {
                                     <div className="text-stone-500 text-xs font-medium px-2">
                                         {date}
                                     </div>
-                                    {arr.map((obj, i) => (
+                                    {arr.reverse().map((obj, i) => (
                                         <Link
-                                            href="#"
-                                            key={i}
-                                            className="truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 block hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
-                                            prefetch={false}>
-                                            {obj.type} -{" "}
-                                            <MathField
-                                                value={obj.question}
-                                                readonly
+                                            href={pathName + "#" + obj.uid}
+                                            key={obj.uid}
+                                            className={cn(
+                                                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
+                                                "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
+                                                "flex items-start justify-start flex-col",
+                                                ""
+                                            )}>
+                                            <div>
+                                                <span
+                                                    className={cn(
+                                                        "px-2 py-1 rounded-sm bg-lime-400",
+                                                        {
+                                                            "bg-[#321820] text-[#d39883]":
+                                                                obj.type ===
+                                                                "ode",
+                                                            "bg-[#0b2337] text-[#2ea2f8]":
+                                                                obj.type ===
+                                                                "integration",
+                                                            "bg-[#1f1e41] text-[#9cb3f3]":
+                                                                obj.type ===
+                                                                "differentiation",
+                                                            "bg-[#30343a] text-[#b4ccbc]":
+                                                                obj.type ===
+                                                                "matrix",
+                                                        }
+                                                    )}>
+                                                    {obj.type}
+                                                </span>
+                                                <span
+                                                    className={cn(
+                                                        "px-2 py-1 rounded-sm bg-lime-400 ml-2",
+                                                        {
+                                                            "bg-[#0b2628] text-[#01d188]":
+                                                                obj.mode ===
+                                                                "explain",
+                                                            "bg-[#32233c] text-[#d477d5]":
+                                                                obj.mode ===
+                                                                "minimal",
+                                                        }
+                                                    )}>
+                                                    {obj.mode}
+                                                </span>
+                                            </div>
+                                            <MarkdownView
                                                 style={{
                                                     display: "inline-block",
-                                                    fontSize: "1.2rem",
-                                                }}
-                                            />{" "}
-                                            -{obj.mode}
+                                                    margin: 0,
+                                                    padding: 0,
+                                                }}>
+                                                {obj.question}
+                                            </MarkdownView>
                                         </Link>
                                     ))}
                                 </>

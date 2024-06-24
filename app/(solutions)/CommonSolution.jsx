@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import MathField from "../components/MathField";
-import MarkdownView from "../components/MarkdownView";
+import MathField from "@/app/components/MathField";
+import MarkdownView from "@/app/components/MarkdownView";
 import {
     Select,
     SelectContent,
@@ -15,16 +15,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { submitForm } from "./action";
-import SubmitButton from "../components/SubmitButton";
-import Loading from "../components/Loading";
+import SubmitButton from "@/app/components/SubmitButton";
+import Loading from "@/app/components/Loading";
 import icon from "@/app/favicon.ico";
 import user_icon from "@/assets/user-photo.jpg";
-import {
-    ClipboardIcon,
-    ThumbsDownIcon,
-    ThumbsUpIcon,
-} from "../components/icons";
+import { ClipboardIcon } from "@/app/components/icons";
 import Link from "next/link";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { auth, firestoreDb, setDocumentToUsersCollection } from "@/firebase";
@@ -35,14 +30,16 @@ import { doc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
 import { useAuthContext } from "@/contexts/AuthProvider";
 
-export default function Component() {
-    const [value, setValue] = useState(
-        "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
-    );
+export default function CommonSolution({
+    pageType = "ode",
+    defaultQuestion = "",
+    actionFunction = () => {},
+}) {
+    const [value, setValue] = useState(defaultQuestion);
     let { questionList } = useUserQuestions();
-    questionList = questionList.filter(question => question.type === "ode");
+    questionList = questionList.filter(question => question.type === pageType);
 
-    const [state, formAction] = useFormState(submitForm, {});
+    const [state, formAction] = useFormState(actionFunction, {});
 
     const [localState, setLocalState] = useState([]);
 
@@ -70,7 +67,7 @@ export default function Component() {
                         uid,
                         question: state.question,
                         answer: state.answer,
-                        type: "ode",
+                        type: pageType,
                         mode: state.mode,
                         vote: 0,
                         createdBy: auth.currentUser.uid,
@@ -82,11 +79,18 @@ export default function Component() {
             } else {
                 setLocalState(prev => [
                     ...prev,
-                    { ...state, type: "ode", vote: 0, uid, fromServer: false },
+                    {
+                        ...state,
+                        type: pageType,
+                        vote: 0,
+                        uid,
+                        fromServer: false,
+                    },
                 ]);
             }
         } else if (state && state.success === false) {
             toast.error(state.answer);
+            console.log(state);
         }
     }, [state]);
 
@@ -200,7 +204,9 @@ function BidirectionalChat({ question, answer, vote, fromServer, id }) {
     };
 
     return (
-        <div className="flex-1 flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)]">
+        <div
+            className="flex-1 flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)] border-b-2"
+            id={id}>
             <div className="flex items-start gap-4">
                 <Avatar className="border w-10 h-10 text-xs">
                     <AvatarImage src={user_icon.src} />
@@ -215,7 +221,7 @@ function BidirectionalChat({ question, answer, vote, fromServer, id }) {
                 <div className="flex flex-col items-center">
                     <Avatar className="border w-10 h-10 dark:invert">
                         <AvatarImage src={icon.src} />
-                        <AvatarFallback>ODE</AvatarFallback>
+                        <AvatarFallback>S</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col">
                         <Button

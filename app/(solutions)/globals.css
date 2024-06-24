@@ -53,21 +53,21 @@
     * {
         @apply border-border;
     }
+
+    html {
+        scroll-behavior: smooth !important;
+    }
     body {
         @apply bg-background text-foreground;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        padding: 20px;
+        padding-top: 0;
     }
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    padding: 20px;
-    padding-top: 0;
+    :target {
+        scroll-margin-top: 100px;
+    }
 }
 
 p {
@@ -113,4 +113,8 @@ p {
 }
 .firebase-emulator-warning {
     @apply sr-only;
+}
+
+math-field {
+    --contains-highlight-background-color: rgba(0, 120, 212, 0.2);
 }

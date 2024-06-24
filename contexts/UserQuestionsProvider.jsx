@@ -3,7 +3,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuthContext } from "./AuthProvider";
 import { DATABASE_PATH } from "@/lib/variables";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+    collection,
+    onSnapshot,
+    orderBy,
+    query,
+    where,
+} from "firebase/firestore";
 import { firestoreDb } from "@/firebase";
 
 const Context = createContext({});
@@ -20,7 +26,8 @@ export default function UserQuestionsProvider({ children }) {
         if (user) {
             const q = query(
                 collection(firestoreDb, DATABASE_PATH.solutions),
-                where("createdBy", "==", user.uid)
+                where("createdBy", "==", user.uid),
+                orderBy("createdAt", "asc")
             );
             unsubscribe = onSnapshot(q, querySnapshot => {
                 const cities = [];

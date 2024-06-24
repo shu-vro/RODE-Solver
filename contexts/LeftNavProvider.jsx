@@ -9,7 +9,7 @@ export function useLeftNav() {
 }
 
 export default function LeftNavProvider({ children }) {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(localStorage?.["leftNavOpen"] === "true");
     return (
         <Context.Provider value={{ open, setOpen }}>
             {children}
