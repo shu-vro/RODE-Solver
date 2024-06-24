@@ -90,23 +90,55 @@ export default function LeftSidebar() {
                                             href={pathName + "#" + obj.uid}
                                             key={obj.uid}
                                             className={cn(
-                                                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2",
+                                                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
                                                 "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
-                                                "flex items-center gap-2 justify-start",
-                                                "border-b-2"
-                                            )}
-                                            prefetch={false}>
-                                            <span>{obj.type}</span>
+                                                "flex items-start justify-start flex-col",
+                                                ""
+                                            )}>
+                                            <div>
+                                                <span
+                                                    className={cn(
+                                                        "px-2 py-1 rounded-sm bg-lime-400",
+                                                        {
+                                                            "bg-[#321820] text-[#d39883]":
+                                                                obj.type ===
+                                                                "ode",
+                                                            "bg-[#0b2337] text-[#2ea2f8]":
+                                                                obj.type ===
+                                                                "integration",
+                                                            "bg-[#1f1e41] text-[#9cb3f3]":
+                                                                obj.type ===
+                                                                "differentiation",
+                                                            "bg-[#30343a] text-[#b4ccbc]":
+                                                                obj.type ===
+                                                                "matrix",
+                                                        }
+                                                    )}>
+                                                    {obj.type}
+                                                </span>
+                                                <span
+                                                    className={cn(
+                                                        "px-2 py-1 rounded-sm bg-lime-400 ml-2",
+                                                        {
+                                                            "bg-[#0b2628] text-[#01d188]":
+                                                                obj.mode ===
+                                                                "explain",
+                                                            "bg-[#32233c] text-[#d477d5]":
+                                                                obj.mode ===
+                                                                "minimal",
+                                                        }
+                                                    )}>
+                                                    {obj.mode}
+                                                </span>
+                                            </div>
                                             <MarkdownView
                                                 style={{
                                                     display: "inline-block",
-                                                    fontSize: "1.2rem",
                                                     margin: 0,
                                                     padding: 0,
                                                 }}>
                                                 {obj.question}
-                                            </MarkdownView>{" "}
-                                            <span>{obj.mode}</span>
+                                            </MarkdownView>
                                         </Link>
                                     ))}
                                 </>

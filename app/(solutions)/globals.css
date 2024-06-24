@@ -114,3 +114,7 @@ p {
 .firebase-emulator-warning {
     @apply sr-only;
 }
+
+math-field {
+    --contains-highlight-background-color: rgba(0, 120, 212, 0.2);
+}

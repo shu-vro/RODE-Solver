@@ -51,25 +51,33 @@ async function GPT(question) {
         history: [
             {
                 role: "user",
-                parts: [{ text: "\\frac{d}{dt}\\ln (3t+5) (minimal)" }],
+                parts: [
+                    {
+                        text: "\\int\\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}\\mathrm{d}x (explain)",
+                    },
+                ],
             },
             {
                 role: "model",
                 parts: [
                     {
-                        text: "$\\frac{d}{dt}\\ln (3t+5)$\n\n$\\frac{1}{3t+5} \\cdot \\frac{d}{dt}(3t+5)$\n\n$\\frac{3}{3t+5}$\n",
+                        text: "We can solve this integral by using the substitution method. \n\nLet's substitute \n$u = e^x + e^{-x}$.\n\nThen \n$\\mathrm{d}u = (e^x - e^{-x}) \\mathrm{d}x$.\n\nNow, we can rewrite the integral in terms of $u$:\n\n$\\int\\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}\\mathrm{d}x = \\int \\frac{1}{u} \\mathrm{d}u$.\n\nWe know that the integral of $\\frac{1}{u}$ is $\\ln|u|$. \n\nSo, the integral becomes:\n\n$\\int \\frac{1}{u} \\mathrm{d}u = \\ln|u| + C$.\n\nNow, substitute back $u = e^x + e^{-x}$:\n\n$\\ln|u| + C = \\ln|e^x + e^{-x}| + C$.\n\nTherefore, the solution to the integral is:\n\n$\\int\\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}\\mathrm{d}x = \\ln|e^x + e^{-x}| + C$.\n",
                     },
                 ],
             },
             {
                 role: "user",
-                parts: [{ text: "\\frac{d}{dt}\\ln (3t+5) (explain)" }],
+                parts: [
+                    {
+                        text: "\\int\\frac{\\sqrt{x+3}}{x+2}\\mathrm{d}x (minimal)",
+                    },
+                ],
             },
             {
                 role: "model",
                 parts: [
                     {
-                        text: "We are given the equation: \n$\\frac{d}{dt}\\ln (3t+5)$\n\nThis equation represents the derivative of the natural logarithm of $(3t+5)$ with respect to $t$. \n\nTo solve this, we will use the chain rule: \n$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$\n\nIn our case,  $f(x) = \\ln(x)$ and $g(x) = 3t+5$. \n\nFirst, we find the derivative of $f(x)$:\n$f'(x) = \\frac{1}{x}$\n\nThen, we find the derivative of $g(x)$:\n$g'(x) = 3$\n\nNow, we apply the chain rule:\n$\\frac{d}{dt}\\ln (3t+5) = \\frac{1}{3t+5} \\cdot \\frac{d}{dt}(3t+5)$\n\nFinally, we simplify the expression:\n$\\frac{d}{dt}\\ln (3t+5) = \\frac{3}{3t+5}$\n\nTherefore, the derivative of $\\ln (3t+5)$ with respect to $t$ is $\\frac{3}{3t+5}$. \n",
+                        text: "$\\int\\frac{\\sqrt{x+3}}{x+2}\\mathrm{d}x$\n\nLet $u = \\sqrt{x+3}$. Then $x = u^2 - 3$ and $\\mathrm{d}x = 2u\\mathrm{d}u$.\n\n$\\int\\frac{\\sqrt{x+3}}{x+2}\\mathrm{d}x = \\int \\frac{u}{u^2 - 1} 2u\\mathrm{d}u = 2\\int\\frac{u^2}{u^2 - 1}\\mathrm{d}u$\n\n$= 2\\int\\frac{u^2 - 1 + 1}{u^2 - 1}\\mathrm{d}u = 2\\int\\left(1 + \\frac{1}{u^2 - 1}\\right) \\mathrm{d}u$\n\n$= 2\\int\\left(1 + \\frac{1}{(u-1)(u+1)}\\right) \\mathrm{d}u$\n\nWe can use partial fraction decomposition to solve the second integral:\n\n$\\frac{1}{(u-1)(u+1)} = \\frac{A}{u-1} + \\frac{B}{u+1}$\n\n$1 = A(u+1) + B(u-1)$\n\nWhen $u = 1$, we get $A = \\frac{1}{2}$.\n\nWhen $u = -1$, we get $B = -\\frac{1}{2}$.\n\nTherefore,\n\n$2\\int\\left(1 + \\frac{1}{(u-1)(u+1)}\\right) \\mathrm{d}u = 2\\int\\left(1 + \\frac{1/2}{u-1} - \\frac{1/2}{u+1}\\right) \\mathrm{d}u$\n\n$= 2\\left(u + \\frac{1}{2}\\ln|u-1| - \\frac{1}{2}\\ln|u+1|\\right) + C$\n\n$= 2u + \\ln|u-1| - \\ln|u+1| + C$\n\n$= 2\\sqrt{x+3} + \\ln|\\sqrt{x+3} - 1| - \\ln|\\sqrt{x+3} + 1| + C$\n\n$= 2\\sqrt{x+3} + \\ln\\left|\\frac{\\sqrt{x+3} - 1}{\\sqrt{x+3} + 1}\\right| + C$\n",
                     },
                 ],
             },
@@ -80,14 +88,14 @@ async function GPT(question) {
     return result.response.text();
 }
 
-export async function differentiationSolveAction(prevState, formData) {
+export async function integrationSolveAction(prevState, formData) {
     revalidatePath("/");
     try {
         const question = formData.get("question");
         const mode = formData.get("mode").toLowerCase();
         const format_question = `${question} (${mode})`;
 
-        // console.log(format_question, formData.get("question"));
+        console.log(format_question, formData.get("question"));
         const answer = await GPT(format_question);
         // console.log(answer);
         return {
@@ -97,6 +105,7 @@ export async function differentiationSolveAction(prevState, formData) {
             answer,
         };
     } catch (error) {
+        console.log(error);
         return {
             success: false,
             question: `${formData.get("question")}$`,
