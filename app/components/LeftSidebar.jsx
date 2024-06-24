@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { signInWithGoogle } from "@/firebase";
 import Link from "next/link";
-import React, { useMemo } from "react";
-import { ChromeIcon } from "./icons";
+import React, { useEffect, useMemo, useState } from "react";
+import { BiSpreadsheet } from "react-icons/bi";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
 import { auth } from "@/firebase";
@@ -19,14 +19,15 @@ import {
 import { signOut } from "firebase/auth";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
-import { usePathname } from "next/navigation";
 import MarkdownView from "./MarkdownView";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ImDownload } from "react-icons/im";
+import { PiGoogleChromeLogoDuotone } from "react-icons/pi";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
     const { user } = useAuthContext();
-    const pathName = usePathname();
+    const [deferredPrompt, setDeferredPrompt] = useState();
 
     const { questionList } = useUserQuestions();
     const formattedQuestionList = useMemo(() => {
@@ -44,6 +45,12 @@ export default function LeftSidebar() {
             return acc;
         }, {});
     });
+
+    useEffect(() => {
+        window.addEventListener("beforeinstallprompt", e => {
+            setDeferredPrompt(e);
+        });
+    }, []);
 
     return (
         <div className="z-[1000]">
@@ -77,14 +84,15 @@ export default function LeftSidebar() {
                                     </div>
                                     {arr.reverse().map((obj, i) => (
                                         <Link
-                                            href={pathName + "#" + obj.uid}
+                                            href={`/${obj.type}#${obj.uid}`}
                                             key={obj.uid}
                                             className={cn(
                                                 "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
                                                 "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
                                                 "flex items-start justify-start flex-col",
                                                 ""
-                                            )}>
+                                            )}
+                                            prefetch={false}>
                                             <div>
                                                 <span
                                                     className={cn(
@@ -138,15 +146,35 @@ export default function LeftSidebar() {
                 </div>
                 <div className="mb-3 flex flex-col gap-2">
                     <Button className="w-full capitalize" asChild>
-                        <Link href={"#"}>See other solutions</Link>
+                        <Link href={"#"}>
+                            <BiSpreadsheet className="mr-2 text-lg" />
+                            See other solutions
+                        </Link>
                     </Button>
+
+                    {deferredPrompt && (
+                        <Button
+                            className="w-full"
+                            onClick={async () => {
+                                deferredPrompt.prompt();
+                                const { outcome } =
+                                    await deferredPrompt.userChoice;
+                                if (outcome === "accepted") {
+                                    setDeferredPrompt(undefined);
+                                }
+                            }}>
+                            <ImDownload className="mr-2 text-lg" />
+                            <span>Download As PWA</span>
+                        </Button>
+                    )}
                     {!user ? (
                         <Button
                             className="w-full"
                             onClick={async () => {
                                 const user = await signInWithGoogle();
                             }}>
-                            <ChromeIcon className="mr-2 h-5 w-5" />
+                            {/* <ChromeIcon className="mr-2 h-5 w-5" /> */}
+                            <PiGoogleChromeLogoDuotone className="mr-2 text-xl" />
                             Sign in with Google
                         </Button>
                     ) : (

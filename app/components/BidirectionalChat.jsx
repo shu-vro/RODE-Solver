@@ -82,7 +82,7 @@ export default function BidirectionalChat({
             </div>
             <div className="flex items-start gap-4 text-xs">
                 <div className="flex flex-col items-center">
-                    <Avatar className="border w-10 h-10 dark:invert">
+                    <Avatar className="border w-10 h-10 invert dark:invert-0">
                         <AvatarImage src={icon.src} />
                         <AvatarFallback>S</AvatarFallback>
                     </Avatar>

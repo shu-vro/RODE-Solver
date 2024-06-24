@@ -8,10 +8,9 @@ export default function PageLoader({ loading = true }) {
     const [shouldLoad, setShouldLoad] = useState(loading);
 
     useEffect(() => {
-        // Simulate a delay to ensure the transition is visible
         const timer = setTimeout(() => {
             setShouldLoad(false);
-        }, 100); // Adjust this delay as needed
+        }, 100);
 
         return () => clearTimeout(timer);
     }, [loading]);
