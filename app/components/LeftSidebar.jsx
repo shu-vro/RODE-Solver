@@ -87,16 +87,16 @@ export default function LeftSidebar() {
                                                     className={cn(
                                                         "px-2 py-1 rounded-sm bg-lime-400",
                                                         {
-                                                            "bg-[#321820] text-[#d39883]":
+                                                            "bg-[#d73a4a38] text-[#d73a4a]":
                                                                 obj.type ===
                                                                 "ode",
-                                                            "bg-[#0b2337] text-[#2ea2f8]":
+                                                            "bg-[#2ea0f83a] text-[#2ea2f8]":
                                                                 obj.type ===
                                                                 "integration",
-                                                            "bg-[#1f1e41] text-[#9cb3f3]":
+                                                            "bg-[#9cb3f33a] text-[#5b87ff]":
                                                                 obj.type ===
                                                                 "differentiation",
-                                                            "bg-[#30343a] text-[#b4ccbc]":
+                                                            "bg-[#3fd3703a] text-[#3fd370]":
                                                                 obj.type ===
                                                                 "matrix",
                                                         }
@@ -107,10 +107,10 @@ export default function LeftSidebar() {
                                                     className={cn(
                                                         "px-2 py-1 rounded-sm bg-lime-400 ml-2",
                                                         {
-                                                            "bg-[#0b2628] text-[#01d188]":
+                                                            "bg-[#01d1883a] text-[#01d188]":
                                                                 obj.mode ===
                                                                 "explain",
-                                                            "bg-[#32233c] text-[#d477d5]":
+                                                            "bg-[#d477d53a] text-[#d477d5]":
                                                                 obj.mode ===
                                                                 "minimal",
                                                         }
