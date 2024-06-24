@@ -65,12 +65,12 @@ Please head to https://ai.google.dev/pricing for knowing more about the constrai
 -   [x] Up and down arrow for navigation
 -   [x] login system
 -   [x] save the question
--   [ ] four different modes
-    -   [ ] backend
-    -   [ ] frontend
+-   [x] three different modes
+    -   [x] backend
+    -   [x] frontend
 -   [ ] equation from url
 -   [ ] Other's solutions
 -   [ ] Preset Solve button
+-   [x] Sidebar styling for mobile view (rounded corner, margin on left, colored border)
+-   [x] PWA Button placement
 -   [ ] Miscellaneous
--   [ ] Sidebar styling for mobile view (rounded corner, margin on left, colored border)
--   [ ] PWA Button placement

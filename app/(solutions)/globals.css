@@ -118,3 +118,18 @@ p {
 math-field {
     --contains-highlight-background-color: rgba(0, 120, 212, 0.2);
 }
+
+.go-away {
+    @apply overflow-hidden;
+    width: fit-content;
+    /* make this element's width be 0 after 6 seconds */
+    animation: go-away 1s 3s linear forwards;
+}
+
+@keyframes go-away {
+    100% {
+        width: 0;
+        padding: 0;
+        margin: 0;
+    }
+}

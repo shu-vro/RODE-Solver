@@ -34,7 +34,7 @@ export const metadata = {
         },
     ],
     description: APP_DESCRIPTION,
-    // manifest: "/manifest.json",
+    manifest: "/manifest.json",
     appleWebApp: {
         capable: true,
         statusBarStyle: "default",

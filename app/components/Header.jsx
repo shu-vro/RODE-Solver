@@ -110,7 +110,7 @@ function MobileNavigation() {
 
 function DesktopNavigation() {
     return (
-        <NavigationMenuItem>
+        <NavigationMenuItem className="gap-1 flex">
             {links.map(link => (
                 <Link href={link.href} legacyBehavior passHref key={link.href}>
                     <NavigationMenuLink
