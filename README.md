@@ -72,3 +72,5 @@ Please head to https://ai.google.dev/pricing for knowing more about the constrai
 -   [ ] Other's solutions
 -   [ ] Preset Solve button
 -   [ ] Miscellaneous
+-   [ ] Sidebar styling for mobile view (rounded corner, margin on left, colored border)
+-   [ ] PWA Button placement
