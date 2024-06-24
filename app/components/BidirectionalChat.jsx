@@ -10,7 +10,7 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { firestoreDb } from "@/firebase";
 import { toast } from "sonner";
 import { DATABASE_PATH } from "@/lib/variables";
-import { doc, FieldValue, updateDoc, deleteField } from "firebase/firestore";
+import { doc, updateDoc, increment } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
 
 export default function BidirectionalChat({
@@ -34,13 +34,26 @@ export default function BidirectionalChat({
             if (fromServer && user) {
                 const docRef = doc(firestoreDb, DATABASE_PATH.solutions, id);
 
-                if (incr == 1) {
+                // await updateDoc(docRef, {
+                //     [`vote.${user.uid}`]: incr,
+                // });
+                if (typeof vote?.[user.uid] === "number") {
+                    if (incr == 1) {
+                        if (vote[user.uid] === 0 || vote[user.uid] === -1) {
+                            await updateDoc(docRef, {
+                                [`vote.${user.uid}`]: increment(incr),
+                            });
+                        }
+                    } else if (incr == -1) {
+                        if (vote[user.uid] === 0 || vote[user.uid] === 1) {
+                            await updateDoc(docRef, {
+                                [`vote.${user.uid}`]: increment(incr),
+                            });
+                        }
+                    }
+                } else {
                     await updateDoc(docRef, {
-                        [`vote.${user.uid}`]: true,
-                    });
-                } else if (incr == -1) {
-                    await updateDoc(docRef, {
-                        [`vote.${user.uid}`]: deleteField(),
+                        [`vote.${user.uid}`]: incr,
                     });
                 }
             } else {
@@ -91,7 +104,10 @@ export default function BidirectionalChat({
                             size="icon"
                             type="button"
                             className="text-2xl">
-                            {Object.keys(vote).length}
+                            {Object.values(vote).reduce(
+                                (prev, curr) => prev + curr,
+                                0
+                            )}
                         </Button>
                         <Button
                             variant="ghost"

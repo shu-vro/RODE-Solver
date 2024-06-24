@@ -53,7 +53,10 @@ export default function LeftSidebar() {
                     { hidden: !open }
                 )}
                 onClick={() => {
-                    setOpen(false);
+                    setOpen(prev => {
+                        localStorage["leftNavOpen"] = "false";
+                        return false;
+                    });
                 }}></div>
             <div
                 className={cn(
