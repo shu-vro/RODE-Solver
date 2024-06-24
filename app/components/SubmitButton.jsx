@@ -8,7 +8,7 @@ import { IoSend } from "react-icons/io5";
 export default function SubmitButton() {
     const { pending } = useFormStatus();
     return (
-        <Button type="submit" size="icon" className="ml-4" disabled={pending}>
+        <Button type="submit" size="icon" disabled={pending}>
             <IoSend />
             <span className="sr-only">Send</span>
         </Button>

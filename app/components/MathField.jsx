@@ -13,6 +13,7 @@ export default function MathField({ value, ...rest }) {
                     display: "block",
                     fontSize: "1.8rem",
                     border: "1px solid hsl(var(--border))",
+                    marginRight: 0,
                     ...extra_style,
                 }}>
                 {value}
