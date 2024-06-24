@@ -104,7 +104,7 @@ export default function CommonSolution({
                 }
             }}>
             <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
-                <div className="relative flex flex-row justify-around items-center max-[694px]:flex-wrap bg-background max-w-screen-lg mx-auto">
+                <div className="relative flex flex-row justify-between items-center max-[467px]:flex-wrap bg-background max-w-screen-lg mx-auto gap-3">
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
@@ -115,7 +115,7 @@ export default function CommonSolution({
                         }}
                     />
                     <Select name="mode" defaultValue="Minimal">
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-[130px]">
                             <SelectValue placeholder="Select a Mode" />
                         </SelectTrigger>
                         <SelectContent>

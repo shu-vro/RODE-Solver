@@ -21,6 +21,7 @@ import { useAuthContext } from "@/contexts/AuthProvider";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
 import { usePathname } from "next/navigation";
 import MarkdownView from "./MarkdownView";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
@@ -56,7 +57,7 @@ export default function LeftSidebar() {
                 }}></div>
             <div
                 className={cn(
-                    "bg-white dark:bg-neutral-950 flex flex-col gap-2 text-black dark:text-white sticky top-0 h-[calc(100vh-70px)] overflow-auto border-r-2 border-border transition-all",
+                    "bg-white dark:bg-neutral-950 flex flex-col gap-2 text-black dark:text-white sticky top-0 h-[calc(100svh-70px)] overflow-auto border-r-2 border-border transition-all",
                     {
                         "min-w-80 w-80": open,
                         "min-w-0 w-0": !open,
@@ -65,20 +66,6 @@ export default function LeftSidebar() {
                 )}>
                 <div className="flex-1 overflow-auto z-20">
                     <div className="grid gap-1 p-2">
-                        {/* <div className="text-stone-500 text-xs font-medium px-2">
-                            Today
-                        </div>
-                        {Array(25)
-                            .fill(1)
-                            .map((_, i) => (
-                                <Link
-                                    href="#"
-                                    key={i}
-                                    className="truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 block hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
-                                    prefetch={false}>
-                                    Python function for Fibonacci sequence
-                                </Link>
-                            ))} */}
                         {Object.entries(formattedQuestionList).map(
                             ([date, arr]) => (
                                 <>
@@ -162,7 +149,19 @@ export default function LeftSidebar() {
                     ) : (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button className="w-full">
+                                <Button
+                                    className="w-full gap-2 truncate"
+                                    // variant="secondary"
+                                >
+                                    <Avatar className="w-8 h-8">
+                                        <AvatarImage
+                                            src={user.photoURL}
+                                            alt="photo"
+                                        />
+                                        <AvatarFallback>
+                                            {user.displayName}
+                                        </AvatarFallback>
+                                    </Avatar>
                                     {user.displayName}
                                 </Button>
                             </DropdownMenuTrigger>
