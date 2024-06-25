@@ -75,7 +75,7 @@ export default function CommonSolution({
 
     return (
         <form
-            className="flex flex-col grow min-h-[calc(100svh-90px)]"
+            className="flex flex-col grow min-h-[calc(100dvh-90px)]"
             action={formAction}
             onSubmit={e => {
                 if (!auth.currentUser) {
