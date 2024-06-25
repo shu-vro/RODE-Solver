@@ -20,11 +20,11 @@ export default function Footer() {
         });
     };
     return (
-        <div className="fixed bottom-6 right-6 flex flex-col z-[1000] gap-3">
+        <div className="fixed bottom-36 right-6 flex flex-col z-[1000] gap-3">
             <Button
                 type="button"
                 size="icon"
-                className="ml-4 opacity-25 hover:opacity-70"
+                className="ml-4 opacity-25 hover:opacity-70 w-7 h-7"
                 onClick={scrollUp}>
                 <FaAngleUp />
                 <span className="sr-only">Go up</span>
@@ -32,7 +32,7 @@ export default function Footer() {
             <Button
                 type="button"
                 size="icon"
-                className="ml-4 opacity-25 hover:opacity-70"
+                className="ml-4 opacity-25 hover:opacity-70 w-7 h-7"
                 onClick={scrollDown}>
                 <FaAngleDown />
                 <span className="sr-only">Go up</span>

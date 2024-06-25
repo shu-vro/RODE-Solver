@@ -63,10 +63,11 @@
         padding: 0;
         box-sizing: border-box;
         padding: 20px;
-        padding-top: 0;
-    }
-    :target {
-        scroll-margin-top: 100px;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        overflow-x: hidden;
+        --keyboard-zindex: 3000;
+        --keyboard-padding-top: 0px;
     }
 }
 
