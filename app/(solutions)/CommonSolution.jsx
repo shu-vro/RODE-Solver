@@ -75,19 +75,69 @@ export default function CommonSolution({
 
     return (
         <form
-            className="flex flex-col grow"
+            className="flex flex-col grow min-h-[calc(100svh-90px)]"
             action={formAction}
             onSubmit={e => {
                 if (!auth.currentUser) {
                     toast.warning("Please sign in to save your answer");
                 }
             }}>
-            <div className="sticky top-0 py-2 px-4 shadow-sm z-20">
-                <div className="relative flex flex-row justify-between items-center max-[467px]:flex-col max-[467px]:items-stretch bg-background max-w-screen-lg mx-auto gap-3">
+            {![...questionList, ...localState].length ? (
+                <div className="mx-auto my-4 flex-1 grow w-[min(100%,1024px)]">
+                    <div className="z-10 grid grid-cols-2 gap-4 mx-auto my-4 grow">
+                        {Array(4)
+                            .fill(1)
+                            .map((_, i) => {
+                                return (
+                                    <Link
+                                        href={"#"}
+                                        key={i}
+                                        className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4 grid place-items-center">
+                                        <div>
+                                            Solve ODE{" "}
+                                            <MathField
+                                                value={
+                                                    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
+                                                }
+                                                readonly
+                                                style={{
+                                                    display: "inline-block",
+                                                    border: "none",
+                                                    background: "none",
+                                                }}
+                                            />
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                    </div>
+                </div>
+            ) : (
+                <div className="mx-auto my-4 flex-1 grow w-[min(100%,740px)]">
+                    <div className="flex flex-col items-start gap-8 px-4 bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
+                        {[...questionList, ...localState].map(
+                            (response, index) => (
+                                <BidirectionalChat
+                                    key={response.uid}
+                                    question={response.question}
+                                    answer={response.answer}
+                                    vote={response.vote}
+                                    fromServer={response.fromServer}
+                                    id={response.uid}
+                                />
+                            )
+                        )}
+                        <Loading />
+                    </div>
+                </div>
+            )}
+            <div className="sticky bottom-[0] pt-2 px-4 mb-4 shadow-sm z-20">
+                <div className="relative flex flex-row justify-between items-center max-[539px]:flex-col max-[539px]:items-stretch bg-background max-w-screen-lg mx-auto gap-3">
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
                         style={{
+                            // width: "280px",
                             zIndex: 100,
                             flexGrow: 1,
                         }}
@@ -113,47 +163,6 @@ export default function CommonSolution({
                     </div>
                 </div>
             </div>
-            {![...questionList, ...localState].length ? (
-                <div className="w-[min(100%,1024px)] z-10 grid grid-cols-2 gap-4 mx-auto my-4">
-                    {Array(4)
-                        .fill(1)
-                        .map((_, i) => {
-                            return (
-                                <Link
-                                    href={"#"}
-                                    key={i}
-                                    className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4">
-                                    Solve ODE{" "}
-                                    <MathField
-                                        value={
-                                            "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
-                                        }
-                                        readonly
-                                        style={{
-                                            display: "inline-block",
-                                            border: "none",
-                                            background: "none",
-                                        }}
-                                    />
-                                </Link>
-                            );
-                        })}
-                </div>
-            ) : (
-                <div className="flex-1 mx-auto my-4 flex flex-col items-start gap-8 px-4 w-[min(100%,740px)] bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
-                    {[...questionList, ...localState].map((response, index) => (
-                        <BidirectionalChat
-                            key={response.uid}
-                            question={response.question}
-                            answer={response.answer}
-                            vote={response.vote}
-                            fromServer={response.fromServer}
-                            id={response.uid}
-                        />
-                    ))}
-                    <Loading />
-                </div>
-            )}
         </form>
     );
 }

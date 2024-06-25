@@ -145,7 +145,7 @@ export default function LeftSidebar() {
                     </div>
                 </div>
                 <div className="mb-3 flex flex-col gap-2">
-                    <Button className="w-full capitalize" asChild>
+                    <Button className="w-full capitalize justify-start" asChild>
                         <Link href={"#"}>
                             <BiSpreadsheet className="mr-2 text-lg" />
                             See other solutions
@@ -154,7 +154,7 @@ export default function LeftSidebar() {
 
                     {deferredPrompt && (
                         <Button
-                            className="w-full"
+                            className="w-full capitalize justify-start"
                             onClick={async () => {
                                 deferredPrompt.prompt();
                                 const { outcome } =
@@ -164,12 +164,12 @@ export default function LeftSidebar() {
                                 }
                             }}>
                             <ImDownload className="mr-2 text-lg" />
-                            <span>Download As PWA</span>
+                            <span>Install App</span>
                         </Button>
                     )}
                     {!user ? (
                         <Button
-                            className="w-full"
+                            className="w-full capitalize justify-start"
                             onClick={async () => {
                                 const user = await signInWithGoogle();
                             }}>
@@ -181,7 +181,7 @@ export default function LeftSidebar() {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
-                                    className="w-full gap-2 truncate"
+                                    className="w-full gap-2 truncate justify-start"
                                     // variant="secondary"
                                 >
                                     <Avatar className="w-8 h-8">

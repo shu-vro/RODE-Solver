@@ -68,7 +68,7 @@ export default function BidirectionalChat({
 
     return (
         <div
-            className="flex-1 flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)] border-b-2"
+            className="flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)] border-b-2"
             id={id}>
             <div className="flex items-start gap-4">
                 <Avatar className="border w-10 h-10 text-xs">
