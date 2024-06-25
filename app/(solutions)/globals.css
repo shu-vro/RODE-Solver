@@ -62,10 +62,8 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        padding: 20px;
         padding-left: 20px !important;
         padding-right: 20px !important;
-        overflow-x: hidden;
         --keyboard-zindex: 3000;
         --keyboard-padding-top: 0px;
     }

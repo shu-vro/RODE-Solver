@@ -49,6 +49,10 @@ It's Interface kind of like Chatgpt, you can ask the question and it will solve 
     bun run dev
     ```
 
+## Documentation
+
+-   [keyboard shortcuts form mathlive](https://cortexjs.io/mathlive/reference/keybindings/)
+
 ## Contributing
 
 Please head to [CONTRIBUTING.md](CONTRIBUTING.md) to know more about contributing to this project.

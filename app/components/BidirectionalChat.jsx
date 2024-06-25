@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { DATABASE_PATH } from "@/lib/variables";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
+import MathField from "./MathField";
 
 export default function BidirectionalChat({
     question,
@@ -33,10 +34,6 @@ export default function BidirectionalChat({
         try {
             if (fromServer && user) {
                 const docRef = doc(firestoreDb, DATABASE_PATH.solutions, id);
-
-                // await updateDoc(docRef, {
-                //     [`vote.${user.uid}`]: incr,
-                // });
                 if (typeof vote?.[user.uid] === "number") {
                     if (incr == 1) {
                         if (vote[user.uid] === 0 || vote[user.uid] === -1) {
@@ -77,7 +74,14 @@ export default function BidirectionalChat({
                 </Avatar>
                 <div className="grid gap-1">
                     <div className="font-bold">You</div>
-                    <MarkdownView>{question}</MarkdownView>
+                    <MathField
+                        value={question}
+                        readonly
+                        style={{
+                            background: "none",
+                            border: "none",
+                        }}
+                    />
                 </div>
             </div>
             <div className="flex items-start gap-4 text-xs">
