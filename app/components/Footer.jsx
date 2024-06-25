@@ -20,7 +20,7 @@ export default function Footer() {
         });
     };
     return (
-        <div className="fixed bottom-36 right-6 flex flex-col z-[1000] gap-3">
+        <div className="fixed bottom-8 max-[539px]:bottom-40 right-6 flex flex-col z-[1000] gap-3">
             <Button
                 type="button"
                 size="icon"

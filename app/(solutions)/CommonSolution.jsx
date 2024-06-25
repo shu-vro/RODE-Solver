@@ -115,33 +115,34 @@ export default function CommonSolution({
             ) : (
                 <div className="mx-auto my-4 flex-1 grow w-[min(100%,740px)]">
                     <div className="flex flex-col items-start gap-8 px-4 bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
-                        {[...questionList, ...localState].map(
-                            (response, index) => (
-                                <BidirectionalChat
-                                    key={response.uid}
-                                    question={response.question}
-                                    answer={response.answer}
-                                    vote={response.vote}
-                                    fromServer={response.fromServer}
-                                    id={response.uid}
-                                />
-                            )
-                        )}
+                        {[...questionList, ...localState].map(response => (
+                            <BidirectionalChat
+                                key={response.uid}
+                                question={response.question}
+                                answer={response.answer}
+                                vote={response.vote}
+                                fromServer={response.fromServer}
+                                id={response.uid}
+                            />
+                        ))}
                         <Loading />
                     </div>
                 </div>
             )}
-            <div className="sticky bottom-[0] pt-2 px-4 mb-4 shadow-sm z-20">
+            <div className="sticky bottom-[0] pt-2 mb-4 shadow-sm z-20 w-[min(100%,740px)] mx-auto">
                 <div className="relative flex flex-row justify-between items-center max-[539px]:flex-col max-[539px]:items-stretch bg-background max-w-screen-lg mx-auto gap-3">
+                    {/* <div className="w-[min(100%,740px)]"> */}
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
                         style={{
-                            // width: "280px",
+                            width: "100%",
                             zIndex: 100,
-                            flexGrow: 1,
+                            // flexGrow: 1,
+                            overflowX: "auto",
                         }}
                     />
+                    {/* </div> */}
                     <div className="flex flex-row justify-between gap-3">
                         <Select name="mode" defaultValue="Minimal">
                             <SelectTrigger className="w-[130px]">
