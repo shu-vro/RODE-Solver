@@ -119,11 +119,7 @@ export default function CommonSolution({
                         {[...questionList, ...localState].map(response => (
                             <BidirectionalChat
                                 key={response.uid}
-                                question={response.question}
-                                answer={response.answer}
-                                vote={response.vote}
-                                fromServer={response.fromServer}
-                                id={response.uid}
+                                response={response}
                             />
                         ))}
                         <Loading />

@@ -34,7 +34,6 @@ export default function UserQuestionsProvider({ children }) {
                 querySnapshot.forEach(doc => {
                     questions.push(doc.data());
                 });
-                console.log(questions);
                 setQuestionList(questions);
             });
         }

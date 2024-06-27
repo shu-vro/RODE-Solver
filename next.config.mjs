@@ -3,6 +3,7 @@ import withPWAInit from "@ducanh2912/next-pwa";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: { unoptimized: true },
+    reactStrictMode: false,
 };
 
 const withPWA = withPWAInit({

@@ -41,7 +41,15 @@ async function paginateQuery(last, sortField = "voteCount", lim = 10) {
     docs.docs.forEach(doc => {
         finalData.push(doc.data());
     });
-    return { data: finalData, last: docs.docs[docs.docs.length - 1] };
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+        });
+    }, 500);
+    console.log(docs.docs[docs.docs.length - 1], finalData);
+    last = finalData.length ? docs.docs[docs.docs.length - 1] : last;
+    return { data: finalData, last };
 }
 
 export default function Page() {

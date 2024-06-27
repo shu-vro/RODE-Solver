@@ -81,7 +81,7 @@ export default function LeftSidebar() {
                     <div className="grid gap-1 p-2">
                         {Object.entries(formattedQuestionList).map(
                             ([date, arr]) => (
-                                <>
+                                <div className="mb-4" key={date}>
                                     <div className="text-stone-500 text-xs font-medium px-2">
                                         {date}
                                     </div>
@@ -156,7 +156,7 @@ export default function LeftSidebar() {
                                             />
                                         </Link>
                                     ))}
-                                </>
+                                </div>
                             )
                         )}
                     </div>
