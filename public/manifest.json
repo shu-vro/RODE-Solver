@@ -2,7 +2,7 @@
     "name": "RODE Solver",
     "short_name": "RODE Solver",
     "theme_color": "#000000",
-    "background_color": "#000000",
+    "background_color": "#ffffff",
     "start_url": "/ode",
     "display": "standalone",
     "orientation": "portrait",

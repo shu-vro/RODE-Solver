@@ -51,13 +51,13 @@ async function GPT(question) {
         history: [
             {
                 role: "user",
-                parts: [{ text: "\\frac{d}{dt}\\ln (3t+5) (minimal)" }],
+                parts: [{ text: "\\frac{d}{dt}x^{x^{x}} (minimal)" }],
             },
             {
                 role: "model",
                 parts: [
                     {
-                        text: "$\\frac{d}{dt}\\ln (3t+5)$\n\n$\\frac{1}{3t+5} \\cdot \\frac{d}{dt}(3t+5)$\n\n$\\frac{3}{3t+5}$\n",
+                        text: "$\\frac{d}{dx}x^{x^{x}}$\n\n$\\frac{d}{dx}e^{x^{x}\\ln(x)}$\n\n$e^{x^{x}\\ln(x)} \\cdot \\frac{d}{dx}(x^{x}\\ln(x))$\n\n$x^{x^{x}} \\cdot (\\frac{d}{dx}(x^{x})\\ln(x) + x^{x}\\frac{d}{dx}\\ln(x))$\n\n$x^{x^{x}} \\cdot (\\frac{d}{dx}(e^{x\\ln(x)})\\ln(x) + x^{x}\\frac{d}{dx}\\ln(x))$\n\n$x^{x^{x}} \\cdot (e^{x\\ln(x)}(\\frac{d}{dx}(x\\ln(x)))\\ln(x) + x^{x}\\frac{1}{x})$\n\n$x^{x^{x}} \\cdot (x^{x}(\\ln(x)+1)\\ln(x) + x^{x-1})$\n\n$x^{x^{x}} \\cdot x^{x}(\\ln^{2}(x)+\\ln(x)+x^{-1})$\n\n$x^{x^{x}+x}(\\ln^{2}(x)+\\ln(x)+x^{-1})$ \n",
                     },
                 ],
             },
@@ -69,7 +69,7 @@ async function GPT(question) {
                 role: "model",
                 parts: [
                     {
-                        text: "We are given the equation: \n$\\frac{d}{dt}\\ln (3t+5)$\n\nThis equation represents the derivative of the natural logarithm of $(3t+5)$ with respect to $t$. \n\nTo solve this, we will use the chain rule: \n$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$\n\nIn our case,  $f(x) = \\ln(x)$ and $g(x) = 3t+5$. \n\nFirst, we find the derivative of $f(x)$:\n$f'(x) = \\frac{1}{x}$\n\nThen, we find the derivative of $g(x)$:\n$g'(x) = 3$\n\nNow, we apply the chain rule:\n$\\frac{d}{dt}\\ln (3t+5) = \\frac{1}{3t+5} \\cdot \\frac{d}{dt}(3t+5)$\n\nFinally, we simplify the expression:\n$\\frac{d}{dt}\\ln (3t+5) = \\frac{3}{3t+5}$\n\nTherefore, the derivative of $\\ln (3t+5)$ with respect to $t$ is $\\frac{3}{3t+5}$. \n",
+                        text: "We are given the expression: \n \n $\\frac{d}{dt}\\ln (3t+5)$ \n \n This is asking us to find the derivative of the natural logarithm of (3t + 5) with respect to t.\n \n To solve this, we will use the chain rule. The chain rule states that the derivative of a composite function is equal to the derivative of the outer function evaluated at the inner function multiplied by the derivative of the inner function.\n \n In our case, the outer function is the natural logarithm (ln), and the inner function is (3t + 5).\n \n Therefore, the derivative of the outer function is 1/(3t + 5).\n \n The derivative of the inner function is 3.\n \n Now, applying the chain rule:\n \n $\\frac{d}{dt}\\ln (3t+5) = \\frac{1}{3t+5} \\cdot 3$\n \n Simplifying the expression:\n \n $\\frac{d}{dt}\\ln (3t+5) = \\frac{3}{3t+5}$ \n \n Thus, the derivative of ln(3t + 5) with respect to t is 3/(3t + 5).\n \n \n \n \n",
                     },
                 ],
             },

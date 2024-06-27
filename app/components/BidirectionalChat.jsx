@@ -15,11 +15,12 @@ import { useAuthContext } from "@/contexts/AuthProvider";
 import MathField from "./MathField";
 
 export default function BidirectionalChat({
-    question,
-    answer,
-    vote,
-    fromServer,
-    id,
+    // question,
+    // answer,
+    // vote,
+    // fromServer,
+    // id,
+    response,
 }) {
     useEffect(() => {
         window.scrollTo({
@@ -32,25 +33,48 @@ export default function BidirectionalChat({
 
     const voteHandler = async incr => {
         try {
-            if (fromServer && user) {
-                const docRef = doc(firestoreDb, DATABASE_PATH.solutions, id);
-                if (typeof vote?.[user.uid] === "number") {
+            if (response.fromServer && user) {
+                const docRef = doc(
+                    firestoreDb,
+                    DATABASE_PATH.solutions,
+                    response.uid
+                );
+                if (typeof response.vote?.[user.uid] === "number") {
                     if (incr == 1) {
-                        if (vote[user.uid] === 0 || vote[user.uid] === -1) {
+                        if (
+                            response.vote[user.uid] === 0 ||
+                            response.vote[user.uid] === -1
+                        ) {
+                            const voteCount =
+                                Object.values(response.vote).reduce(
+                                    (prev, curr) => prev + curr,
+                                    0
+                                ) ?? 0;
+                            console.log(voteCount);
                             await updateDoc(docRef, {
                                 [`vote.${user.uid}`]: increment(incr),
+                                voteCount: voteCount + incr,
                             });
                         }
                     } else if (incr == -1) {
-                        if (vote[user.uid] === 0 || vote[user.uid] === 1) {
+                        const voteCount = Object.values(response.vote).reduce(
+                            (prev, curr) => prev + curr,
+                            0
+                        );
+                        if (
+                            response.vote[user.uid] === 0 ||
+                            response.vote[user.uid] === 1
+                        ) {
                             await updateDoc(docRef, {
                                 [`vote.${user.uid}`]: increment(incr),
+                                voteCount: voteCount + incr,
                             });
                         }
                     }
                 } else {
                     await updateDoc(docRef, {
                         [`vote.${user.uid}`]: incr,
+                        voteCount: increment(incr),
                     });
                 }
             } else {
@@ -60,13 +84,14 @@ export default function BidirectionalChat({
             }
         } catch (e) {
             toast.error(e.message);
+            console.log(e);
         }
     };
 
     return (
         <div
             className="flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)] border-b-2"
-            id={id}>
+            id={response.uid}>
             <div className="flex items-start gap-4">
                 <Avatar className="border w-10 h-10 text-xs">
                     <AvatarImage src={user?.photoURL || user_icon.src} />
@@ -75,7 +100,7 @@ export default function BidirectionalChat({
                 <div className="grid gap-1">
                     <div className="font-bold">You</div>
                     <MathField
-                        value={question}
+                        value={response.question}
                         readonly
                         style={{
                             background: "none",
@@ -108,7 +133,7 @@ export default function BidirectionalChat({
                             size="icon"
                             type="button"
                             className="text-2xl">
-                            {Object.values(vote).reduce(
+                            {Object.values(response.vote).reduce(
                                 (prev, curr) => prev + curr,
                                 0
                             )}
@@ -128,14 +153,14 @@ export default function BidirectionalChat({
                 </div>
                 <div className="grid gap-1">
                     <div className="font-bold">RODE Solver</div>
-                    <MarkdownView>{answer}</MarkdownView>
+                    <MarkdownView>{response.answer}</MarkdownView>
                     <div className="flex items-center gap-2 py-2">
                         <Button
                             variant="ghost"
                             size="icon"
                             type="button"
                             onClick={() => {
-                                navigator.clipboard.writeText(answer);
+                                navigator.clipboard.writeText(response.answer);
                                 alert("Copied to clipboard");
                             }}
                             className="w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
