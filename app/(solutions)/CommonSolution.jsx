@@ -49,6 +49,7 @@ export default function CommonSolution({
                         type: pageType,
                         mode: state.mode,
                         vote: {},
+                        voteCount: 0,
                         createdBy: auth.currentUser.uid,
                         createdAt: serverTimestamp(),
                         fromServer: true,

@@ -23,11 +23,14 @@ import MarkdownView from "./MarkdownView";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ImDownload } from "react-icons/im";
 import { PiGoogleChromeLogoDuotone } from "react-icons/pi";
+import MathField from "./MathField";
+import { useRouter } from "next/navigation";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
     const { user } = useAuthContext();
     const [deferredPrompt, setDeferredPrompt] = useState();
+    const { push } = useRouter();
 
     const { questionList } = useUserQuestions();
     const formattedQuestionList = useMemo(() => {
@@ -96,7 +99,7 @@ export default function LeftSidebar() {
                                             <div>
                                                 <span
                                                     className={cn(
-                                                        "px-2 py-1 rounded-sm bg-lime-400",
+                                                        "px-2 py-1 rounded-sm",
                                                         {
                                                             "bg-[#d73a4a38] text-[#d73a4a]":
                                                                 obj.type ===
@@ -104,10 +107,10 @@ export default function LeftSidebar() {
                                                             "bg-[#2ea0f83a] text-[#2ea2f8]":
                                                                 obj.type ===
                                                                 "integration",
-                                                            "bg-[#9cb3f33a] text-[#5b87ff]":
+                                                            "bg-[#3fd3703a] text-[#3fd370]":
                                                                 obj.type ===
                                                                 "differentiation",
-                                                            "bg-[#3fd3703a] text-[#3fd370]":
+                                                            "bg-[#9cb3f33a] text-[#5b87ff]":
                                                                 obj.type ===
                                                                 "matrix",
                                                         }
@@ -129,14 +132,28 @@ export default function LeftSidebar() {
                                                     {obj.mode}
                                                 </span>
                                             </div>
-                                            <MarkdownView
+                                            {/* <MarkdownView
                                                 style={{
                                                     display: "inline-block",
                                                     margin: 0,
                                                     padding: 0,
                                                 }}>
                                                 {obj.question}
-                                            </MarkdownView>
+                                            </MarkdownView> */}
+                                            <MathField
+                                                value={obj.question}
+                                                readonly
+                                                onPointerUp={() => {
+                                                    push(
+                                                        `/${obj.type}#${obj.uid}`
+                                                    );
+                                                }}
+                                                style={{
+                                                    display: "inline-block",
+                                                    border: "none",
+                                                    background: "none",
+                                                }}
+                                            />
                                         </Link>
                                     ))}
                                 </>
@@ -146,7 +163,7 @@ export default function LeftSidebar() {
                 </div>
                 <div className="mb-3 flex flex-col gap-2">
                     <Button className="w-full capitalize justify-start" asChild>
-                        <Link href={"#"}>
+                        <Link href="/others-solutions">
                             <BiSpreadsheet className="mr-2 text-lg" />
                             See other solutions
                         </Link>

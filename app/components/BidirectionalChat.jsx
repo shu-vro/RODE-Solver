@@ -37,14 +37,24 @@ export default function BidirectionalChat({
                 if (typeof vote?.[user.uid] === "number") {
                     if (incr == 1) {
                         if (vote[user.uid] === 0 || vote[user.uid] === -1) {
+                            const voteCount = Object.values(vote).reduce(
+                                (prev, curr) => prev + curr,
+                                0
+                            );
                             await updateDoc(docRef, {
                                 [`vote.${user.uid}`]: increment(incr),
+                                voteCount: voteCount + incr,
                             });
                         }
                     } else if (incr == -1) {
+                        const voteCount = Object.values(vote).reduce(
+                            (prev, curr) => prev + curr,
+                            0
+                        );
                         if (vote[user.uid] === 0 || vote[user.uid] === 1) {
                             await updateDoc(docRef, {
                                 [`vote.${user.uid}`]: increment(incr),
+                                voteCount: voteCount + incr,
                             });
                         }
                     }

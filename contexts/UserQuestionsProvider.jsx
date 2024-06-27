@@ -26,15 +26,16 @@ export default function UserQuestionsProvider({ children }) {
         if (user) {
             const q = query(
                 collection(firestoreDb, DATABASE_PATH.solutions),
-                where("createdBy", "==", user.uid),
-                orderBy("createdAt", "asc")
+                where("createdBy", "==", user.uid)
+                // orderBy("createdAt", "asc")
             );
             unsubscribe = onSnapshot(q, querySnapshot => {
-                const cities = [];
+                const questions = [];
                 querySnapshot.forEach(doc => {
-                    cities.push(doc.data());
+                    questions.push(doc.data());
                 });
-                setQuestionList(cities);
+                console.log(questions);
+                setQuestionList(questions);
             });
         }
         return () => {
