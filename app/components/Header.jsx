@@ -70,7 +70,7 @@ export default function Header() {
                 </Button>
                 <div>
                     <Link href={`/`} className="font-bold text-2xl">
-                        R<span className="text-red-500">ODE</span> Solver
+                        R<span className="text-primary">ODE</span> Solver
                     </Link>
                     <div className="mt-1">
                         <NameDecorator name={pathname} />

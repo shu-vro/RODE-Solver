@@ -11,6 +11,7 @@ import { auth } from "@/firebase";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -214,14 +215,38 @@ export default function LeftSidebar() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-80">
-                                <DropdownMenuLabel>Options</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem
-                                    onClick={async () => {
-                                        await signOut(auth);
-                                    }}>
-                                    Log Out
-                                </DropdownMenuItem>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLabel>
+                                        Options
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                        onClick={async () => {
+                                            await signOut(auth);
+                                        }}>
+                                        Log Out
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLabel>
+                                        Support
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem asChild>
+                                        <Link
+                                            href="https://github.com/shu-vro/RODE-Solver"
+                                            prefetch={false}>
+                                            Star The Project
+                                        </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <Link
+                                            href="https://github.com/shu-vro/RODE-Solver/issues"
+                                            prefetch={false}>
+                                            Report An Issue
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     )}
