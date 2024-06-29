@@ -53,7 +53,7 @@ export default function Header() {
     const { setOpen } = useLeftNav();
     const pathname = usePathname();
     return (
-        <div className="flex justify-between my-4 z-[1001] bg-background max-w-[1024px] mx-auto sticky top-0">
+        <div className="flex justify-between pt-4 z-[1001] bg-background max-w-[1024px] mx-auto sticky top-0">
             <div className="flex justify-center items-center flex-row">
                 <Button
                     size="icon"

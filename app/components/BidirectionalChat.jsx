@@ -13,6 +13,7 @@ import { DATABASE_PATH } from "@/lib/variables";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import MathField from "./MathField";
+import { cn } from "@/lib/utils";
 
 export default function BidirectionalChat({
     // question,
@@ -90,21 +91,25 @@ export default function BidirectionalChat({
 
     return (
         <div
-            className="flex flex-col items-start gap-8 mx-auto w-[min(100%,740px)] border-b-2"
+            className="flex flex-col items-start gap-8 mx-auto w-[min(100%,800px)] border-b-2"
             id={response.uid}>
-            <div className="flex items-start gap-4">
+            <div className="flex items-start justify-start gap-3 w-full flex-row-reverse">
                 <Avatar className="border w-10 h-10 text-xs">
                     <AvatarImage src={user?.photoURL || user_icon.src} />
                     <AvatarFallback>YOU</AvatarFallback>
                 </Avatar>
-                <div className="grid gap-1">
-                    <div className="font-bold">You</div>
+                <div className="grid gap-1 px-3 py-2">
+                    <div className="font-bold text-right">
+                        {user?.displayName || You}
+                    </div>
                     <MathField
                         value={response.question}
                         readonly
                         style={{
-                            background: "none",
+                            background: "var(--primary-color)",
                             border: "none",
+                            color: "white",
+                            borderRadius: ".75rem",
                         }}
                     />
                 </div>
@@ -153,7 +158,13 @@ export default function BidirectionalChat({
                 </div>
                 <div className="grid gap-1">
                     <div className="font-bold">RODE Solver</div>
-                    <MarkdownView>{response.answer}</MarkdownView>
+                    <MarkdownView
+                        className={cn(
+                            "rounded-xl p-0 sm:p-2",
+                            "bg-[#f0f4f9] dark:bg-[#0e1724]"
+                        )}>
+                        {response.answer}
+                    </MarkdownView>
                     <div className="flex items-center gap-2 py-2">
                         <Button
                             variant="ghost"

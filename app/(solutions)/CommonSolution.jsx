@@ -22,6 +22,7 @@ import { DATABASE_PATH } from "@/lib/variables";
 import { serverTimestamp } from "firebase/firestore";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
 import BidirectionalChat from "@/app/components/BidirectionalChat";
+import { cn } from "@/lib/utils";
 
 export default function CommonSolution({
     pageType = "ode",
@@ -114,8 +115,13 @@ export default function CommonSolution({
                     </div>
                 </div>
             ) : (
-                <div className="mx-auto my-4 flex-1 grow w-[min(100%,740px)]">
-                    <div className="flex flex-col items-start gap-8 px-4 bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10 pt-4">
+                <div className="mx-auto my-4 flex-1 grow w-[min(100%,800px)]">
+                    <div
+                        className={cn(
+                            "flex flex-col items-start gap-8 px-4 rounded-lg z-10 pt-4",
+                            "bg-[#f0f4f9] dark:bg-[#0e1724]",
+                            "bg-background dark:bg-background"
+                        )}>
                         {[...questionList, ...localState].map(response => (
                             <BidirectionalChat
                                 key={response.uid}
@@ -126,9 +132,8 @@ export default function CommonSolution({
                     </div>
                 </div>
             )}
-            <div className="sticky bottom-[0] pt-2 mb-4 shadow-sm z-20 w-[min(100%,740px)] mx-auto">
+            <div className="sticky bottom-[0] pt-2 mb-4 shadow-sm z-20 w-[min(100%,800px)] mx-auto">
                 <div className="relative flex flex-row justify-between items-center max-[539px]:flex-col max-[539px]:items-stretch bg-background max-w-screen-lg mx-auto gap-3">
-                    {/* <div className="w-[min(100%,740px)]"> */}
                     <MathField
                         value={value}
                         onInput={evt => setValue(evt.target.value)}
@@ -139,7 +144,6 @@ export default function CommonSolution({
                             overflowX: "auto",
                         }}
                     />
-                    {/* </div> */}
                     <div className="flex flex-row justify-between gap-3">
                         <Select name="mode" defaultValue="Minimal">
                             <SelectTrigger className="w-[130px]">

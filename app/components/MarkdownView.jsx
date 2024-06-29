@@ -4,14 +4,15 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
+import { cn } from "@/lib/utils";
 
 export default function MarkdownView({ children, ...rest }) {
     return (
         <Markdown
-            className="text-lg"
             remarkPlugins={[remarkGfm, remarkMath]}
             rehypePlugins={[rehypeKatex]}
-            {...rest}>
+            {...rest}
+            className={cn("text-lg", rest?.className)}>
             {children}
         </Markdown>
     );

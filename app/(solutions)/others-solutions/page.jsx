@@ -77,7 +77,7 @@ export default function Page() {
     };
 
     return (
-        <div className="flex flex-col grow min-h-[calc(100dvh-90px)] mx-5 sm:mx-20 gap-3">
+        <div className="flex flex-col grow min-h-[calc(100dvh-90px)] mx-5 sm:mx-20 gap-3 pt-5">
             {solutions.map(sol => (
                 <div
                     key={sol.id}
@@ -98,7 +98,7 @@ export default function Page() {
                         }}
                     />
                     <div className="flex flex-row justify-center items-center gap-2">
-                        <div className="px-2 py-1 rounded-sm bg-black text-white dark:bg-white dark:text-black">
+                        <div className="px-2 py-1 rounded-sm bg-primary/60 text-white">
                             votes {sol.voteCount}
                         </div>
                         <div
