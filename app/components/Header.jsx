@@ -24,6 +24,22 @@ import {
 } from "@/components/ui/sheet";
 import { useLeftNav } from "@/contexts/LeftNavProvider";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+
+function NameDecorator({ name }) {
+    let title = name.split("/")[1];
+    return (
+        <span
+            className={cn("px-2 py-1 rounded-sm", {
+                "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
+                "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
+                "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
+                "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
+            })}>
+            {title}
+        </span>
+    );
+}
 
 const links = [
     { href: "/ode", text: "ODE" },
@@ -35,8 +51,9 @@ const links = [
 export default function Header() {
     const match_700 = useMediaQuery(`(max-width: 631px)`);
     const { setOpen } = useLeftNav();
+    const pathname = usePathname();
     return (
-        <div className="flex justify-between my-4 z-[1001] relative max-w-[1024px] mx-auto">
+        <div className="flex justify-between my-4 z-[1001] bg-background max-w-[1024px] mx-auto sticky top-0">
             <div className="flex justify-center items-center flex-row">
                 <Button
                     size="icon"
@@ -51,9 +68,14 @@ export default function Header() {
                     }}>
                     <BsLayoutSidebarInset />
                 </Button>
-                <Link href={`/`} className="font-bold text-2xl">
-                    R<span className="text-red-500">ODE</span> Solver
-                </Link>
+                <div>
+                    <Link href={`/`} className="font-bold text-2xl">
+                        R<span className="text-red-500">ODE</span> Solver
+                    </Link>
+                    <div className="mt-1">
+                        <NameDecorator name={pathname} />
+                    </div>
+                </div>
             </div>
             <NavigationMenu className="z-[1001]">
                 <NavigationMenuList>
@@ -109,11 +131,13 @@ function MobileNavigation() {
 }
 
 function DesktopNavigation() {
+    const pathname = usePathname();
     return (
         <NavigationMenuItem className="gap-1 flex">
             {links.map(link => (
                 <Link href={link.href} legacyBehavior passHref key={link.href}>
                     <NavigationMenuLink
+                        active={pathname === link.href}
                         className={cn(
                             navigationMenuTriggerStyle(),
                             "bg-transparent"

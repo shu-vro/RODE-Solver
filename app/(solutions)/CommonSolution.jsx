@@ -115,7 +115,7 @@ export default function CommonSolution({
                 </div>
             ) : (
                 <div className="mx-auto my-4 flex-1 grow w-[min(100%,740px)]">
-                    <div className="flex flex-col items-start gap-8 px-4 bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10">
+                    <div className="flex flex-col items-start gap-8 px-4 bg-[#f0f4f9] dark:bg-[#0e1724] rounded-lg z-10 pt-4">
                         {[...questionList, ...localState].map(response => (
                             <BidirectionalChat
                                 key={response.uid}

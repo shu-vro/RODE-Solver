@@ -13,6 +13,7 @@ import {
     initializeFirestore,
     persistentLocalCache,
     persistentMultipleTabManager,
+    addDoc,
 } from "firebase/firestore";
 import {
     getAuth,
@@ -70,7 +71,7 @@ export async function setDocumentToUsersCollection(
     } catch (error) {
         console.warn(error);
         return toast.error(
-            "there was an error on setDocumentToUsersCollection"
+            "there was an error on setDocumentToUsersCollection " + error
         );
     }
 }

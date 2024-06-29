@@ -63,14 +63,14 @@ export default function LeftSidebar() {
                     { hidden: !open }
                 )}
                 onClick={() => {
-                    setOpen(prev => {
+                    setOpen(() => {
                         localStorage["leftNavOpen"] = "false";
                         return false;
                     });
                 }}></div>
             <div
                 className={cn(
-                    "bg-white dark:bg-neutral-950 flex flex-col gap-2 text-black dark:text-white sticky top-0 h-[calc(100svh-70px)] overflow-auto border-r-2 border-border transition-all",
+                    "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-0 h-[calc(100svh-70px)] overflow-auto border-r-2 border-border transition-all",
                     {
                         "min-w-80 w-80": open,
                         "min-w-0 w-0": !open,
