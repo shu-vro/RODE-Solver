@@ -62,10 +62,17 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: 20px;
+        padding-right: 20px;
         --keyboard-zindex: 3000;
         --keyboard-padding-top: 0px;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
     }
 }
 
