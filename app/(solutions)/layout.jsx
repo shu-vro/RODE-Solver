@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ConfigComponent from "../components/ConfigComponent";
 import AuthProvider from "@/contexts/AuthProvider";
 import UserQuestionsProvider from "@/contexts/UserQuestionsProvider";
+import { Metadata } from "next";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -19,9 +20,16 @@ const APP_TITLE_TEMPLATE = "%s - for solving equations";
 const APP_DESCRIPTION =
     "Solve equations with interactive step-by-step solutions.";
 
+/**
+ * @type {Metadata}
+ 
+ */
 export const metadata = {
     applicationName: APP_NAME,
-    themeColor: "#000000",
+    themeColor: [
+        { media: "(prefers-color-scheme: dark)", color: "#000000" },
+        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    ],
     title: {
         default: APP_DEFAULT_TITLE,
         template: APP_TITLE_TEMPLATE,

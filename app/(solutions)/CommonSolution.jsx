@@ -85,33 +85,10 @@ export default function CommonSolution({
                 }
             }}>
             {![...questionList, ...localState].length ? (
-                <div className="mx-auto my-4 flex-1 grow w-[min(100%,1024px)]">
-                    <div className="z-10 grid grid-cols-2 gap-4 mx-auto my-4 grow">
-                        {Array(4)
-                            .fill(1)
-                            .map((_, i) => {
-                                return (
-                                    <Link
-                                        href={"#"}
-                                        key={i}
-                                        className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4 grid place-items-center">
-                                        <div>
-                                            Solve ODE{" "}
-                                            <MathField
-                                                value={
-                                                    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
-                                                }
-                                                readonly
-                                                style={{
-                                                    display: "inline-block",
-                                                    border: "none",
-                                                    background: "none",
-                                                }}
-                                            />
-                                        </div>
-                                    </Link>
-                                );
-                            })}
+                <div className="mx-auto my-4 flex-1 grow w-[min(100%,800px)]">
+                    <div className="text-center text-[10vw] text-opacity-30 text-black/10 dark:text-primary-foreground select-none capitalize">
+                        Ask a<br />
+                        question
                     </div>
                 </div>
             ) : (
@@ -141,6 +118,8 @@ export default function CommonSolution({
                             width: "100%",
                             zIndex: 100,
                             // flexGrow: 1,
+                            background: "transparent",
+                            borderColor: "hsla(var(--primary) / 50%)",
                             overflowX: "auto",
                         }}
                     />

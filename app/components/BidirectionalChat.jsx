@@ -100,7 +100,7 @@ export default function BidirectionalChat({
                 </Avatar>
                 <div className="grid gap-1 px-3 py-2">
                     <div className="font-bold text-right">
-                        {user?.displayName || You}
+                        {user?.displayName || "You"}
                     </div>
                     <MathField
                         value={response.question}

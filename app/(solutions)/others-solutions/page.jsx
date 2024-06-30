@@ -83,7 +83,7 @@ export default function Page() {
                     key={sol.id}
                     onClick={() => handleClick(sol.uid)}
                     className={cn(
-                        "flex flex-col justify-center gap-2 rounded-md items-start text-xs bg-[#f2f4f7] dark:bg-neutral-900 p-3 py-2 cursor-pointer",
+                        "flex flex-col justify-center gap-2 rounded-md items-start text-xs bg-[#f2f4f7] dark:bg-primary/5 p-3 py-2 cursor-pointer",
                         "md:flex-row md:items-center md:gap-0 md:text-base"
                     )}>
                     <MathField
@@ -95,6 +95,7 @@ export default function Page() {
                             background: "transparent",
                             border: "none",
                             pointerEvents: "none",
+                            cursor: "pointer",
                         }}
                     />
                     <div className="flex flex-row justify-center items-center gap-2">
