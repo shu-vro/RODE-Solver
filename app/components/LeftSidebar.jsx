@@ -80,8 +80,9 @@ export default function LeftSidebar() {
                 )}>
                 <div className="flex-1 overflow-auto z-20">
                     <div className="grid grid-cols-1 gap-1 px-2">
-                        {Object.entries(formattedQuestionList).map(
-                            ([date, arr]) => (
+                        {Object.entries(formattedQuestionList)
+                            .reverse()
+                            .map(([date, arr]) => (
                                 <div className="mb-4" key={date}>
                                     <div className="text-stone-500 text-xs font-medium px-2">
                                         {date}
@@ -92,9 +93,8 @@ export default function LeftSidebar() {
                                             key={obj.uid}
                                             className={cn(
                                                 "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
-                                                "hover:bg-neutral-200 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
-                                                "flex items-start justify-start flex-col",
-                                                ""
+                                                "hover:bg-primary/10",
+                                                "flex items-start justify-start flex-col"
                                             )}
                                             prefetch={false}>
                                             <div>
@@ -158,8 +158,7 @@ export default function LeftSidebar() {
                                         </Link>
                                     ))}
                                 </div>
-                            )
-                        )}
+                            ))}
                     </div>
                 </div>
                 <div className="mb-3 flex flex-col gap-2">
