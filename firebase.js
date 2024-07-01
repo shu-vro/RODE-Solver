@@ -13,7 +13,6 @@ import {
     initializeFirestore,
     persistentLocalCache,
     persistentMultipleTabManager,
-    addDoc,
 } from "firebase/firestore";
 import {
     getAuth,
@@ -25,6 +24,7 @@ import {
     updateProfile,
     signOut,
 } from "firebase/auth";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { DATABASE_PATH } from "./lib/variables";
 import { toast } from "sonner";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -45,6 +45,12 @@ const app =
     getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
 export default app;
+
+const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(
+        process.env.NEXT_PUBLIC_RECAPTCHA_PUBLIC_KEY
+    ),
+});
 
 export const auth = getAuth(app);
 export const firestoreDb = initializeFirestore(app, {
