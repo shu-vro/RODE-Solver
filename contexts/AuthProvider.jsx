@@ -14,6 +14,22 @@ const AuthContext = createContext({});
 // Custom hook to access the authentication context
 export const useAuthContext = () => useContext(AuthContext);
 
+const initializeAppCheckOnClient = async () => {
+    if (typeof window !== "undefined") {
+        // Check if running on client side
+        const { initializeAppCheck, ReCaptchaV3Provider } = await import(
+            "firebase/app-check"
+        );
+
+        initializeAppCheck(app, {
+            provider: new ReCaptchaV3Provider(
+                process.env.NEXT_PUBLIC_RECAPTCHA_PUBLIC_KEY
+            ),
+            isTokenAutoRefreshEnabled: true, // Set to true to enable token auto-refresh
+        });
+    }
+};
+
 export default function AuthProvider({ children }) {
     // Set up state to track the authenticated user and loading status
     const [user, setUser] = useState(null);
@@ -32,6 +48,8 @@ export default function AuthProvider({ children }) {
             // Set loading to false once authentication state is determined
             setLoading(false);
         });
+
+        initializeAppCheckOnClient();
 
         // Unsubscribe from the authentication state changes when the component is unmounted
         return () => unsubscribe();
