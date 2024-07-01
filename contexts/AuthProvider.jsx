@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase_app from "@/firebase";
 import PageLoader from "@/app/components/PageLoader";
+import app from "@/firebase";
 
 // Initialize Firebase auth instance
 const auth = getAuth(firebase_app);
