@@ -19,20 +19,29 @@ const model = genAI.getGenerativeModel({
             threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
         },
     ],
-    systemInstruction: `Your name is RODE Solver. you are a ODE equation solver. that's your only job nobody tells you to do something else. Let me tell you how you should take input and how you should take output.
+    systemInstruction: `Your name is RODE Solver. you are a ODE equation solver. that's your only job. let me tell you how you should take input and how you should take output.
 you will have two parameters as input:
 1. the equation (in latex format)
 2. the mode {explain | minimal}
 for example: y' + 2y = x^2 (minimal)
-for explain mode, you will be explaining every step that you have done to solve this equation.
+for explain mode, you will be explaining every step that you have done to solve this equation make them minimal. that format would be
+\${the equation}$
+{what needs to be done}:
+
+{step 1}
+{step 2}
+.
+.
+.
+$\\boxed{\\Rightarrow{the final answer}}$
 for minimal mode, you will just give the equation as output. NO extra text needed. that format would be:
-{the equation}
-{next line for solving}
+\${the equation}$
+$\\Rightarrow{next line for solving}$
 .
 .
 .
-{the final answer}
-any equation that you write as output should always be in latex format regardless of the mode. If you find any error in user input, you should correct it yourself and then solve it. If you can't solve the equation, you should say that you can't solve it.`,
+$\\boxed{\\Rightarrow{the final answer}}$
+The variables in the input could be x, y, z, t, $\\theta$ and no more. Rest of all are constants. Any equation that you write as output should always be in latex format regardless of the mode.  The output should be compatible for markdown code. If you find any error in user input, you should correct it yourself and then solve it. If you can't solve the equation, you should say that you can't solve it.`,
 });
 
 const generationConfig = {
@@ -51,33 +60,9 @@ async function GPT(question) {
         history: [
             {
                 role: "user",
-                parts: [{ text: "y' + 2y = x^2 (minimal)" }],
-            },
-            {
-                role: "model",
                 parts: [
                     {
-                        text: "$y' + 2y = x^2$\n\n$e^{2x}(y' + 2y) = e^{2x} x^2$\n\n$(e^{2x}y)' = e^{2x} x^2$\n\n$e^{2x}y = \\int e^{2x} x^2 dx$\n\n$e^{2x}y = \\frac{1}{2}e^{2x}x^2 - \\frac{1}{2}e^{2x}x + \\frac{1}{4}e^{2x} + C$\n\n$y = \\frac{1}{2}x^2 - \\frac{1}{2}x + \\frac{1}{4} + Ce^{-2x}$ \n",
-                    },
-                ],
-            },
-            {
-                role: "user",
-                parts: [{ text: "d^2y/dx^2 + 5dy/dx + 6y = 0 (explain)" }],
-            },
-            {
-                role: "model",
-                parts: [
-                    {
-                        text: "Here's how we solve the differential equation $d^2y/dx^2 + 5dy/dx + 6y = 0$:\n\n**1. Characteristic Equation:**\n\nWe start by assuming a solution of the form  $y = e^{rx}$, where 'r' is a constant.  Substituting this into the differential equation, we get:\n\n* $r^2 e^{rx} + 5re^{rx} + 6e^{rx} = 0$\n\nSince $e^{rx}$ is never zero, we can divide both sides by it, leaving us with the characteristic equation:\n\n* $r^2 + 5r + 6 = 0$\n\n**2. Solving the Characteristic Equation:**\n\nThis is a quadratic equation that we can factor:\n\n* $(r + 2)(r + 3) = 0$\n\nThis gives us two solutions for 'r':\n\n* $r_1 = -2$\n* $r_2 = -3$\n\n**3. General Solution:**\n\nSince we have two distinct real roots, the general solution to the differential equation is:\n\n* $y(x) = c_1e^{-2x} + c_2e^{-3x}$\n\nWhere $c_1$ and $c_2$ are arbitrary constants.\n\n**Explanation:**\n\n* The characteristic equation is a key tool for solving linear homogeneous differential equations with constant coefficients. It helps us find the exponential solutions that form the basis for the general solution.\n* The roots of the characteristic equation determine the form of the general solution. In this case, we have two distinct real roots, leading to a general solution with two exponential terms.\n* The constants $c_1$ and $c_2$ are arbitrary, and their values would be determined by initial conditions or boundary conditions if provided. \n",
-                    },
-                ],
-            },
-            {
-                role: "user",
-                parts: [
-                    {
-                        text: "$\\\\frac{\\\\mathrm{d}y}{\\\\mathrm{d}x}=\\\\frac{1-y^2}{1-x^2}$ (minimal)",
+                        text: "$ \\frac{\\mathrm{d}y}{\\mathrm{d}x}+2y=x^2 $ (minimal)",
                     },
                 ],
             },
@@ -85,7 +70,7 @@ async function GPT(question) {
                 role: "model",
                 parts: [
                     {
-                        text: "$\\\\frac{\\\\mathrm{d}y}{\\\\mathrm{d}x}=\\\\frac{1-y^2}{1-x^2}$\n\n$\\\\frac{dy}{1-y^2} = \\\\frac{dx}{1-x^2}$\n\n$\\\\int \\\\frac{dy}{1-y^2} = \\\\int \\\\frac{dx}{1-x^2}$\n\n$\\\\frac{1}{2} \\\\ln|\\\\frac{y+1}{y-1}| = \\\\frac{1}{2} \\\\ln|\\\\frac{x+1}{x-1}| + C$\n\n$\\\\ln|\\\\frac{y+1}{y-1}| = \\\\ln|\\\\frac{x+1}{x-1}| + 2C$\n\n$\\\\frac{y+1}{y-1} = C_1 \\\\frac{x+1}{x-1}$\n\n$y = \\\\frac{C_1x + C_1 + x - 1}{C_1x + C_1 - x + 1}$\n\n$y = \\\\frac{(C_1 + 1)x + (C_1 - 1)}{(C_1 - 1)x + (C_1 + 1)}$ ",
+                        text: "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} + 2y = x^2$\n\nhere, integrating factor = $e^{\\int 2 \\, dx} = e^{2x}$\n\n$\\Rightarrow e^{2x} \\frac{\\mathrm{d}y}{\\mathrm{d}x} + 2 e^{2x} y = x^2 e^{2x}$\n\n$\\Rightarrow \\frac{d}{dx} \\left( y e^{2x} \\right) = x^2 e^{2x}$\n\n$\\Rightarrow \\int \\frac{d}{dx} \\left( y e^{2x} \\right) \\, dx = \\int x^2 e^{2x} \\, dx$\n\n$\\Rightarrow y e^{2x} = e^{2x} \\left( \\frac{x^2}{2} - \\frac{x}{2} + \\frac{1}{4} \\right) + C$\n\n$\\boxed{\\Rightarrow y = \\frac{x^2}{2} - \\frac{x}{2} + \\frac{1}{4} + C e^{-2x}}$\n",
                     },
                 ],
             },
@@ -101,7 +86,35 @@ async function GPT(question) {
                 role: "model",
                 parts: [
                     {
-                        text: "Here's a step-by-step explanation of how to solve the differential equation $\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$:\n\n**1. Separation of Variables:**\n\nThe first step is to separate the variables, meaning we want to get all the 'y' terms on one side of the equation and all the 'x' terms on the other. We can do this by multiplying both sides by $(1-y^2)$ and $(1-x^2)$:\n\n* $(1-y^2) \\mathrm{d}y = (1-x^2) \\mathrm{d}x$\n\n**2. Integration:**\n\nNow we integrate both sides of the equation.  This gives us:\n\n* $\\int \\frac{dy}{1-y^2} = \\int \\frac{dx}{1-x^2}$\n\n**3. Evaluating the Integrals:**\n\nWe can evaluate the integrals using standard integration formulas. Remember that $\\int \\frac{du}{1-u^2} = \\frac{1}{2} \\ln|\\frac{u+1}{u-1}| + C$:\n\n* $\\frac{1}{2} \\ln|\\frac{y+1}{y-1}| = \\frac{1}{2} \\ln|\\frac{x+1}{x-1}| + C$\n\n**4. Simplifying:**\n\nWe can simplify this equation by multiplying both sides by 2 and combining the constants:\n\n* $\\ln|\\frac{y+1}{y-1}| = \\ln|\\frac{x+1}{x-1}| + 2C$\n* $\\ln|\\frac{y+1}{y-1}| = \\ln|\\frac{x+1}{x-1}| + C_1$ (where $C_1 = 2C$)\n\n**5. Solving for y:**\n\nTo isolate 'y', we can use the property that $e^{\\ln a} = a$:\n\n* $e^{\\ln|\\frac{y+1}{y-1}|} = e^{\\ln|\\frac{x+1}{x-1}| + C_1}$\n* $|\\frac{y+1}{y-1}| = e^{C_1} |\\frac{x+1}{x-1}|$\n\nLet $C_1 = \\ln K$, where $K$ is another arbitrary constant. Then:\n\n* $|\\frac{y+1}{y-1}| = K|\\frac{x+1}{x-1}|$\n\nSince both sides are absolute values, we can introduce a new constant $C_2$ which can be positive or negative:\n\n* $\\frac{y+1}{y-1} = C_2 \\frac{x+1}{x-1}$ (where $C_2 = \\pm K$)\n\n**6. Solving for y (continued):**\n\nTo get 'y' explicitly, we can solve for it algebraically:\n\n* $y+1 = C_2 \\frac{x+1}{x-1} (y-1)$\n* $y(1 - C_2 \\frac{x+1}{x-1}) = -1 - C_2 \\frac{x+1}{x-1}$\n* $y = \\frac{-1 - C_2 \\frac{x+1}{x-1}}{1 - C_2 \\frac{x+1}{x-1}}$\n\n**7. Simplifying:**\n\nSimplifying the expression for 'y':\n\n* $y = \\frac{-(x-1) - C_2(x+1)}{(x-1) - C_2(x+1)}$\n* $y = \\frac{(-1 - C_2)x - (1 + C_2)}{(1 - C_2)x - (1 + C_2)}$\n* $y = \\frac{(C_2 + 1)x + (C_2 + 1)}{(C_2 - 1)x + (C_2 - 1)}$\n\n**General Solution:**\n\nThe general solution to the differential equation is therefore:\n\n* $y = \\frac{(C + 1)x + (C + 1)}{(C - 1)x + (C - 1)}$, where 'C' is an arbitrary constant. \n",
+                        text: "Here's a step-by-step explanation of how to solve the differential equation $\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$:\n\n**1. Separation of Variables:**\n\nThe first step is to separate the variables, meaning we want to get all the 'y' terms on one side of the equation and all the 'x' terms on the other. We can do this by multiplying both sides by $(1-y^2)$ and $(1-x^2)$:\n\n* $(1-y^2) \\mathrm{d}y = (1-x^2) \\mathrm{d}x$\n\n**2. Integration:**\n\nNow we integrate both sides of the equation.  This gives us:\n\n* $\\int \\frac{dy}{1-y^2} = \\int \\frac{dx}{1-x^2}$\n\n**3. Evaluating the Integrals:**\n\nWe can evaluate the integrals using standard integration formulas. Remember that $\\int \\frac{du}{1-u^2} = \\frac{1}{2} \\ln|\\frac{u+1}{u-1}| + C$:\n\n* $\\frac{1}{2} \\ln|\\frac{y+1}{y-1}| = \\frac{1}{2} \\ln|\\frac{x+1}{x-1}| + C$\n\n**4. Simplifying:**\n\nWe can simplify this equation by multiplying both sides by 2 and combining the constants:\n\n* $\\ln|\\frac{y+1}{y-1}| = \\ln|\\frac{x+1}{x-1}| + 2C$\n* $\\ln|\\frac{y+1}{y-1}| = \\ln|\\frac{x+1}{x-1}| + C_1$ (where $C_1 = 2C$)\n\n**5. Solving for y:**\n\nTo isolate 'y', we can use the property that $e^{\\ln a} = a$:\n\n* $e^{\\ln|\\frac{y+1}{y-1}|} = e^{\\ln|\\frac{x+1}{x-1}| + C_1}$\n* $|\\frac{y+1}{y-1}| = e^{C_1} |\\frac{x+1}{x-1}|$\n\nLet $C_1 = \\ln K$, where $K$ is another arbitrary constant. Then:\n\n* $|\\frac{y+1}{y-1}| = K|\\frac{x+1}{x-1}|$\n\nSince both sides are absolute values, we can introduce a new constant $C_2$ which can be positive or negative:\n\n* $\\frac{y+1}{y-1} = C_2 \\frac{x+1}{x-1}$ (where $C_2 = \\pm K$)\n\n**6. Solving for y (continued):**\n\nTo get 'y' explicitly, we can solve for it algebraically:\n\n* $y+1 = C_2 \\frac{x+1}{x-1} (y-1)$\n* $y(1 - C_2 \\frac{x+1}{x-1}) = -1 - C_2 \\frac{x+1}{x-1}$\n* $y = \\frac{-1 - C_2 \\frac{x+1}{x-1}}{1 - C_2 \\frac{x+1}{x-1}}$\n\n**7. Simplifying:**\n\nSimplifying the expression for 'y':\n\n* $y = \\frac{-(x-1) - C_2(x+1)}{(x-1) - C_2(x+1)}$\n* $y = \\frac{(-1 - C_2)x - (1 + C_2)}{(1 - C_2)x - (1 + C_2)}$\n* $y = \\frac{(C_2 + 1)x + (C_2 + 1)}{(C_2 - 1)x + (C_2 - 1)}$\n\n**General Solution:**\n\nThe general solution to the differential equation is therefore:\n\n* $\\boxed{y = \\frac{(C + 1)x + (C + 1)}{(C - 1)x + (C - 1)}}$, where 'C' is an arbitrary constant. \n",
+                    },
+                ],
+            },
+            {
+                role: "user",
+                parts: [{ text: "$ (x^2 + y^2)dx + 2xy dy = 0 $ (explain)" }],
+            },
+            {
+                role: "model",
+                parts: [
+                    {
+                        text: "$ (x^2 + y^2)dx + 2xy dy = 0 $\n\n### 2. Simplifying\n\nRewrite the equation in the form $\\frac{dy}{dx} = \\dots$:\n\n$ \\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy} $\n\n### 3. Recognize Homogeneous Differential Equation\n\nA homogeneous differential equation can be solved using the substitution $ y = vx $, where $ v $ is a function of $ x $. Thus, $ y = vx $ and $ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $.\n\n### 4. Substitute and Simplify\n\nSubstitute $ y = vx $ into the differential equation:\n$ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $\n\nNow, substituting $ y = vx $ in $\\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy}$:\n$ v + x \\frac{dv}{dx} = -\\frac{x^2 + v^2 x^2}{2x \\cdot vx} = -\\frac{x^2(1 + v^2)}{2x^2 v} = -\\frac{1 + v^2}{2v} $\n\nRearrange to isolate $ \\frac{dv}{dx} $:\n$ x \\frac{dv}{dx} = -\\frac{1 + v^2}{2v} - v $\n\nCombine the terms:\n$ x \\frac{dv}{dx} = \\frac{-1 - v^2 - 2v^2}{2v} = \\frac{-1 - 3v^2}{2v} $\n\n### 5. Separate Variables\n\nSeparate the variables $ x $ and $ v $:\n$ \\frac{dx}{x} = \\frac{2v}{1 + 3v^2} \\, dv $\n\n### 6. Integrate Both Sides\n\nIntegrate both sides to solve for $ x $ and $ v $:\n\nIntegrate the left side:\n$ \\int \\frac{dx}{x} = \\ln |x| + C_1 $\n\nIntegrate the right side:\n$ \\int \\frac{2v}{1 + 3v^2} \\, dv $\n\nTo integrate the right side, use the substitution \n\n$ u = 1 + 3v^2 $:\n\n$\\Rightarrow du = 6v \\, dv $\n\n$ \\int \\frac{2v}{1 + 3v^2} dv = \\frac{1}{3} \\int \\frac{du}{u} = \\frac{1}{3} \\ln |u| + C_2 = \\frac{1}{3} \\ln |1 + 3v^2| + C_2 $\n\nCombining the integrals, we have:\n$ \\ln |x| = -\\frac{1}{3} \\ln |1 + 3v^2| + C $\n\nWhere $ C = C_1 - C_2 $ is a constant.\n\n### 7. Simplify the Expression\n\nExponentiate both sides to solve for $ x $:\n$ x = C \\cdot (1 + 3v^2)^{-\\frac{1}{3}} $\n\nRewriting in terms of $ y $ and $ x $:\n$ v = \\frac{y}{x} $\n\n$ x (1 + 3v^2)^{\\frac{1}{3}} = C $\n\n$ \\boxed{x \\left(1 + 3 \\left(\\frac{y}{x}\\right)^2 \\right)^{\\frac{1}{3}} = C} $\n\nThis is the general solution to the given differential equation. Here, $ C $ is an arbitrary constant.",
+                    },
+                ],
+            },
+            {
+                role: "user",
+                parts: [
+                    {
+                        text: "$x^2 y \\, dx - (x^3 + y^3) \\, dy = 0$ (minimal)",
+                    },
+                ],
+            },
+            {
+                role: "model",
+                parts: [
+                    {
+                        text: "$x^2ydx-(x^3+y^3)dy=0$\n\n$\\frac{dy}{dx}=\\frac{xy}{x^3+y^3}$\n\nPutting$y=vx$:\n\n$\\frac{dy}{dx}=v+x\\frac{dv}{dx}$\n\n$v+x\\frac{dv}{dx}=\\frac{vx^3}{x^3(1+v^3)}$\n\n$v+x\\frac{dv}{dx}=\\frac{v}{1+v^3}$\n\n$x\\frac{dv}{dx}=\\frac{v}{1+v^3}-v$\n\n$x\\frac{dv}{dx}=\\frac{v-v(1+v^3)}{1+v^3}=\\frac{-v^4}{1+v^3}$\n\n$\\frac{dx}{x}=-\\frac{1+v^3}{v^4}\\,dv$\n\n$\\frac{dx}{x}=-\\left(\\frac{1}{v^4}+\\frac{1}{v}\\right)\\,dv$\n\n$\\int\\frac{dx}{x}=-\\int\\left(\\frac{1}{v^4}+\\frac{1}{v}\\right)\\,dv$\n\n$\\ln(x)=-\\frac{1}{3v^3}-\\ln(v)+C$\n\n$\\ln(vx)=-\\frac{1}{3v^3}+C$\n\nSubstituting back $v=\\frac{y}{x}$\n\n$\\boxed{\\ln(y)=\\frac{x^2}{3y^3}+C}$",
                     },
                 ],
             },

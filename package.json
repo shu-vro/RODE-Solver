@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "shadcn": "shadcn-ui",
-    "firebase:start": "firebase emulators:start --import='firebase-backup-dev' --export-on-exit='firebase-backup-dev'"
+    "firebase:ie": "firebase emulators:start --import='firebase-backup-dev' --export-on-exit='firebase-backup-dev'",
+    "firebase:i": "firebase emulators:start --import='firebase-backup-dev'"
 
   },
   "dependencies": {

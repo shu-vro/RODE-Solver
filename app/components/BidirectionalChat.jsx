@@ -106,7 +106,7 @@ export default function BidirectionalChat({
                         value={response.question}
                         readonly
                         style={{
-                            background: "var(--primary-color)",
+                            background: "hsl(var(--primary))",
                             border: "none",
                             color: "white",
                             borderRadius: ".75rem",

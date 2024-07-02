@@ -4,61 +4,74 @@ import React, { useState } from "react";
 import MarkdownView from "@/app/components/MarkdownView";
 import MathField from "@/app/components/MathField";
 
-let ans = `Here's how to solve the ODE and reach the given answer:
+let ans = `$ (x^2 + y^2)dx + 2xy dy = 0 $
 
-**Step 1: Check for separability**
+### 2. Simplifying
 
-The equation is not directly separable because the variables x and y are mixed in both the numerator and denominator. 
+Rewrite the equation in the form $\\frac{dy}{dx} = \\dots$:
 
-**Step 2: Homogenize the equation (optional)**
+$ \\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy} $
 
-This equation is already homogeneous (meaning of degree 1 in both x and y) so this step isn't necessary. However, for some ODEs, homogenization can help separate the variables.
+### 3. Recognize Homogeneous Differential Equation
 
-**Step 3: Manipulate the equation**
+A homogeneous differential equation can be solved using the substitution $ y = vx $, where $ v $ is a function of $ x $. Thus, $ y = vx $ and $ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $.
 
-We can try to manipulate the equation to make it separable. Notice that both the numerator and denominator have a term of -3. Let's subtract 3 from both sides:
+### 4. Substitute and Simplify
 
-$$ \\frac{\\mathrm{d}y}{\\mathrm{d}x} = \\frac{x+2y-3}{2x+y-3} - 3 = \\frac{x+2y-6}{2x+y-6} $$
+Substitute $ y = vx $ into the differential equation:
+$ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $
 
-Now both the numerator and denominator have a common factor of (x+2y-6). We can rewrite the equation:
+Now, substituting $ y = vx $ in $\\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy}$:
+$ v + x \\frac{dv}{dx} = -\\frac{x^2 + v^2 x^2}{2x \\cdot vx} = -\\frac{x^2(1 + v^2)}{2x^2 v} = -\\frac{1 + v^2}{2v} $
 
-$$ \\frac{\\mathrm{d}y}{\\mathrm{d}x} = \\frac{x+2y-6}{2x+y-6} = \\frac{1}{2} \\cdot \\frac{2(x+2y-6)}{2(x+y-6)} $$
+Rearrange to isolate $ \\frac{dv}{dx} $:
+$ x \\frac{dv}{dx} = -\\frac{1 + v^2}{2v} - v $
 
-**Step 4: Separate the variables**
+Combine the terms:
+$ x \\frac{dv}{dx} = \\frac{-1 - v^2 - 2v^2}{2v} = \\frac{-1 - 3v^2}{2v} $
 
-Now, if we let  u = x+2y-6, then du = (2+2y) dx = 2(dx+dy). Substituting and manipulating:
+### 5. Separate Variables
 
-$$ \\frac{\\mathrm{d}y}{\\mathrm{d}x} = \\frac{1}{2} \\cdot \\frac{du}{2(dx+dy)} = \\frac{du}{4(dx+dy)} $$
+Separate the variables $ x $ and $ v $:
+$ \\frac{dx}{x} = \\frac{2v}{1 + 3v^2} \\, dv $
 
-Notice how dy is now isolated on the right side. We can separate the variables:
+### 6. Integrate Both Sides
 
-$$ 4(dx+dy) = du $$
+Integrate both sides to solve for $ x $ and $ v $:
 
-**Step 5: Integrate both sides**
+Integrate the left side:
+$ \\int \\frac{dx}{x} = \\ln |x| + C_1 $
 
-Integrate both sides of the equation:
+Integrate the right side:
+$ \\int \\frac{2v}{1 + 3v^2} \\, dv $
 
-$$ \\int 4(dx+dy) = \\int du $$
+To integrate the right side, use the substitution 
 
-This gives us:
+$ u = 1 + 3v^2 $:
 
-$$ 4x + 4y = u + C_1 $$
+$\\Rightarrow du = 6v \\, dv $
 
-where C_1 is the constant of integration.
+$ \\int \\frac{2v}{1 + 3v^2} dv = \\frac{1}{3} \\int \\frac{du}{u} = \\frac{1}{3} \\ln |u| + C_2 = \\frac{1}{3} \\ln |1 + 3v^2| + C_2 $
 
-**Step 6: Substitute back and simplify**
+Combining the integrals, we have:
+$ \\ln |x| = -\\frac{1}{3} \\ln |1 + 3v^2| + C $
 
-We defined u = x+2y-6. Substitute this back and rearrange:
+Where $ C = C_1 - C_2 $ is a constant.
 
-$$ 4x + 4y = (x+2y-6) + C_1 $$
+### 7. Simplify the Expression
 
-$$ 3x + 2y = C_1 + 6 $$
+Exponentiate both sides to solve for $ x $:
+$ x = C \\cdot (1 + 3v^2)^{-\\frac{1}{3}} $
 
-Finally, factor out a constant (let a = (C_1+6)/2):
+Rewriting in terms of $ y $ and $ x $:
+$ v = \\frac{y}{x} $
 
-$$ x+y-2 = a(x-y)^3 $$
+$ x (1 + 3v^2)^{\\frac{1}{3}} = C $
 
-This is the solution to the ODE, where a is an arbitrary constant obtained by combining the original constant of integration (C_1) with another constant. `;
+$ \\boxed{x \\left(1 + 3 \\left(\\frac{y}{x}\\right)^2 \\right)^{\\frac{1}{3}} = C} $
+
+This is the general solution to the given differential equation. Here, $ C $ is an arbitrary constant.
+`;
 
 export default function Page() {
     const [value, setValue] = useState("");
