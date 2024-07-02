@@ -10,8 +10,9 @@ import {
 import React from "react";
 import { BsFillMoonStarsFill } from "react-icons/bs";
 import { MdSunny } from "react-icons/md";
+import { cn } from "@/lib/utils";
 
-export default function ModeToggle() {
+export default function ModeToggle({ ...rest }) {
     const { setTheme } = useTheme();
 
     return (
@@ -20,8 +21,9 @@ export default function ModeToggle() {
                 <Button
                     size="icon"
                     variant="outline"
-                    className="mr-3"
-                    type="button">
+                    className={cn("mr-3", rest?.className)}
+                    type="button"
+                    {...rest}>
                     {/* {theme == "dark" ? <BsFillMoonStarsFill /> : <MdSunny />} */}
                     <MdSunny className="block dark:hidden" />
                     <BsFillMoonStarsFill className="hidden dark:block" />

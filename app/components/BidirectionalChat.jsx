@@ -160,7 +160,7 @@ export default function BidirectionalChat({
                     <div className="font-bold">RODE Solver</div>
                     <MarkdownView
                         className={cn(
-                            "rounded-xl p-0 sm:p-2",
+                            "rounded-xl p-2",
                             "bg-[#f0f4f9] dark:bg-[#0e1724]"
                         )}>
                         {response.answer}

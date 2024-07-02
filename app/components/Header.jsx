@@ -50,7 +50,7 @@ const links = [
 ];
 
 export default function Header() {
-    const match_700 = useMediaQuery(`(max-width: 631px)`);
+    const match_media = useMediaQuery(`(max-width: 835px)`);
     const { setOpen } = useLeftNav();
     const pathname = usePathname();
     return (
@@ -81,7 +81,7 @@ export default function Header() {
                 </div>
                 <NavigationMenu className="z-[1001]">
                     <NavigationMenuList>
-                        {match_700 ? (
+                        {match_media ? (
                             <MobileNavigation />
                         ) : (
                             <DesktopNavigation />
@@ -101,6 +101,7 @@ function MobileNavigation() {
                     <span
                         className={buttonVariants({
                             size: "icon",
+                            variant: "outline",
                         })}>
                         <FaBarsStaggered />
                         <span className="sr-only">Toggle panel</span>
@@ -108,13 +109,13 @@ function MobileNavigation() {
                 </SheetTrigger>
                 <SheetContent className="w-full z-[1000000]" side="top">
                     <SheetHeader>
-                        <SheetTitle>
+                        <SheetTitle className="text-center">
                             <Link href={`/`} className="font-bold text-2xl">
                                 R<span className="text-red-500">ODE</span>{" "}
                                 Solver
                             </Link>
                         </SheetTitle>
-                        <SheetDescription className="text-foreground">
+                        <SheetDescription className="text-foreground text-center">
                             <ul>
                                 {links.map(link => (
                                     <li key={link.href} className="my-4">
@@ -126,7 +127,7 @@ function MobileNavigation() {
                                     </li>
                                 ))}
                                 <li>
-                                    <ModeToggle />
+                                    <ModeToggle variant="secondary" />
                                 </li>
                             </ul>
                         </SheetDescription>

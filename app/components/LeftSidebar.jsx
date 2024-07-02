@@ -73,8 +73,8 @@ export default function LeftSidebar() {
                 className={cn(
                     "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-[80px] h-[calc(100svh-80px)] overflow-hidden border-r-2 border-border transition-all",
                     {
-                        "min-w-80 w-80": open,
-                        "min-w-0 w-0": !open,
+                        "min-w-80 w-80 pl-4": open,
+                        "min-w-0 w-0 pl-0": !open,
                     },
                     "max-[924px]:fixed max-[924px]:top-[70px] max-[924px]:left-0 max-[924px]:bottom-0 max-[924px]:right-0 max-[924px]:z-50"
                 )}>
@@ -233,13 +233,17 @@ export default function LeftSidebar() {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild>
                                         <Link
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             href="https://github.com/shu-vro/RODE-Solver"
                                             prefetch={false}>
                                             Star The Project
                                         </Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
                                         <Link
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             href="https://github.com/shu-vro/RODE-Solver/issues"
                                             prefetch={false}>
                                             Report An Issue
