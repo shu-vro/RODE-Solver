@@ -30,7 +30,7 @@ function NameDecorator({ name }) {
     let title = name.split("/")[1];
     return (
         <span
-            className={cn("px-2 py-1 rounded-sm", {
+            className={cn("px-2 py-1 rounded-sm font-bold", {
                 "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
                 "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
                 "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
@@ -54,35 +54,41 @@ export default function Header() {
     const { setOpen } = useLeftNav();
     const pathname = usePathname();
     return (
-        <div className="flex justify-between pt-4 z-[1001] bg-background max-w-[1024px] mx-auto sticky top-0">
-            <div className="flex justify-center items-center flex-row">
-                <Button
-                    size="icon"
-                    variant="outline"
-                    className="mr-3"
-                    type="button"
-                    onClick={() => {
-                        setOpen(prev => {
-                            localStorage["leftNavOpen"] = !prev;
-                            return !prev;
-                        });
-                    }}>
-                    <BsLayoutSidebarInset />
-                </Button>
-                <div>
-                    <Link href={`/`} className="font-bold text-2xl">
-                        R<span className="text-primary">ODE</span> Solver
-                    </Link>
-                    <div className="mt-1">
-                        <NameDecorator name={pathname} />
+        <div className="flex justify-between pt-4 z-[1001] bg-primary mx-auto sticky top-0 w-full">
+            <div className="w-full mx-10 flex justify-between items-center flex-row">
+                <div className="flex justify-center items-center flex-row">
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        className="mr-3"
+                        type="button"
+                        onClick={() => {
+                            setOpen(prev => {
+                                localStorage["leftNavOpen"] = !prev;
+                                return !prev;
+                            });
+                        }}>
+                        <BsLayoutSidebarInset />
+                    </Button>
+                    <div>
+                        <Link href={`/`} className="font-bold text-2xl">
+                            R<span className="text-[#2eccf7]">ODE</span> Solver
+                        </Link>
+                        <div className="mt-1">
+                            <NameDecorator name={pathname} />
+                        </div>
                     </div>
                 </div>
+                <NavigationMenu className="z-[1001]">
+                    <NavigationMenuList>
+                        {match_700 ? (
+                            <MobileNavigation />
+                        ) : (
+                            <DesktopNavigation />
+                        )}
+                    </NavigationMenuList>
+                </NavigationMenu>
             </div>
-            <NavigationMenu className="z-[1001]">
-                <NavigationMenuList>
-                    {match_700 ? <MobileNavigation /> : <DesktopNavigation />}
-                </NavigationMenuList>
-            </NavigationMenu>
         </div>
     );
 }
@@ -141,7 +147,7 @@ function DesktopNavigation() {
                         active={pathname === link.href}
                         className={cn(
                             navigationMenuTriggerStyle(),
-                            "bg-transparent"
+                            "bg-transparent font-bold text-xl"
                         )}>
                         {link.text}
                     </NavigationMenuLink>

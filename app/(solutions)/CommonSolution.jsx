@@ -86,7 +86,7 @@ export default function CommonSolution({
             }}>
             {![...questionList, ...localState].length ? (
                 <div className="mx-auto my-4 flex-1 grow w-[min(100%,800px)]">
-                    <div className="text-center text-[10vw] text-opacity-30 text-black/10 dark:text-primary-foreground select-none capitalize">
+                    <div className="text-center text-[10vw] text-black/10 dark:text-primary-foreground/5 select-none capitalize">
                         Ask a<br />
                         question
                     </div>
