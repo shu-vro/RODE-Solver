@@ -35,6 +35,7 @@ function NameDecorator({ name }) {
                 "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
                 "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
                 "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
+                "bg-[#8fff5b3a] text-[#8fff5b]": title === "solutions",
             })}>
             {title}
         </span>

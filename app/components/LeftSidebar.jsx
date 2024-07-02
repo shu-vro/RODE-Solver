@@ -71,7 +71,7 @@ export default function LeftSidebar() {
                 }}></div>
             <div
                 className={cn(
-                    "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-[90px] h-[calc(100svh-80px)] overflow-hidden border-r-2 border-border transition-all",
+                    "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-[80px] h-[calc(100svh-80px)] overflow-hidden border-r-2 border-border transition-all",
                     {
                         "min-w-80 w-80": open,
                         "min-w-0 w-0": !open,
