@@ -159,10 +159,10 @@ export default function BidirectionalChat({
                 </div>
                 <div className="grid gap-1">
                     <div className="font-bold">RODE Solver</div>
-                    <div className="w-[min(calc(100vw-104px),768px)]">
+                    <div className="w-[min(calc(100vw-104px),740px)]">
                         <MarkdownView
                             className={cn(
-                                "rounded-xl p-2 w-[min(calc(100vw-104px),768px)]",
+                                "rounded-xl p-2 w-[min(calc(100vw-104px),740px)]",
                                 "bg-[#f0f4f9] dark:bg-[#0e1724]"
                             )}>
                             {response.answer}

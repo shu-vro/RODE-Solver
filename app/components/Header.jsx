@@ -58,7 +58,7 @@ export default function Header() {
     const pathname = usePathname();
     return (
         <div className="flex justify-between pt-4 z-[1001] bg-primary mx-auto sticky top-0 w-full">
-            <div className="w-full mx-10 flex justify-between items-center flex-row">
+            <div className="w-full mx-10 flex justify-between items-center flex-row max-sm:mx-5">
                 <div className="flex justify-center items-center flex-row">
                     <Button
                         size="icon"
@@ -121,7 +121,7 @@ function MobileNavigation() {
                         <SheetDescription className="text-foreground text-center">
                             <ul>
                                 {links.map(link => (
-                                    <li key={link.href} className="my-4">
+                                    <li key={link.href} className="my-6">
                                         <a
                                             href={link.href}
                                             className="text-2xl px-3 py-2 fancy-1">

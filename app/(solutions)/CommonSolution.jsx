@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import SubmitButton from "@/app/components/SubmitButton";
 import Loading from "@/app/components/Loading";
-import Link from "next/link";
 import { auth, setDocumentToUsersCollection } from "@/firebase";
 import { toast } from "sonner";
 import { nanoid } from "nanoid";
@@ -23,19 +22,26 @@ import { serverTimestamp } from "firebase/firestore";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
 import BidirectionalChat from "@/app/components/BidirectionalChat";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function CommonSolution({
     pageType = "ode",
     defaultQuestion = "",
     actionFunction = () => {},
+    setValue = () => {},
+    presets = [],
 }) {
-    const [value, setValue] = useState(defaultQuestion);
+    const { push } = useRouter();
     let { questionList } = useUserQuestions();
     questionList = questionList.filter(question => question.type === pageType);
 
     const [state, formAction] = useFormState(actionFunction, {});
 
     const [localState, setLocalState] = useState([]);
+
+    const handleReloadClick = preset => {
+        push(`?q=${preset}`);
+    };
 
     useEffect(() => {
         if (state?.success) {
@@ -85,10 +91,36 @@ export default function CommonSolution({
                 }
             }}>
             {![...questionList, ...localState].length ? (
-                <div className="mx-auto my-4 flex-1 grow w-[min(100%,800px)]">
-                    <div className="text-center text-[10vw] text-black/10 dark:text-primary-foreground/5 select-none capitalize">
-                        Ask a<br />
-                        question
+                <div className="mx-auto my-4 flex-1 grow w-[min(100%,1024px)]">
+                    <div className="z-10 grid grid-cols-2 max-[539px]:grid-cols-1 gap-4 mx-auto m-4 grow">
+                        {presets.map((preset, i) => {
+                            return (
+                                <div
+                                    onClick={() => {
+                                        handleReloadClick(preset);
+                                    }}
+                                    href={"#"}
+                                    key={i}
+                                    className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4 grid place-items-center cursor-pointer max-[539px]:mx-4">
+                                    <div>
+                                        Solve ODE{" "}
+                                        <MathField
+                                            value={preset}
+                                            onPointerUp={() => {
+                                                handleReloadClick(preset);
+                                            }}
+                                            readonly
+                                            style={{
+                                                display: "inline-block",
+                                                border: "none",
+                                                background: "none",
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             ) : (
@@ -118,15 +150,12 @@ export default function CommonSolution({
                     )}>
                     <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)] overflow-x-auto">
                         <MathField
-                            value={value}
+                            value={defaultQuestion}
                             onInput={evt => setValue(evt.target.value)}
                             style={{
-                                // width: "100%",
                                 zIndex: 100,
-                                // flexGrow: 1,
                                 background: "transparent",
                                 borderColor: "hsla(var(--primary) / 50%)",
-                                // overflowX: "auto",
                             }}
                         />
                     </div>
