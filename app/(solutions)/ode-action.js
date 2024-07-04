@@ -118,6 +118,22 @@ async function GPT(question) {
                     },
                 ],
             },
+            {
+                role: "user",
+                parts: [
+                    {
+                        text: "\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3} (explain)",
+                    },
+                ],
+            },
+            {
+                role: "model",
+                parts: [
+                    {
+                        text: "$\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3}$\n\nLet $ x = X + h $ and $ y = Y + k $. The given equation becomes:\n\n$\\frac{dY}{dX} = \\frac{X + 2Y + (h + 2k - 3)}{2X + Y + (2h + k - 3)}$\n\nSolving for $ h $ and $ k $:\n\n$h + 2k - 3 = 0$\n\n$2h + k - 3 = 0$\n\nThis gives $ h = 1 $ and $ k = 1 $. Thus, the equation becomes:\n\n$\\frac{dY}{dX} = \\frac{X + 2Y}{2X + Y}$\n\nLet $ Y = vX $, then:\n\n$\\frac{dY}{dX} = v + X \\frac{dv}{dX}$\n\nSubstituting:\n\n$v + X \\frac{dv}{dX} = \\frac{X + 2vX}{2X + vX}$\n\nSimplifying:\n\n$v + X \\frac{dv}{dX} = \\frac{1 + 2v}{2 + v}$\n\n$\\Rightarrow X \\frac{dv}{dX} = \\frac{1 + 2v - v(2 + v)}{2 + v} = \\frac{1 + 2v - 2v - v^2}{2 + v} = \\frac{1 - v^2}{2 + v}$\n\n\n$\\Rightarrow \\frac{dv}{dX} = \\frac{1 - v^2}{X(2 + v)}$\n\nSeparating variables and integrating:\n\n$\\frac{X dX}{X} = \\left( \\frac{1}{1 - v^2} + \\frac{1}{v} \\right) dv$\n\nIntegrating:\n\n$\\ln X = \\frac{1}{2} \\ln \\left| \\frac{1 + v}{1 - v} \\right| + \\ln C$\n\n$\\Rightarrow X = C \\sqrt{\\frac{1 + v}{1 - v}}$\n\nSubstituting back $ v = \\frac{Y}{X} $:\n\n$X = C \\sqrt{\\frac{1 + \\frac{Y}{X}}{1 - \\frac{Y}{X}}}$\n\nFurther simplification:\n\n$X(1 - \\frac{Y}{X})^3 = C (1 + \\frac{Y}{X})$\n\n\n$\\Rightarrow (X - Y)^3 = C(X + Y)$\n\n\nSubstituting back:\n\n$x = X + 1 \\quad \\text{and} \\quad y = Y + 1$\n\nWe get:\n\n$\\boxed{(x - y)^3 = C(x + y - 2)}$",
+                    },
+                ],
+            },
         ],
     });
 

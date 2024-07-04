@@ -109,20 +109,27 @@ export default function CommonSolution({
                     </div>
                 </div>
             )}
-            <div className="sticky bottom-[0] pt-2 mb-4 shadow-sm z-20 w-[min(100%,800px)] mx-auto">
-                <div className="relative flex flex-row justify-between items-center max-[539px]:flex-col max-[539px]:items-stretch bg-background max-w-screen-lg mx-auto gap-3">
-                    <MathField
-                        value={value}
-                        onInput={evt => setValue(evt.target.value)}
-                        style={{
-                            width: "100%",
-                            zIndex: 100,
-                            // flexGrow: 1,
-                            background: "transparent",
-                            borderColor: "hsla(var(--primary) / 50%)",
-                            overflowX: "auto",
-                        }}
-                    />
+            <div className="sticky bottom-[0] pt-2 px-3 mb-4 shadow-sm z-20 w-[min(100%,800px)] mx-auto">
+                <div
+                    className={cn(
+                        "flex flex-row justify-between items-center",
+                        "relative bg-background mx-auto gap-3",
+                        "max-[539px]:flex-col max-[539px]:items-stretch max-w-screen-lg"
+                    )}>
+                    <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)] overflow-x-auto">
+                        <MathField
+                            value={value}
+                            onInput={evt => setValue(evt.target.value)}
+                            style={{
+                                // width: "100%",
+                                zIndex: 100,
+                                // flexGrow: 1,
+                                background: "transparent",
+                                borderColor: "hsla(var(--primary) / 50%)",
+                                // overflowX: "auto",
+                            }}
+                        />
+                    </div>
                     <div className="flex flex-row justify-between gap-3">
                         <Select name="mode" defaultValue="Minimal">
                             <SelectTrigger className="w-[130px]">

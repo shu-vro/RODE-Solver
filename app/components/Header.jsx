@@ -30,13 +30,16 @@ function NameDecorator({ name }) {
     let title = name.split("/")[1];
     return (
         <span
-            className={cn("px-2 py-1 rounded-sm font-bold", {
-                "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
-                "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
-                "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
-                "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
-                "bg-[#8fff5b3a] text-[#8fff5b]": title === "solutions",
-            })}>
+            className={cn(
+                "px-2 py-1 rounded-sm font-bold bg-foreground/15 text-foreground"
+                // {
+                //     "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
+                //     "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
+                //     "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
+                //     "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
+                //     "bg-[#8fff5b3a] text-[#8fff5b]": title === "solutions",
+                // }
+            )}>
             {title}
         </span>
     );
@@ -50,7 +53,7 @@ const links = [
 ];
 
 export default function Header() {
-    const match_700 = useMediaQuery(`(max-width: 631px)`);
+    const match_media = useMediaQuery(`(max-width: 835px)`);
     const { setOpen } = useLeftNav();
     const pathname = usePathname();
     return (
@@ -72,7 +75,7 @@ export default function Header() {
                     </Button>
                     <div>
                         <Link href={`/`} className="font-bold text-2xl">
-                            R<span className="text-[#2eccf7]">ODE</span> Solver
+                            R<span className="text-red-500">ODE</span> Solver
                         </Link>
                         <div className="mt-1">
                             <NameDecorator name={pathname} />
@@ -81,7 +84,7 @@ export default function Header() {
                 </div>
                 <NavigationMenu className="z-[1001]">
                     <NavigationMenuList>
-                        {match_700 ? (
+                        {match_media ? (
                             <MobileNavigation />
                         ) : (
                             <DesktopNavigation />
@@ -101,6 +104,7 @@ function MobileNavigation() {
                     <span
                         className={buttonVariants({
                             size: "icon",
+                            variant: "outline",
                         })}>
                         <FaBarsStaggered />
                         <span className="sr-only">Toggle panel</span>
@@ -108,13 +112,13 @@ function MobileNavigation() {
                 </SheetTrigger>
                 <SheetContent className="w-full z-[1000000]" side="top">
                     <SheetHeader>
-                        <SheetTitle>
+                        <SheetTitle className="text-center">
                             <Link href={`/`} className="font-bold text-2xl">
                                 R<span className="text-red-500">ODE</span>{" "}
                                 Solver
                             </Link>
                         </SheetTitle>
-                        <SheetDescription className="text-foreground">
+                        <SheetDescription className="text-foreground text-center">
                             <ul>
                                 {links.map(link => (
                                     <li key={link.href} className="my-4">
@@ -126,7 +130,7 @@ function MobileNavigation() {
                                     </li>
                                 ))}
                                 <li>
-                                    <ModeToggle />
+                                    <ModeToggle variant="secondary" />
                                 </li>
                             </ul>
                         </SheetDescription>

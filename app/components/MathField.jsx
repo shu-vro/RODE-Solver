@@ -60,7 +60,6 @@ export default function MathField({ value, ...rest }) {
                     rows={2}
                     cols={30}
                     className="sr-only"
-                    onInput={e => setValue(e.target.value)}
                     value={value}></textarea>
             )}
         </>
