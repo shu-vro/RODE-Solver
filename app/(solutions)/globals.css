@@ -130,3 +130,12 @@ math-field {
         margin: 0;
     }
 }
+
+.katex {
+    font-size: 1.5rem !important;
+    line-height: 1.6 !important;
+
+    display: block !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+}

@@ -1,5 +1,6 @@
 "use client";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import MarkdownView from "@/app/components/MarkdownView";
@@ -29,6 +30,8 @@ export default function BidirectionalChat({
             behavior: "smooth",
         });
     }, []);
+
+    const [first, setFirst] = useState(true);
 
     const { user } = useAuthContext();
 
@@ -157,14 +160,25 @@ export default function BidirectionalChat({
                     </div>
                 </div>
                 <div className="grid gap-1">
+                    <input
+                        type="checkbox"
+                        checked={first}
+                        onChange={e => {
+                            setFirst(e.target.checked);
+                        }}
+                    />
                     <div className="font-bold">RODE Solver</div>
-                    <MarkdownView
-                        className={cn(
-                            "rounded-xl p-2",
-                            "bg-[#f0f4f9] dark:bg-[#0e1724]"
-                        )}>
-                        {response.answer}
-                    </MarkdownView>
+                    {first && (
+                        <div className="w-[min(calc(100vw-104px),768px)]">
+                            <MarkdownView
+                                className={cn(
+                                    "rounded-xl p-2 w-[min(calc(100vw-104px),768px)]",
+                                    "bg-[#f0f4f9] dark:bg-[#0e1724]"
+                                )}>
+                                {response.answer}
+                            </MarkdownView>
+                        </div>
+                    )}
                     <div className="flex items-center gap-2 py-2">
                         <Button
                             variant="ghost"

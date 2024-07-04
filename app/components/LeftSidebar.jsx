@@ -26,12 +26,13 @@ import { ImDownload } from "react-icons/im";
 import { PiGoogleChromeLogoDuotone } from "react-icons/pi";
 import MathField from "./MathField";
 import { useRouter } from "next/navigation";
+import useMediaQuery from "@/lib/useMediaQuery";
 
 export default function LeftSidebar() {
     const { open, setOpen } = useLeftNav();
     const { user } = useAuthContext();
     const [deferredPrompt, setDeferredPrompt] = useState();
-    const { push } = useRouter();
+    const matchMedia = useMediaQuery("(max-width: 924px)");
 
     const { questionList } = useUserQuestions();
     const formattedQuestionList = useMemo(() => {
@@ -76,7 +77,10 @@ export default function LeftSidebar() {
                         "min-w-80 w-80 pl-4": open,
                         "min-w-0 w-0 pl-0": !open,
                     },
-                    "max-[924px]:fixed max-[924px]:top-[70px] max-[924px]:left-0 max-[924px]:bottom-0 max-[924px]:right-0 max-[924px]:z-50"
+                    {
+                        "fixed top-[80px] left-0 bottom-0 right-0 z-50":
+                            matchMedia,
+                    }
                 )}>
                 <div className="flex-1 overflow-auto z-20">
                     <div className="grid grid-cols-1 gap-1 px-2">
@@ -88,74 +92,11 @@ export default function LeftSidebar() {
                                         {date}
                                     </div>
                                     {arr.reverse().map((obj, i) => (
-                                        <Link
-                                            href={`/${obj.type}#${obj.uid}`}
-                                            key={obj.uid}
-                                            className={cn(
-                                                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
-                                                "hover:bg-primary/10",
-                                                "flex items-start justify-start flex-col"
-                                            )}
-                                            prefetch={false}>
-                                            <div>
-                                                <span
-                                                    className={cn(
-                                                        "px-2 py-1 rounded-sm",
-                                                        {
-                                                            "bg-[#d73a4a38] text-[#d73a4a]":
-                                                                obj.type ===
-                                                                "ode",
-                                                            "bg-[#2ea0f83a] text-[#2ea2f8]":
-                                                                obj.type ===
-                                                                "integration",
-                                                            "bg-[#3fd3703a] text-[#3fd370]":
-                                                                obj.type ===
-                                                                "differentiation",
-                                                            "bg-[#9cb3f33a] text-[#5b87ff]":
-                                                                obj.type ===
-                                                                "matrix",
-                                                        }
-                                                    )}>
-                                                    {obj.type}
-                                                </span>
-                                                <span
-                                                    className={cn(
-                                                        "px-2 py-1 rounded-sm bg-lime-400 ml-2",
-                                                        {
-                                                            "bg-[#01d1883a] text-[#01d188]":
-                                                                obj.mode ===
-                                                                "explain",
-                                                            "bg-[#d477d53a] text-[#d477d5]":
-                                                                obj.mode ===
-                                                                "minimal",
-                                                        }
-                                                    )}>
-                                                    {obj.mode}
-                                                </span>
-                                            </div>
-                                            {/* <MarkdownView
-                                                style={{
-                                                    display: "inline-block",
-                                                    margin: 0,
-                                                    padding: 0,
-                                                }}>
-                                                {obj.question}
-                                            </MarkdownView> */}
-                                            <MathField
-                                                value={obj.question}
-                                                readonly
-                                                onPointerUp={() => {
-                                                    push(
-                                                        `/${obj.type}#${obj.uid}`
-                                                    );
-                                                }}
-                                                style={{
-                                                    display: "inline-block",
-                                                    border: "none",
-                                                    background: "none",
-                                                }}
-                                            />
-                                        </Link>
+                                        <Question
+                                            obj={obj}
+                                            key={i}
+                                            mobileView={matchMedia}
+                                        />
                                     ))}
                                 </div>
                             ))}
@@ -256,5 +197,66 @@ export default function LeftSidebar() {
                 </div>
             </div>
         </div>
+    );
+}
+
+function Question({ obj, mobileView }) {
+    const { push } = useRouter();
+    const { setOpen } = useLeftNav();
+    return (
+        <Link
+            href={`/${obj.type}#${obj.uid}`}
+            onClick={() => {
+                if (mobileView) {
+                    setOpen(false);
+                }
+            }}
+            className={cn(
+                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
+                "hover:bg-primary/10",
+                "flex items-start justify-start flex-col"
+            )}
+            prefetch={false}>
+            <div>
+                <span
+                    className={cn("px-2 py-1 rounded-sm", {
+                        "bg-[#d73a4a38] text-[#d73a4a]": obj.type === "ode",
+                        "bg-[#2ea0f83a] text-[#2ea2f8]":
+                            obj.type === "integration",
+                        "bg-[#3fd3703a] text-[#3fd370]":
+                            obj.type === "differentiation",
+                        "bg-[#9cb3f33a] text-[#5b87ff]": obj.type === "matrix",
+                    })}>
+                    {obj.type}
+                </span>
+                <span
+                    className={cn("px-2 py-1 rounded-sm bg-lime-400 ml-2", {
+                        "bg-[#01d1883a] text-[#01d188]": obj.mode === "explain",
+                        "bg-[#d477d53a] text-[#d477d5]": obj.mode === "minimal",
+                    })}>
+                    {obj.mode}
+                </span>
+            </div>
+            {/* <MarkdownView
+                    style={{
+                        display: "inline-block",
+                        margin: 0,
+                        padding: 0,
+                    }}>
+                    {obj.question}
+                </MarkdownView> */}
+            <MathField
+                value={obj.question}
+                readonly
+                onPointerUp={() => {
+                    push(`/${obj.type}#${obj.uid}`);
+                }}
+                style={{
+                    display: "inline-block",
+                    border: "none",
+                    background: "none",
+                }}
+            />
+        </Link>
     );
 }

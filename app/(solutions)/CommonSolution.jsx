@@ -116,18 +116,20 @@ export default function CommonSolution({
                         "relative bg-background mx-auto gap-3",
                         "max-[539px]:flex-col max-[539px]:items-stretch max-w-screen-lg"
                     )}>
-                    <MathField
-                        value={value}
-                        onInput={evt => setValue(evt.target.value)}
-                        style={{
-                            width: "100%",
-                            zIndex: 100,
-                            // flexGrow: 1,
-                            background: "transparent",
-                            borderColor: "hsla(var(--primary) / 50%)",
-                            overflowX: "auto",
-                        }}
-                    />
+                    <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)] overflow-x-auto">
+                        <MathField
+                            value={value}
+                            onInput={evt => setValue(evt.target.value)}
+                            style={{
+                                // width: "100%",
+                                zIndex: 100,
+                                // flexGrow: 1,
+                                background: "transparent",
+                                borderColor: "hsla(var(--primary) / 50%)",
+                                // overflowX: "auto",
+                            }}
+                        />
+                    </div>
                     <div className="flex flex-row justify-between gap-3">
                         <Select name="mode" defaultValue="Minimal">
                             <SelectTrigger className="w-[130px]">

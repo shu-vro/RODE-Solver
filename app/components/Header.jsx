@@ -30,13 +30,16 @@ function NameDecorator({ name }) {
     let title = name.split("/")[1];
     return (
         <span
-            className={cn("px-2 py-1 rounded-sm font-bold", {
-                "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
-                "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
-                "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
-                "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
-                "bg-[#8fff5b3a] text-[#8fff5b]": title === "solutions",
-            })}>
+            className={cn(
+                "px-2 py-1 rounded-sm font-bold bg-foreground/15 text-foreground"
+                // {
+                //     "bg-[#d73a4a38] text-[#d73a4a]": title === "ode",
+                //     "bg-[#2ea0f83a] text-[#2ea2f8]": title === "integration",
+                //     "bg-[#3fd3703a] text-[#3fd370]": title === "differentiation",
+                //     "bg-[#9cb3f33a] text-[#5b87ff]": title === "others-solutions",
+                //     "bg-[#8fff5b3a] text-[#8fff5b]": title === "solutions",
+                // }
+            )}>
             {title}
         </span>
     );
@@ -72,7 +75,7 @@ export default function Header() {
                     </Button>
                     <div>
                         <Link href={`/`} className="font-bold text-2xl">
-                            R<span className="text-[#2eccf7]">ODE</span> Solver
+                            R<span className="text-red-500">ODE</span> Solver
                         </Link>
                         <div className="mt-1">
                             <NameDecorator name={pathname} />
