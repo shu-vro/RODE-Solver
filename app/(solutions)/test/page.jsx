@@ -4,74 +4,68 @@ import React, { useState } from "react";
 import MarkdownView from "@/app/components/MarkdownView";
 import MathField from "@/app/components/MathField";
 
-let ans = `$ (x^2 + y^2)dx + 2xy dy = 0 $
+let ans = `$\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3}$
 
-### 2. Simplifying
+Let $ x = X + h $ and $ y = Y + k $. The given equation becomes:
 
-Rewrite the equation in the form $\\frac{dy}{dx} = \\dots$:
+$\\frac{dY}{dX} = \\frac{X + 2Y + (h + 2k - 3)}{2X + Y + (2h + k - 3)}$
 
-$ \\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy} $
+Solving for $ h $ and $ k $:
 
-### 3. Recognize Homogeneous Differential Equation
+$h + 2k - 3 = 0$
 
-A homogeneous differential equation can be solved using the substitution $ y = vx $, where $ v $ is a function of $ x $. Thus, $ y = vx $ and $ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $.
+$2h + k - 3 = 0$
 
-### 4. Substitute and Simplify
+This gives $ h = 1 $ and $ k = 1 $. Thus, the equation becomes:
 
-Substitute $ y = vx $ into the differential equation:
-$ \\frac{dy}{dx} = v + x \\frac{dv}{dx} $
+$\\frac{dY}{dX} = \\frac{X + 2Y}{2X + Y}$
 
-Now, substituting $ y = vx $ in $\\frac{dy}{dx} = -\\frac{x^2 + y^2}{2xy}$:
-$ v + x \\frac{dv}{dx} = -\\frac{x^2 + v^2 x^2}{2x \\cdot vx} = -\\frac{x^2(1 + v^2)}{2x^2 v} = -\\frac{1 + v^2}{2v} $
+Let $ Y = vX $, then:
 
-Rearrange to isolate $ \\frac{dv}{dx} $:
-$ x \\frac{dv}{dx} = -\\frac{1 + v^2}{2v} - v $
+$\\frac{dY}{dX} = v + X \\frac{dv}{dX}$
 
-Combine the terms:
-$ x \\frac{dv}{dx} = \\frac{-1 - v^2 - 2v^2}{2v} = \\frac{-1 - 3v^2}{2v} $
+Substituting:
 
-### 5. Separate Variables
+$v + X \\frac{dv}{dX} = \\frac{X + 2vX}{2X + vX}$
 
-Separate the variables $ x $ and $ v $:
-$ \\frac{dx}{x} = \\frac{2v}{1 + 3v^2} \\, dv $
+Simplifying:
 
-### 6. Integrate Both Sides
+$v + X \\frac{dv}{dX} = \\frac{1 + 2v}{2 + v}$
 
-Integrate both sides to solve for $ x $ and $ v $:
+$\\Rightarrow X \\frac{dv}{dX} = \\frac{1 + 2v - v(2 + v)}{2 + v} = \\frac{1 + 2v - 2v - v^2}{2 + v} = \\frac{1 - v^2}{2 + v}$
 
-Integrate the left side:
-$ \\int \\frac{dx}{x} = \\ln |x| + C_1 $
 
-Integrate the right side:
-$ \\int \\frac{2v}{1 + 3v^2} \\, dv $
+$\\Rightarrow \\frac{dv}{dX} = \\frac{1 - v^2}{X(2 + v)}$
 
-To integrate the right side, use the substitution 
+Separating variables and integrating:
 
-$ u = 1 + 3v^2 $:
+$\\frac{X dX}{X} = \\left( \\frac{1}{1 - v^2} + \\frac{1}{v} \\right) dv$
 
-$\\Rightarrow du = 6v \\, dv $
+Integrating:
 
-$ \\int \\frac{2v}{1 + 3v^2} dv = \\frac{1}{3} \\int \\frac{du}{u} = \\frac{1}{3} \\ln |u| + C_2 = \\frac{1}{3} \\ln |1 + 3v^2| + C_2 $
+$\\ln X = \\frac{1}{2} \\ln \\left| \\frac{1 + v}{1 - v} \\right| + \\ln C$
 
-Combining the integrals, we have:
-$ \\ln |x| = -\\frac{1}{3} \\ln |1 + 3v^2| + C $
+$\\Rightarrow X = C \\sqrt{\\frac{1 + v}{1 - v}}$
 
-Where $ C = C_1 - C_2 $ is a constant.
+Substituting back $ v = \\frac{Y}{X} $:
 
-### 7. Simplify the Expression
+$X = C \\sqrt{\\frac{1 + \\frac{Y}{X}}{1 - \\frac{Y}{X}}}$
 
-Exponentiate both sides to solve for $ x $:
-$ x = C \\cdot (1 + 3v^2)^{-\\frac{1}{3}} $
+Further simplification:
 
-Rewriting in terms of $ y $ and $ x $:
-$ v = \\frac{y}{x} $
+$X(1 - \\frac{Y}{X})^3 = C (1 + \\frac{Y}{X})$
 
-$ x (1 + 3v^2)^{\\frac{1}{3}} = C $
 
-$ \\boxed{x \\left(1 + 3 \\left(\\frac{y}{x}\\right)^2 \\right)^{\\frac{1}{3}} = C} $
+$\\Rightarrow (X - Y)^3 = C(X + Y)$
 
-This is the general solution to the given differential equation. Here, $ C $ is an arbitrary constant.
-`;
+
+Substituting back:
+
+$x = X + 1 \\quad \\text{and} \\quad y = Y + 1$
+
+We get:
+
+$\\boxed{(x - y)^3 = C(x + y - 2)}$`;
 
 export default function Page() {
     const [value, setValue] = useState("");

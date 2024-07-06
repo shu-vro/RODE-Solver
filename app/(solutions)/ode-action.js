@@ -34,7 +34,8 @@ for explain mode, you will be explaining every step that you have done to solve 
 .
 .
 $\\boxed{\\Rightarrow{the final answer}}$
-for minimal mode, you will just give the equation as output. NO extra text needed. that format would be:
+
+For minimal mode, you will just give the equation as output. NO extra text needed. that format would be:
 \${the equation}$
 $\\Rightarrow{next line for solving}$
 .
@@ -122,7 +123,7 @@ async function GPT(question) {
                 role: "user",
                 parts: [
                     {
-                        text: "\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3} (explain)",
+                        text: "\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3} (minimal)",
                     },
                 ],
             },
@@ -130,7 +131,7 @@ async function GPT(question) {
                 role: "model",
                 parts: [
                     {
-                        text: "$\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3}$\n\nLet $ x = X + h $ and $ y = Y + k $. The given equation becomes:\n\n$\\frac{dY}{dX} = \\frac{X + 2Y + (h + 2k - 3)}{2X + Y + (2h + k - 3)}$\n\nSolving for $ h $ and $ k $:\n\n$h + 2k - 3 = 0$\n\n$2h + k - 3 = 0$\n\nThis gives $ h = 1 $ and $ k = 1 $. Thus, the equation becomes:\n\n$\\frac{dY}{dX} = \\frac{X + 2Y}{2X + Y}$\n\nLet $ Y = vX $, then:\n\n$\\frac{dY}{dX} = v + X \\frac{dv}{dX}$\n\nSubstituting:\n\n$v + X \\frac{dv}{dX} = \\frac{X + 2vX}{2X + vX}$\n\nSimplifying:\n\n$v + X \\frac{dv}{dX} = \\frac{1 + 2v}{2 + v}$\n\n$\\Rightarrow X \\frac{dv}{dX} = \\frac{1 + 2v - v(2 + v)}{2 + v} = \\frac{1 + 2v - 2v - v^2}{2 + v} = \\frac{1 - v^2}{2 + v}$\n\n\n$\\Rightarrow \\frac{dv}{dX} = \\frac{1 - v^2}{X(2 + v)}$\n\nSeparating variables and integrating:\n\n$\\frac{X dX}{X} = \\left( \\frac{1}{1 - v^2} + \\frac{1}{v} \\right) dv$\n\nIntegrating:\n\n$\\ln X = \\frac{1}{2} \\ln \\left| \\frac{1 + v}{1 - v} \\right| + \\ln C$\n\n$\\Rightarrow X = C \\sqrt{\\frac{1 + v}{1 - v}}$\n\nSubstituting back $ v = \\frac{Y}{X} $:\n\n$X = C \\sqrt{\\frac{1 + \\frac{Y}{X}}{1 - \\frac{Y}{X}}}$\n\nFurther simplification:\n\n$X(1 - \\frac{Y}{X})^3 = C (1 + \\frac{Y}{X})$\n\n\n$\\Rightarrow (X - Y)^3 = C(X + Y)$\n\n\nSubstituting back:\n\n$x = X + 1 \\quad \\text{and} \\quad y = Y + 1$\n\nWe get:\n\n$\\boxed{(x - y)^3 = C(x + y - 2)}$",
+                        text: "$\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3}$\n\nLet $ x = X + h $ and $ y = Y + k $.\n\n$\\frac{dY}{dX} = \\frac{X + 2Y + (h + 2k - 3)}{2X + Y + (2h + k - 3)}$\n\nSolving for $ h $ and $ k $:\n\n$h + 2k - 3 = 0$\n\n$2h + k - 3 = 0$\n\n$\\therefore h = 1 \\quad k = 1 $.\n\n$\\frac{dY}{dX} = \\frac{X + 2Y}{2X + Y}$\n\nLet $ Y = vX $\n\n$\\frac{dY}{dX} = v + X \\frac{dv}{dX}$\n\n$\\Rightarrow v + X \\frac{dv}{dX} = \\frac{X + 2vX}{2X + vX}$\n\n$\\Rightarrow v + X \\frac{dv}{dX} = \\frac{1 + 2v}{2 + v}$\n\n$\\Rightarrow X \\frac{dv}{dX} = \\frac{1 + 2v - v(2 + v)}{2 + v} = \\frac{1 + 2v - 2v - v^2}{2 + v} = \\frac{1 - v^2}{2 + v}$\n\n\n$\\Rightarrow \\frac{dv}{dX} = \\frac{1 - v^2}{X(2 + v)}$\n\n$\\Rightarrow \\frac{dX}{X} = \\left( \\frac{2+v}{1 - v^2}\\right) dv$\n\n$\\Rightarrow\\frac{dX}{X} = \\left( \\frac{2}{1 - v^2} + \\frac{v}{1 - v^2} \\right) dv$\n\n$\\ln X = 2 \\frac{1}{2} \\ln \\left| \\frac{1 + v}{1 - v} \\right| + \\frac{1}{2} \\ln \\left| 1-v^2 \\right| + \\ln C $\n\n$\\Rightarrow X = C \\frac{1+v}{1-v} \\frac{1}{\\sqrt {1-v^2}}$\n\n<!-- $\\Rightarrow X = \\frac{c \\left {1+v} \\right}{1}$ -->\n\n$\\Rightarrow X = \\frac{c (1+ \\nu)}{(1-\\nu)(1-\\nu)^{\\frac{1}{2}} (1+\\nu)^{\\frac{1}{2}}} $\n\n$\\Rightarrow X = \\frac{C (1+\\nu)^{\\frac{1}{2}}}{(1-\\nu)^{\\frac{3}{2}}} $\n\n$\\Rightarrow X^2 = \\frac{C^2 (1+\\nu)}{(1-\\nu)^3} $\n\n$\\Rightarrow X^2 (1-\\nu)^3 = C^2 (1+\\nu)$\n\n$\\Rightarrow X^2 (1-\\frac{Y}{X})^3 = C^2 (1 + \\frac{Y}{X})$\n\n$\\Rightarrow X^2 (\\frac{X-Y}{X})^3 = C^2 (\\frac{X+Y}{X})$\n\n$\\Rightarrow \\ (X - Y)^3 = C^2 (X + Y)$\n\nBut\n$ \\ x = X + 1 \\quad y = Y + 1$\n\n$\\boxed {\\Rightarrow \\ (x - y)^3 = c^2 (x + y - 2)}$\n",
                     },
                 ],
             },

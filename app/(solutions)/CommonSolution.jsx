@@ -121,6 +121,8 @@ export default function CommonSolution({
                                 </div>
                             );
                         })}
+
+                        <Loading />
                     </div>
                 </div>
             ) : (
@@ -151,13 +153,24 @@ export default function CommonSolution({
                     <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)] overflow-x-auto">
                         <MathField
                             value={defaultQuestion}
-                            onInput={evt => setValue(evt.target.value)}
+                            onInput={e => {
+                                console.log(e.target.value);
+                                setValue(e.target.value);
+                            }}
                             style={{
                                 zIndex: 100,
                                 background: "transparent",
                                 borderColor: "hsla(var(--primary) / 50%)",
                             }}
                         />
+                        <textarea
+                            name="question"
+                            id=""
+                            rows={2}
+                            cols={30}
+                            className="sr-only"
+                            value={defaultQuestion}
+                            onChange={() => null}></textarea>
                     </div>
                     <div className="flex flex-row justify-between gap-3">
                         <Select name="mode" defaultValue="Minimal">

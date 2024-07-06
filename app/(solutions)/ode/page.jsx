@@ -15,7 +15,7 @@ const presetQuestions = [
 export default function Page() {
     const equation = useEquation();
     const [value, setValue] = useState(
-        "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
+        equation || "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$"
     );
 
     return (
@@ -23,7 +23,7 @@ export default function Page() {
             pageType="ode"
             actionFunction={odeSolveAction}
             setValue={setValue}
-            defaultQuestion={equation || value}
+            defaultQuestion={value}
             presets={presetQuestions}
         />
     );

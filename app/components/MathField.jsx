@@ -40,29 +40,21 @@ export default function MathField({ value, ...rest }) {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(value);
+    }, [value]);
+
     return (
-        <>
-            <math-field
-                {...rest}
-                style={{
-                    display: "block",
-                    fontSize: "1.8rem",
-                    border: "1px solid hsl(var(--border))",
-                    marginRight: 0,
-                    ...extra_style,
-                }}>
-                {value}
-            </math-field>
-            {!rest.readonly && (
-                <textarea
-                    name="question"
-                    id=""
-                    rows={2}
-                    cols={30}
-                    className="sr-only"
-                    value={value}
-                    onChange={() => null}></textarea>
-            )}
-        </>
+        <math-field
+            {...rest}
+            style={{
+                display: "block",
+                fontSize: "1.8rem",
+                border: "1px solid hsl(var(--border))",
+                marginRight: 0,
+                ...extra_style,
+            }}>
+            {value}
+        </math-field>
     );
 }

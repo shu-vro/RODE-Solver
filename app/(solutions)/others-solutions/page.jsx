@@ -47,7 +47,7 @@ async function paginateQuery(last, sortField = "voteCount", lim = 10) {
             behavior: "smooth",
         });
     }, 500);
-    console.log(docs.docs[docs.docs.length - 1], finalData);
+    // console.log(docs.docs[docs.docs.length - 1], finalData);
     last = finalData.length ? docs.docs[docs.docs.length - 1] : last;
     return { data: finalData, last };
 }

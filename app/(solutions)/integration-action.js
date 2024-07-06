@@ -95,7 +95,7 @@ export async function integrationSolveAction(prevState, formData) {
         const mode = formData.get("mode").toLowerCase();
         const format_question = `${question} (${mode})`;
 
-        console.log(format_question, formData.get("question"));
+        // console.log(format_question, formData.get("question"));
         const answer = await GPT(format_question);
         // console.log(answer);
         return {

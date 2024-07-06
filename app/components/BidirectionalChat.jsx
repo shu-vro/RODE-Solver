@@ -52,7 +52,6 @@ export default function BidirectionalChat({
                                     (prev, curr) => prev + curr,
                                     0
                                 ) ?? 0;
-                            console.log(voteCount);
                             await updateDoc(docRef, {
                                 [`vote.${user.uid}`]: increment(incr),
                                 voteCount: voteCount + incr,
@@ -159,10 +158,10 @@ export default function BidirectionalChat({
                 </div>
                 <div className="grid gap-1">
                     <div className="font-bold">RODE Solver</div>
-                    <div className="w-[min(calc(100vw-104px),740px)]">
+                    <div className="w-[min(calc(100vw-104px),710px)]">
                         <MarkdownView
                             className={cn(
-                                "rounded-xl p-2 w-[min(calc(100vw-104px),740px)]",
+                                "rounded-xl p-2 w-[min(calc(100vw-104px),710px)]",
                                 "bg-[#f0f4f9] dark:bg-[#0e1724]"
                             )}>
                             {response.answer}
