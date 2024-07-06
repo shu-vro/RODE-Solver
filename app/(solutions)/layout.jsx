@@ -96,7 +96,13 @@ export default function RootLayout({ children }) {
                                 </div>
                             </LeftNavProvider>
                             <Footer />
-                            <Toaster expand richColors duration={6000} />
+                            <Toaster
+                                expand
+                                richColors
+                                closeButton
+                                duration={5000}
+                                position="top-right"
+                            />
                             <ConfigComponent />
                         </UserQuestionsProvider>
                     </AuthProvider>
