@@ -103,7 +103,7 @@ export default function CommonSolution({
                                     key={i}
                                     className="bg-[#dbdfe4] dark:bg-[#0e1724] rounded-lg p-4 grid place-items-center cursor-pointer max-[539px]:mx-4">
                                     <div>
-                                        Solve ODE{" "}
+                                        Solve {pageType.toUpperCase()}{" "}
                                         <MathField
                                             value={preset}
                                             onPointerUp={() => {

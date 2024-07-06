@@ -6,10 +6,10 @@ import useEquation from "@/lib/useEquation";
 import { useState } from "react";
 
 const presetQuestions = [
-    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} + 2y = e^{-x}$", // First-order linear differential equation
-    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} = y\\sin(x)$", // First-order separable differential equation
-    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} = x^2 + y^2$", // First-order nonlinear differential equation
-    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$", // Second-order linear homogeneous differential equation (Simple harmonic motion)
+    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} + 2y = e^{-x}$",
+    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} = y\\sin(x)$",
+    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x} = x^2 + y^2$",
+    "$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{1-y^2}{1-x^2}$",
 ];
 
 export default function Page() {

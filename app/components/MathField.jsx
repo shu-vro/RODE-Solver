@@ -60,7 +60,8 @@ export default function MathField({ value, ...rest }) {
                     rows={2}
                     cols={30}
                     className="sr-only"
-                    value={value}></textarea>
+                    value={value}
+                    onChange={() => null}></textarea>
             )}
         </>
     );
