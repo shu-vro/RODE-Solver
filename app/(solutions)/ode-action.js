@@ -135,6 +135,22 @@ async function GPT(question) {
                     },
                 ],
             },
+            {
+                role: "user",
+                parts: [
+                    {
+                        text: "\\left(x-y^2\\right)\\mathrm{dx}+2xydy=0 (minimal)",
+                    },
+                ],
+            },
+            {
+                role: "model",
+                parts: [
+                    {
+                        text: "$ \\left(x-y^2\\right)\\mathrm{dx}+2xydy=0 $\n\n$ \\Rightarrow2y\\frac{\\mathrm{d}y}{\\mathrm{d}x}-\\frac{1}{x}y^2=-1 $\n\nlet $ v=y^2 $\n\n$ \\therefore\\frac{\\mathrm{d}v}{\\mathrm{d}x}-\\frac{1}{x}v=-1 $\n\n$ IF=e^{\\int-\\frac{1}{x}\\mathrm{d}x}=e^{-\\ln x}=\\frac{1}{x} $\n\n$ \\therefore v\\cdot\\frac{1}{x}=-\\int\\frac{1}{x}\\mathrm{d}x+C $\n\n$ \\boxed {\\Rightarrow\\frac{y^2}{x}=-\\ln x+C} $",
+                    },
+                ],
+            },
         ],
     });
 

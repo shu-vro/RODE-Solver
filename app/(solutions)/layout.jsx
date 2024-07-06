@@ -101,7 +101,7 @@ export default function RootLayout({ children }) {
                                 richColors
                                 closeButton
                                 duration={5000}
-                                position="top-right"
+                                position="bottom-left"
                             />
                             <ConfigComponent />
                         </UserQuestionsProvider>
