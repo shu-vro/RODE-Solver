@@ -72,9 +72,8 @@ Please head to https://ai.google.dev/pricing for knowing more about the constrai
 -   [x] three different modes
     -   [x] backend
     -   [x] frontend
--   [ ] equation from url
--   [ ] Other's solutions
--   [ ] Preset Solve button
+-   [x] equation from url
+-   [x] Other's solutions
 -   [x] Sidebar styling for mobile view (rounded corner, margin on left, colored border)
 -   [x] PWA Button placement
 -   [ ] Miscellaneous
