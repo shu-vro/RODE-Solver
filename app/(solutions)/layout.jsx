@@ -11,6 +11,7 @@ import ConfigComponent from "../components/ConfigComponent";
 import AuthProvider from "@/contexts/AuthProvider";
 import UserQuestionsProvider from "@/contexts/UserQuestionsProvider";
 import { Metadata } from "next";
+import banner from "@/assets/rode_solver_banner.jpg";
 
 const font = Montserrat({ subsets: ["latin"] });
 
@@ -19,6 +20,13 @@ const APP_DEFAULT_TITLE = "RODE Solver";
 const APP_TITLE_TEMPLATE = "%s - for solving equations";
 const APP_DESCRIPTION =
     "Solve equations with interactive step-by-step solutions.";
+
+const APP_BANNER = {
+    url: banner.src,
+    width: 960,
+    height: 540,
+    alt: APP_DEFAULT_TITLE,
+};
 
 /**
  * @type {Metadata}
@@ -60,6 +68,7 @@ export const metadata = {
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
+        images: APP_BANNER,
     },
     twitter: {
         card: "summary",
@@ -68,6 +77,7 @@ export const metadata = {
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
+        images: APP_BANNER,
     },
 };
 
