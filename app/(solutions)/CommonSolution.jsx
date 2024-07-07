@@ -122,7 +122,9 @@ export default function CommonSolution({
                             );
                         })}
 
-                        <Loading />
+                        <div className="col-span-2">
+                            <Loading />
+                        </div>
                     </div>
                 </div>
             ) : (
