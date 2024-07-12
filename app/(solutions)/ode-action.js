@@ -29,7 +29,7 @@ for explain mode, you will be explaining every step that you have done to solve 
 {what needs to be done}:
 
 {step 1}
-{step 2}
+{\\Rightarrow {step 2}}
 .
 .
 .

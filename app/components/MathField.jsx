@@ -40,10 +40,6 @@ export default function MathField({ value, ...rest }) {
         };
     }, []);
 
-    useEffect(() => {
-        console.log(value);
-    }, [value]);
-
     return (
         <math-field
             {...rest}

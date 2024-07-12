@@ -156,7 +156,6 @@ export default function CommonSolution({
                         <MathField
                             value={defaultQuestion}
                             onInput={e => {
-                                console.log(e.target.value);
                                 setValue(e.target.value);
                             }}
                             style={{

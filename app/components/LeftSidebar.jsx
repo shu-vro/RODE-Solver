@@ -20,7 +20,6 @@ import {
 import { signOut } from "firebase/auth";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
-import MarkdownView from "./MarkdownView";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ImDownload } from "react-icons/im";
 import { PiGoogleChromeLogoDuotone } from "react-icons/pi";
@@ -237,14 +236,6 @@ function Question({ obj, mobileView }) {
                     {obj.mode}
                 </span>
             </div>
-            {/* <MarkdownView
-                    style={{
-                        display: "inline-block",
-                        margin: 0,
-                        padding: 0,
-                    }}>
-                    {obj.question}
-                </MarkdownView> */}
             <MathField
                 value={obj.question}
                 readonly

@@ -15,6 +15,8 @@ import { doc, updateDoc, increment } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import MathField from "./MathField";
 import { cn } from "@/lib/utils";
+import { BsQuestionOctagonFill } from "react-icons/bs";
+import { toString } from "hast-util-to-string";
 
 export default function BidirectionalChat({
     // question,
@@ -159,13 +161,7 @@ export default function BidirectionalChat({
                 <div className="grid gap-1">
                     <div className="font-bold">RODE Solver</div>
                     <div className="w-[min(calc(100vw-104px),710px)]">
-                        <MarkdownView
-                            className={cn(
-                                "rounded-xl p-2 w-[min(calc(100vw-104px),710px)]",
-                                "bg-[#f0f4f9] dark:bg-[#0e1724]"
-                            )}>
-                            {response.answer}
-                        </MarkdownView>
+                        <MarkdownView>{response.answer}</MarkdownView>
                     </div>
                     <div className="flex items-center gap-2 py-2">
                         <Button

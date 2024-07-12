@@ -77,7 +77,7 @@ p {
 
 @media (max-width: 694px) {
     math-field {
-        font-size: medium !important;
+        font-size: large !important;
     }
 }
 

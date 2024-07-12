@@ -10,7 +10,6 @@
     "shadcn": "shadcn-ui",
     "firebase:ie": "firebase emulators:start --import='firebase-backup-dev' --export-on-exit='firebase-backup-dev'",
     "firebase:i": "firebase emulators:start --import='firebase-backup-dev'"
-
   },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.24.1",

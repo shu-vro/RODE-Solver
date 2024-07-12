@@ -59,8 +59,20 @@ export const firestoreDb = initializeFirestore(app, {
 });
 
 if (globalThis?.location?.hostname === "localhost") {
-    connectAuthEmulator(auth, "http://127.0.0.1:4001");
-    connectFirestoreEmulator(firestoreDb, "127.0.0.1", 4002);
+    connectAuthEmulator(auth, "http://localhost:4001");
+    connectFirestoreEmulator(firestoreDb, "localhost", 4002);
+} else if (
+    globalThis?.location?.hostname === process.env.NEXT_PUBLIC_LOCAL_TARGET_HOST
+) {
+    connectAuthEmulator(
+        auth,
+        `http://${process.env.NEXT_PUBLIC_LOCAL_TARGET_HOST}:4001`
+    );
+    connectFirestoreEmulator(
+        firestoreDb,
+        process.env.NEXT_PUBLIC_LOCAL_TARGET_HOST,
+        4002
+    );
 }
 
 export async function setDocumentToUsersCollection(

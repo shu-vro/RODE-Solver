@@ -4,71 +4,53 @@ import React, { useState } from "react";
 import MarkdownView from "@/app/components/MarkdownView";
 import MathField from "@/app/components/MathField";
 
-let ans = `$\\frac{dy}{dx} = \\frac{x + 2y - 3}{2x + y - 3}$
+let ans = `A nice differential equation problem!
 
-Let $ x = X + h $ and $ y = Y + k $. The given equation becomes:
+Let's start by separating the variables:
 
-$\\frac{dY}{dX} = \\frac{X + 2Y + (h + 2k - 3)}{2X + Y + (2h + k - 3)}$
+$$\\frac{\\mathrm{d}y}{\\mathrm{d}x}=\\frac{x(2\\log x+1)}{\\sin y+y\\cos y}$$
 
-Solving for $ h $ and $ k $:
+$$\\Rightarrow\\qquad\\frac{\\mathrm{d}y}{\\sin y+y\\cos y}=\\frac{2\\log x+1}{x}\\mathrm{d}x$$
 
-$h + 2k - 3 = 0$
+Now, let's introduce a new variable $u=\\sin y+y\\cos y$. Then, we can rewrite the equation as:
 
-$2h + k - 3 = 0$
+$$\\frac{\\mathrm{d}y}{u}=\\frac{2\\log x+1}{x}\\mathrm{d}x$$
 
-This gives $ h = 1 $ and $ k = 1 $. Thus, the equation becomes:
+$$\\Rightarrow\\qquad\\int\\frac{\\mathrm{d}y}{u}=\\int\\frac{2\\log x+1}{x}\\mathrm{d}x$$
 
-$\\frac{dY}{dX} = \\frac{X + 2Y}{2X + Y}$
+Evaluating the integrals, we get:
 
-Let $ Y = vX $, then:
+$$\\ln|u|+C=\\int\\frac{2\\log x+1}{x}\\mathrm{d}x$$
 
-$\\frac{dY}{dX} = v + X \\frac{dv}{dX}$
+$$=\\int\\frac{\\log x^2}{x}\\mathrm{d}x+\\int\\frac{1}{x}\\mathrm{d}x$$
 
-Substituting:
+$$=\\log|x|+\\log|x|+C$$
 
-$v + X \\frac{dv}{dX} = \\frac{X + 2vX}{2X + vX}$
+$$=2\\log|x|+C$$
 
-Simplifying:
+$$\\Rightarrow\\qquad u=e^{2\\log|x|+C}=e^{2\\log|x|}\\cdot e^C$$
 
-$v + X \\frac{dv}{dX} = \\frac{1 + 2v}{2 + v}$
+$$=e^C|x|^2$$
 
-$\\Rightarrow X \\frac{dv}{dX} = \\frac{1 + 2v - v(2 + v)}{2 + v} = \\frac{1 + 2v - 2v - v^2}{2 + v} = \\frac{1 - v^2}{2 + v}$
+Now, we can express $u$ in terms of $y$:
 
+$$u=\\sin y+y\\cos y=e^C|x|^2$$
 
-$\\Rightarrow \\frac{dv}{dX} = \\frac{1 - v^2}{X(2 + v)}$
+$$\\Rightarrow\\qquad\\sin y+y\\cos y=e^C|x|^2$$
 
-Separating variables and integrating:
+This is the general solution of the differential equation. Note that we have an arbitrary constant $C$, which can be determined by the initial conditions of the problem.
 
-$\\frac{X dX}{X} = \\left( \\frac{1}{1 - v^2} + \\frac{1}{v} \\right) dv$
+To simplify the solution, we can use the fact that $e^C|x|^2$ is a constant multiple of $|x|^2$. Therefore, we can write:
 
-Integrating:
+$$\\sin y+y\\cos y=k|x|^2$$
 
-$\\ln X = \\frac{1}{2} \\ln \\left| \\frac{1 + v}{1 - v} \\right| + \\ln C$
+where $k$ is a constant.
 
-$\\Rightarrow X = C \\sqrt{\\frac{1 + v}{1 - v}}$
-
-Substituting back $ v = \\frac{Y}{X} $:
-
-$X = C \\sqrt{\\frac{1 + \\frac{Y}{X}}{1 - \\frac{Y}{X}}}$
-
-Further simplification:
-
-$X(1 - \\frac{Y}{X})^3 = C (1 + \\frac{Y}{X})$
-
-
-$\\Rightarrow (X - Y)^3 = C(X + Y)$
-
-
-Substituting back:
-
-$x = X + 1 \\quad \\text{and} \\quad y = Y + 1$
-
-We get:
-
-$\\boxed{(x - y)^3 = C(x + y - 2)}$`;
+This is the final solution of the differential equation.`;
 
 export default function Page() {
     const [value, setValue] = useState("");
+    const [md, setMd] = useState("");
     return (
         <div className="w-full">
             <MathField
@@ -83,6 +65,18 @@ export default function Page() {
                 rows={10}
                 cols={40}
                 className="mx-auto block mt-4 mb-20"></textarea>
+
+            <textarea
+                name="whatever"
+                id=""
+                cols="30"
+                rows="10"
+                value={md}
+                onChange={e => {
+                    setMd(e.target.value);
+                }}></textarea>
+            <MarkdownView>{md}</MarkdownView>
+            <hr />
             <MarkdownView>{ans}</MarkdownView>
         </div>
     );
