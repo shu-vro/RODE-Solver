@@ -30,7 +30,6 @@ const APP_BANNER = {
 
 /**
  * @type {Metadata}
- 
  */
 export const metadata = {
     applicationName: APP_NAME,

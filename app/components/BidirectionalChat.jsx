@@ -14,9 +14,6 @@ import { DATABASE_PATH } from "@/lib/variables";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import MathField from "./MathField";
-import { cn } from "@/lib/utils";
-import { BsQuestionOctagonFill } from "react-icons/bs";
-import { toString } from "hast-util-to-string";
 
 export default function BidirectionalChat({
     // question,
