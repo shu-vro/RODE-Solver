@@ -51,9 +51,14 @@ export default function LeftSidebar() {
     });
 
     useEffect(() => {
-        window.addEventListener("beforeinstallprompt", e => {
+        const cb = e => {
             setDeferredPrompt(e);
-        });
+        };
+        window.addEventListener("beforeinstallprompt", cb);
+
+        return () => {
+            window.removeEventListener("beforeinstallprompt", cb);
+        };
     }, []);
 
     return (

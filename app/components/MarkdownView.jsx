@@ -17,7 +17,7 @@ export default function MarkdownView({ children, ...rest }) {
             )}>
             {slices.map((slice, index) => {
                 return (
-                    <div className="pl-2 relative group">
+                    <div className="pl-2 relative group" key={slice}>
                         <span
                             className="absolute top-1/2 right-full transform -translate-y-1/2 hidden group-hover:block cursor-pointer hover:scale-125 transition-all"
                             onClick={() => {

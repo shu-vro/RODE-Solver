@@ -135,6 +135,7 @@ math-field {
     font-size: 1.5rem !important;
     max-width: 100% !important;
     max-height: 100% !important;
+    line-height: 2 !important;
     vertical-align: middle;
     display: inline-block !important;
     overflow-x: auto !important;

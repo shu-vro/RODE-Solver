@@ -23,6 +23,7 @@ import { useUserQuestions } from "@/contexts/UserQuestionsProvider";
 import BidirectionalChat from "@/app/components/BidirectionalChat";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useLeftNav } from "@/contexts/LeftNavProvider";
 
 export default function CommonSolution({
     pageType = "ode",
@@ -38,6 +39,7 @@ export default function CommonSolution({
     const [state, formAction] = useFormState(actionFunction, {});
 
     const [localState, setLocalState] = useState([]);
+    const { open } = useLeftNav();
 
     const handleReloadClick = preset => {
         push(`?q=${preset}`);
@@ -83,7 +85,10 @@ export default function CommonSolution({
 
     return (
         <form
-            className="flex flex-col grow min-h-[calc(100dvh-80px)]"
+            className={cn("flex flex-col grow min-h-[calc(100dvh-80px)]", {
+                "w-[calc(99%-20rem)]": open,
+                "w-0": !open,
+            })}
             action={formAction}
             onSubmit={() => {
                 if (!auth.currentUser) {
@@ -91,7 +96,14 @@ export default function CommonSolution({
                 }
             }}>
             {![...questionList, ...localState].length ? (
-                <div className="mx-auto my-4 flex-1 grow w-[min(100%,1024px)]">
+                <div
+                    className={cn(
+                        "mx-auto my-4 flex-1 grow w-[min(100%,1024px)]",
+                        {
+                            "w-[calc(99%-20rem)]": open,
+                            "w-0": !open,
+                        }
+                    )}>
                     <div className="z-10 grid grid-cols-2 max-[539px]:flex flex-col gap-4 mx-auto m-4">
                         {presets.map((preset, i) => {
                             return (

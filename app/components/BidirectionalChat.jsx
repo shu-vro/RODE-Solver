@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import MarkdownView from "@/app/components/MarkdownView";
@@ -11,26 +11,44 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { firestoreDb } from "@/firebase";
 import { toast } from "sonner";
 import { DATABASE_PATH } from "@/lib/variables";
-import { doc, updateDoc, increment } from "firebase/firestore";
+import { doc, updateDoc, increment, getDoc } from "firebase/firestore";
 import { useAuthContext } from "@/contexts/AuthProvider";
 import MathField from "./MathField";
+import { cn } from "@/lib/utils";
 
-export default function BidirectionalChat({
-    // question,
-    // answer,
-    // vote,
-    // fromServer,
-    // id,
-    response,
-}) {
+export default function BidirectionalChat({ response }) {
+    const { user } = useAuthContext();
+    const [questionerInfo, setQuestioner] = useState(user);
+
     useEffect(() => {
+        if (response && user?.uid) {
+            if (response.createdBy === user.uid) {
+                setQuestioner({
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                });
+            } else {
+                (async () => {
+                    try {
+                        const data = await getDoc(
+                            doc(firestoreDb, "users", response.createdBy)
+                        );
+
+                        if (data.exists()) {
+                            setQuestioner({
+                                displayName: data.data().name,
+                                photoURL: data.data().photoURL,
+                            });
+                        }
+                    } catch (e) {}
+                })();
+            }
+        }
         window.scrollTo({
             top: document.body.scrollHeight,
             behavior: "smooth",
         });
     }, []);
-
-    const { user } = useAuthContext();
 
     const voteHandler = async incr => {
         try {
@@ -94,12 +112,14 @@ export default function BidirectionalChat({
             id={response.uid}>
             <div className="flex items-start justify-start gap-3 w-full flex-row-reverse">
                 <Avatar className="border w-10 h-10 text-xs">
-                    <AvatarImage src={user?.photoURL || user_icon.src} />
+                    <AvatarImage
+                        src={questionerInfo?.photoURL || user_icon.src}
+                    />
                     <AvatarFallback>YOU</AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1 py-2 w-fit">
                     <div className="font-bold text-right">
-                        {user?.displayName || "You"}
+                        {questionerInfo?.displayName || "You"}
                     </div>
                     <MathField
                         value={response.question}
@@ -128,7 +148,13 @@ export default function BidirectionalChat({
                             onClick={() => {
                                 voteHandler(1);
                             }}
-                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
+                            className={cn(
+                                "text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-all",
+                                {
+                                    "scale-125 text-green-700 dark:text-green-400 hover:text-green-700 hover:dark:text-green-400":
+                                        response.vote?.[user.uid] === 1,
+                                }
+                            )}>
                             <FaCaretUp />
                             <span className="sr-only">Upvote</span>
                         </Button>
@@ -150,7 +176,13 @@ export default function BidirectionalChat({
                             onClick={() => {
                                 voteHandler(-1);
                             }}
-                            className="text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100">
+                            className={cn(
+                                "text-4xl hover:bg-transparent text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-all",
+                                {
+                                    "scale-125 text-red-700 dark:text-red-400 hover:text-red-700 hover:dark:text-red-400":
+                                        response.vote?.[user.uid] === -1,
+                                }
+                            )}>
                             <FaCaretDown />
                             <span className="sr-only">Downvote</span>
                         </Button>
