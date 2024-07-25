@@ -100,7 +100,7 @@ export default function BidirectionalChat({
                     <AvatarImage src={user?.photoURL || user_icon.src} />
                     <AvatarFallback>YOU</AvatarFallback>
                 </Avatar>
-                <div className="grid gap-1 px-3 py-2">
+                <div className="grid gap-1 py-2 w-fit">
                     <div className="font-bold text-right">
                         {user?.displayName || "You"}
                     </div>
@@ -112,6 +112,7 @@ export default function BidirectionalChat({
                             border: "none",
                             color: "white",
                             borderRadius: ".75rem",
+                            overflow: "auto",
                         }}
                     />
                 </div>

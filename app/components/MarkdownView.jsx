@@ -18,7 +18,11 @@ export default function MarkdownView({ children, ...rest }) {
             {slices.map((slice, index) => {
                 return (
                     <div className="pl-2 relative group">
-                        <span className="absolute top-1/2 right-full transform -translate-y-1/2 hidden group-hover:block cursor-pointer hover:scale-125 transition-all">
+                        <span
+                            className="absolute top-1/2 right-full transform -translate-y-1/2 hidden group-hover:block cursor-pointer hover:scale-125 transition-all"
+                            onClick={() => {
+                                console.log(slice);
+                            }}>
                             <BsQuestionOctagonFill className="text-xl" />
                         </span>
                         <Markdown

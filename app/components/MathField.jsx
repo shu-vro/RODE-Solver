@@ -46,6 +46,7 @@ export default function MathField({ value, ...rest }) {
             style={{
                 display: "block",
                 fontSize: "1.8rem",
+                maxWidth: "100%",
                 border: "1px solid hsl(var(--border))",
                 marginRight: 0,
                 ...extra_style,

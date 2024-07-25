@@ -71,7 +71,7 @@ export default function LeftSidebar() {
                 }}></div>
             <div
                 className={cn(
-                    "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-[80px] h-[calc(100svh-80px)] overflow-hidden border-r-2 border-border transition-all",
+                    "bg-background flex flex-col gap-2 text-black dark:text-white sticky top-[80px] h-[calc(100dvh-80px)] overflow-hidden border-r-2 border-border transition-all",
                     {
                         "min-w-80 w-80 pl-4": open,
                         "min-w-0 w-0 pl-0": !open,
@@ -82,11 +82,11 @@ export default function LeftSidebar() {
                     }
                 )}>
                 <div className="flex-1 overflow-auto z-20">
-                    <div className="grid grid-cols-1 gap-1 px-2">
+                    <div className="grid grid-cols-1 gap-1 px-2 pt-4">
                         {Object.entries(formattedQuestionList)
                             .reverse()
                             .map(([date, arr]) => (
-                                <div className="mb-4" key={date}>
+                                <div className="mb-6" key={date}>
                                     <div className="text-stone-500 text-xs font-medium px-2">
                                         {date}
                                     </div>
@@ -211,7 +211,7 @@ function Question({ obj, mobileView }) {
                 }
             }}
             className={cn(
-                "truncate overflow-hidden flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
+                "truncate block overflow-x-auto flex-1 text-sm transition-colors rounded-md whitespace-nowrap p-2 border-b-2",
                 "hover:bg-primary/10",
                 "flex items-start justify-start flex-col"
             )}
@@ -244,6 +244,7 @@ function Question({ obj, mobileView }) {
                 }}
                 style={{
                     display: "inline-block",
+                    overflowX: "auto",
                     border: "none",
                     background: "none",
                 }}

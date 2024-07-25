@@ -77,7 +77,7 @@ export default function Page() {
     };
 
     return (
-        <div className="flex flex-col grow min-h-[calc(100dvh-90px)] mx-5 sm:mx-20 gap-3 pt-5">
+        <div className="flex flex-col grow min-h-[calc(100dvh-80px)] w-full px-5 sm:mx-20 gap-3 pt-5">
             {solutions.map(sol => (
                 <div
                     key={sol.id}
@@ -92,10 +92,12 @@ export default function Page() {
                         onPointerUp={() => handleClick(sol.uid)}
                         style={{
                             flexGrow: 1,
-                            background: "transparent",
                             border: "none",
                             pointerEvents: "none",
                             cursor: "pointer",
+                            display: "inline-block",
+                            overflowX: "auto",
+                            background: "none",
                         }}
                     />
                     <div className="flex flex-row justify-center items-center gap-2">

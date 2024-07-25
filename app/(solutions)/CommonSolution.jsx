@@ -83,16 +83,16 @@ export default function CommonSolution({
 
     return (
         <form
-            className="flex flex-col grow min-h-[calc(100dvh-90px)]"
+            className="flex flex-col grow min-h-[calc(100dvh-80px)]"
             action={formAction}
-            onSubmit={e => {
+            onSubmit={() => {
                 if (!auth.currentUser) {
                     toast.warning("Please sign in to save your answer");
                 }
             }}>
             {![...questionList, ...localState].length ? (
                 <div className="mx-auto my-4 flex-1 grow w-[min(100%,1024px)]">
-                    <div className="z-10 grid grid-cols-2 max-[539px]:grid-cols-1 gap-4 mx-auto m-4 grow">
+                    <div className="z-10 grid grid-cols-2 max-[539px]:flex flex-col gap-4 mx-auto m-4">
                         {presets.map((preset, i) => {
                             return (
                                 <div
@@ -131,9 +131,8 @@ export default function CommonSolution({
                 <div className="mx-auto my-4 flex-1 grow w-[min(100%,800px)]">
                     <div
                         className={cn(
-                            "flex flex-col items-start gap-8 px-4 rounded-lg z-10 pt-4",
-                            "bg-[#f0f4f9] dark:bg-[#0e1724]",
-                            "bg-background dark:bg-background"
+                            "flex flex-col items-start gap-8 rounded-lg z-10 pt-4",
+                            "bg-background"
                         )}>
                         {[...questionList, ...localState].map(response => (
                             <BidirectionalChat
@@ -152,7 +151,7 @@ export default function CommonSolution({
                         "relative bg-background mx-auto gap-3",
                         "max-[539px]:flex-col max-[539px]:items-stretch max-w-screen-lg"
                     )}>
-                    <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)] overflow-x-auto">
+                    <div className="w-[min(calc(100vw-240px),800px)] max-[539px]:w-[min(calc(100vw-40px),800px)]">
                         <MathField
                             value={defaultQuestion}
                             onInput={e => {
@@ -162,6 +161,7 @@ export default function CommonSolution({
                                 zIndex: 100,
                                 background: "transparent",
                                 borderColor: "hsla(var(--primary) / 50%)",
+                                // maxWidth: "calc(100% - 16px)",
                             }}
                         />
                         <textarea

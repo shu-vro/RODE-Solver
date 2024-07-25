@@ -133,9 +133,27 @@ math-field {
 
 .katex {
     font-size: 1.5rem !important;
-    line-height: 1.6 !important;
-
-    display: block !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    vertical-align: middle;
+    display: inline-block !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
+}
+
+.katex::-webkit-scrollbar {
+    height: 5px;
+}
+
+.katex::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Handle */
+.katex::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
+math-field::part(content) {
+    overflow-x: auto !important;
 }
